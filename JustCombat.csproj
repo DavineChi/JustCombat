@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="Entities\Actor.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="GameContent.cs" />
     <Compile Include="JustCombat.cs" />
