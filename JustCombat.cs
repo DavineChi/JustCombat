@@ -11,6 +11,7 @@ namespace JustCombat
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        GameContent gameContent;
 
         public JustCombat()
         {
@@ -41,6 +42,7 @@ namespace JustCombat
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            gameContent = new GameContent(Content);
         }
 
         /// <summary>
