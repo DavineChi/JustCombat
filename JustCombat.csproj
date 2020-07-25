@@ -53,6 +53,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Extended, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoGame.Extended.3.7.0\lib\net472\MonoGame.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -66,6 +69,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
