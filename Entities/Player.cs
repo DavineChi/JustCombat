@@ -11,8 +11,6 @@ namespace JustCombat
         private Texture2D currentDirection;
         private Texture2D[] playerDirections;
 
-        public float XPosition { get; set; }
-        public float YPosition { get; set; }
         public float Width { get; set; }
         public float Height { get; set; }
         public float ScreenWidth { get; set; }
@@ -34,8 +32,8 @@ namespace JustCombat
             base(name, x, y, width, height, heading)
         {
             _name = name;
-            XPosition = x;
-            YPosition = y;
+            _x = x;
+            _y = y;
             Heading = heading;
             FumikoSheet = gameContent.FumikoImage;
             Batch = spriteBatch;
