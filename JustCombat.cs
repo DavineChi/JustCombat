@@ -11,7 +11,8 @@ namespace JustCombat
     {
         private Player player;
 
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
+
         SpriteBatch spriteBatch;
         GameContent gameContent;
 
