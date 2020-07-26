@@ -82,17 +82,17 @@ namespace JustCombat
                 player.WalkNorth();
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 player.WalkEast();
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.S))
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 player.WalkSouth();
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 player.WalkWest();
             }
