@@ -98,7 +98,7 @@ namespace JustCombat
 
             else
             {
-                if (player.Heading.GetHeading() == 180.0f)
+                if (player.GetDirection().GetHeading() == 180.0f)
                 {
                     // TODO: Show last heading state.
                 }
@@ -120,7 +120,7 @@ namespace JustCombat
 
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
             player.Draw(spriteBatch);
-            spriteBatch.DrawString(gameContent.LabelFont, player.Heading.GetHeading().ToString(), new Vector2(10.0f, 10.0f), Color.White);
+            spriteBatch.DrawString(gameContent.LabelFont, player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 10.0f), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
