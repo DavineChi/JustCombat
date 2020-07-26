@@ -13,7 +13,6 @@ namespace JustCombat
 
         public float Width { get; set; }
         public float Height { get; set; }
-        public float ScreenWidth { get; set; }
 
         public Direction Heading { get; set; }
 
@@ -25,7 +24,6 @@ namespace JustCombat
                       float y,
                       float width,
                       float height,
-                      float screenWidth,
                       Direction heading,
                       SpriteBatch spriteBatch,
                       GameContent gameContent) :
@@ -37,7 +35,6 @@ namespace JustCombat
             Heading = heading;
             FumikoSheet = gameContent.FumikoImage;
             Batch = spriteBatch;
-            ScreenWidth = screenWidth;
 
             playerDirections = new Texture2D[4];
         }
