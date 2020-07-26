@@ -9,6 +9,8 @@ namespace JustCombat
     /// </summary>
     public class JustCombat : Game
     {
+        private Player player;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameContent gameContent;
@@ -47,6 +49,8 @@ namespace JustCombat
             graphics.PreferredBackBufferWidth = Constants.SCREEN_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
             graphics.ApplyChanges();
+
+            player = new Player("Fumiko", 168, 425, 0.0f, 0.0f, new Direction(180.0f), spriteBatch, gameContent);
         }
 
         /// <summary>
@@ -72,6 +76,35 @@ namespace JustCombat
 
             // TODO: Add your update logic here
 
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                player.WalkNorth();
+            }
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                player.WalkEast();
+            }
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                player.WalkSouth();
+            }
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                player.WalkWest();
+            }
+
+            else
+            {
+                if (player.Heading.GetHeading() == 180.0f)
+                {
+                    // TODO: Show last heading state.
+                }
+            }
+
+            player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -84,6 +117,11 @@ namespace JustCombat
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            player.Draw(spriteBatch);
+            spriteBatch.DrawString(gameContent.LabelFont, player.Heading.GetHeading().ToString(), new Vector2(10.0f, 10.0f), Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
