@@ -97,14 +97,6 @@ namespace JustCombat
                 player.WalkWest();
             }
 
-            else
-            {
-                if (player.GetDirection().GetHeading() == 180.0f)
-                {
-                    // TODO: Show last heading state.
-                }
-            }
-
             player.Update(gameTime);
             base.Update(gameTime);
         }
