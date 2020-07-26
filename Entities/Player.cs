@@ -59,6 +59,16 @@ namespace JustCombat
             Heading.SetHeading(270.0f);
         }
 
+        public void Update(GameTime gameTime)
+        {
+
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            
+        }
+
         public override bool MoveX(float dx, float dy, long delta)
         {
             throw new NotImplementedException();
