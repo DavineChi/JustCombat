@@ -43,6 +43,10 @@ namespace JustCombat
 
             // TODO: use this.Content to load your game content here
             gameContent = new GameContent(Content);
+
+            graphics.PreferredBackBufferWidth = Constants.SCREEN_WIDTH;
+            graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
