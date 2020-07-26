@@ -10,12 +10,7 @@ namespace JustCombat
     {
         private Texture2D currentDirection;
         private Texture2D[] playerDirections;
-
-        public float Width { get; set; }
-        public float Height { get; set; }
-
-        public Direction Heading { get; set; }
-
+        
         public Texture2D FumikoSheet { get; set; }
         public SpriteBatch Batch { get; set; }
 
@@ -29,10 +24,6 @@ namespace JustCombat
                       GameContent gameContent) :
             base(name, x, y, width, height, heading)
         {
-            _name = name;
-            _x = x;
-            _y = y;
-            Heading = heading;
             FumikoSheet = gameContent.FumikoImage;
             Batch = spriteBatch;
 
@@ -41,22 +32,22 @@ namespace JustCombat
 
         public void WalkNorth()
         {
-            Heading.SetHeading(0.0f);
+            this.SetHeading(0.0f);
         }
 
         public void WalkEast()
         {
-            Heading.SetHeading(90.0f);
+            this.SetHeading(90.0f);
         }
 
         public void WalkSouth()
         {
-            Heading.SetHeading(180.0f);
+            this.SetHeading(180.0f);
         }
 
         public void WalkWest()
         {
-            Heading.SetHeading(270.0f);
+            this.SetHeading(270.0f);
         }
 
         public void Update(GameTime gameTime)
