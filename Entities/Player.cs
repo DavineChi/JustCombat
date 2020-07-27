@@ -17,7 +17,6 @@ namespace JustCombat
         private Texture2D[] playerDirections;
         
         public Texture2D FumikoSheet { get; set; }
-        public SpriteBatch Batch { get; set; }
 
         public Player(string name,
                       float x,
@@ -25,12 +24,10 @@ namespace JustCombat
                       float width,
                       float height,
                       Direction heading,
-                      SpriteBatch spriteBatch,
                       GameContent gameContent) :
             base(name, x, y, width, height, heading)
         {
             FumikoSheet = gameContent.FumikoImage;
-            Batch = spriteBatch;
 
             GraphicsDevice graphics = JustCombat.graphics.GraphicsDevice;
 

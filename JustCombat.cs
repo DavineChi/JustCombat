@@ -51,7 +51,7 @@ namespace JustCombat
             graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
             graphics.ApplyChanges();
 
-            player = new Player("Fumiko", 168, 425, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, new Direction(180.0f), spriteBatch, gameContent);
+            player = new Player("Fumiko", 168, 425, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, new Direction(180.0f), gameContent);
         }
 
         /// <summary>
