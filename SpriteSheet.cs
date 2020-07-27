@@ -21,11 +21,6 @@ namespace JustCombat
             _tileHeight = tileHeight;
         }
 
-        public Texture2D GetTexture(int x, int y, int width, int height)
-        {
-            return SpriteSheet.GetTexture(_texture, x, y, width, height);
-        }
-
         public static Texture2D GetTexture(Texture2D texture, int x, int y, int width, int height)
         {
             Texture2D result = new Texture2D(JustCombat.graphics.GraphicsDevice, width, height);
@@ -36,6 +31,11 @@ namespace JustCombat
             result.SetData(colorData);
 
             return result;
+        }
+
+        public Texture2D GetTexture(int x, int y, int width, int height)
+        {
+            return SpriteSheet.GetTexture(_texture, x, y, width, height);
         }
     }
 }
