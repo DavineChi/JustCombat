@@ -8,6 +8,8 @@ namespace JustCombat
 {
     public class Player : Actor
     {
+        private SpriteSheet spriteSheet;
+
         private Texture2D playerNorth;
         private Texture2D playerEast;
         private Texture2D playerSouth;
@@ -28,33 +30,12 @@ namespace JustCombat
             base(name, x, y, width, height, heading)
         {
             FumikoSheet = gameContent.FumikoImage;
+            spriteSheet = new SpriteSheet(FumikoSheet, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
 
-            GraphicsDevice graphics = JustCombat.graphics.GraphicsDevice;
-
-            Rectangle rectNorth = new Rectangle(24, 0, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            Rectangle rectEast = new Rectangle(24, 32, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            Rectangle rectSouth = new Rectangle(24, 64, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            Rectangle rectWest = new Rectangle(24, 96, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-
-            playerNorth = new Texture2D(graphics, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            playerEast = new Texture2D(graphics, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            playerSouth = new Texture2D(graphics, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            playerWest = new Texture2D(graphics, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-
-            Color[] textureDataNorth = new Color[Constants.PLAYER_WIDTH * Constants.PLAYER_HEIGHT];
-            Color[] textureDataEast = new Color[Constants.PLAYER_WIDTH * Constants.PLAYER_HEIGHT];
-            Color[] textureDataSouth = new Color[Constants.PLAYER_WIDTH * Constants.PLAYER_HEIGHT];
-            Color[] textureDataWest = new Color[Constants.PLAYER_WIDTH * Constants.PLAYER_HEIGHT];
-
-            gameContent.FumikoImage.GetData(0, rectNorth, textureDataNorth, 0, textureDataNorth.Length);
-            gameContent.FumikoImage.GetData(0, rectEast, textureDataEast, 0, textureDataEast.Length);
-            gameContent.FumikoImage.GetData(0, rectSouth, textureDataSouth, 0, textureDataSouth.Length);
-            gameContent.FumikoImage.GetData(0, rectWest, textureDataWest, 0, textureDataWest.Length);
-
-            playerNorth.SetData(textureDataNorth);
-            playerEast.SetData(textureDataEast);
-            playerSouth.SetData(textureDataSouth);
-            playerWest.SetData(textureDataWest);
+            playerNorth = spriteSheet.GetTexture(24, 0,  Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+            playerEast  = spriteSheet.GetTexture(24, 32, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+            playerSouth = spriteSheet.GetTexture(24, 64, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+            playerWest  = spriteSheet.GetTexture(24, 96, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
 
             playerDirections = new Texture2D[] { playerNorth, playerEast, playerSouth, playerWest };
         }
