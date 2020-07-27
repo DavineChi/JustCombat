@@ -99,17 +99,17 @@ namespace JustCombat
                 this.SetDirection(0.0f);
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 this.SetDirection(90.0f);
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.S))
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 this.SetDirection(180.0f);
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 this.SetDirection(270.0f);
             }
