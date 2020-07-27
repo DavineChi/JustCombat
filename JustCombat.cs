@@ -97,6 +97,11 @@ namespace JustCombat
                 player.WalkWest();
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.T))
+            {
+                Teleport();
+            }
+
             player.Update(gameTime);
             base.Update(gameTime);
         }
@@ -117,6 +122,12 @@ namespace JustCombat
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void Teleport()
+        {
+            player.SetX(300.0f);
+            player.SetY(300.0f);
         }
     }
 }
