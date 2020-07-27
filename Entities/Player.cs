@@ -9,12 +9,6 @@ namespace JustCombat
     public class Player : Actor
     {
         private SpriteSheet spriteSheet;
-
-        private Texture2D playerNorth;
-        private Texture2D playerEast;
-        private Texture2D playerSouth;
-        private Texture2D playerWest;
-
         private Texture2D currentDirection;
         private Texture2D[] playerDirections;
         
@@ -32,12 +26,22 @@ namespace JustCombat
             FumikoSheet = gameContent.FumikoImage;
             spriteSheet = new SpriteSheet(FumikoSheet, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
 
-            playerNorth = spriteSheet.GetTexture(24, 0,  Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            playerEast  = spriteSheet.GetTexture(24, 32, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            playerSouth = spriteSheet.GetTexture(24, 64, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
-            playerWest  = spriteSheet.GetTexture(24, 96, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+            playerDirections = new Texture2D[4];
 
-            playerDirections = new Texture2D[] { playerNorth, playerEast, playerSouth, playerWest };
+            InitStaticDirectionSprites();
+        }
+
+        // Helper method to initialize the static directional sprites for this Actor.
+        private void InitStaticDirectionSprites()
+        {
+            int counter = 0;
+
+            for (int i = 0; i < 4; i++)
+            {
+                // TODO: Refactor SpriteSheet class to reference cells by index rather than by pixels.
+                playerDirections[i] = spriteSheet.GetTexture(24, (counter * 32), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+                counter = counter + 1;
+            }
         }
 
         public Texture2D GetSprite()
@@ -115,10 +119,10 @@ namespace JustCombat
         {
             Vector2 position = new Vector2(this._x, this._y);
 
-            if (this.GetDirection().GetHeading() == 0.0f)   { currentDirection = playerNorth; }
-            if (this.GetDirection().GetHeading() == 90.0f)  { currentDirection = playerEast;  }
-            if (this.GetDirection().GetHeading() == 180.0f) { currentDirection = playerSouth; }
-            if (this.GetDirection().GetHeading() == 270.0f) { currentDirection = playerWest;  }
+            if (this.GetDirection().GetHeading() == 0.0f)   { currentDirection = playerDirections[0]; }
+            if (this.GetDirection().GetHeading() == 90.0f)  { currentDirection = playerDirections[1]; }
+            if (this.GetDirection().GetHeading() == 180.0f) { currentDirection = playerDirections[2]; }
+            if (this.GetDirection().GetHeading() == 270.0f) { currentDirection = playerDirections[3]; }
 
             spriteBatch.Draw(currentDirection, position, null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
         }
