@@ -37,5 +37,10 @@ namespace JustCombat
         {
             return SpriteSheet.GetTexture(_texture, x, y, width, height);
         }
+
+        public Texture2D GetTexture(int x, int y)
+        {
+            return SpriteSheet.GetTexture(_texture, (x * _tileWidth), (y * _tileHeight), _tileWidth, _tileHeight);
+        }
     }
 }
