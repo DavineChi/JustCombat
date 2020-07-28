@@ -5,21 +5,11 @@ namespace JustCombat
 {
     public class BoundingBox : ICollision
     {
-        private int _posX;
-        private int _posY;
-        private int _width;
-        private int _height;
-
         private Rectangle _rectangle;
 
-        public BoundingBox(int posX, int posY, int width, int height)
+        public BoundingBox(int x, int y, int width, int height)
         {
-            _posX = posX;
-            _posY = posY;
-            _width = width;
-            _height = height;
-
-            _rectangle = new Rectangle(_posX, _posY, _width, _height);
+            _rectangle = new Rectangle(x, x, width, height);
         }
         
         public bool Intersects(Rectangle other)
@@ -35,42 +25,42 @@ namespace JustCombat
 
         public int GetPosX()
         {
-            return _posX;
+            return _rectangle.X;
         }
 
-        public void SetPosX(int posX)
+        public void SetPosX(int x)
         {
-            _posX = posX;
+            _rectangle.X = x;
         }
 
         public int GetPosY()
         {
-            return _posY;
+            return _rectangle.Y;
         }
 
-        public void SetPosY(int posY)
+        public void SetPosY(int y)
         {
-            _posY = posY;
+            _rectangle.Y = y;
         }
 
         public int GetWidth()
         {
-            return _width;
+            return _rectangle.Width;
         }
 
         public void SetWidth(int width)
         {
-            _width = width;
+            _rectangle.Width = width;
         }
 
         public int GetHeight()
         {
-            return _height;
+            return _rectangle.Height;
         }
 
         public void SetHeight(int height)
         {
-            _height = height;
+            _rectangle.Height = height;
         }
     }
 }
