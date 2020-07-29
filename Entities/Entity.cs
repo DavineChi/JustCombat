@@ -8,9 +8,9 @@ namespace JustCombat
         protected float _y;
         protected float _width;
         protected float _height;
+        protected BoundingBox _boundingBox;
         protected int _hitPoints;
         protected int _maxHitPoints;
-        protected BoundingBox _boundingBox;
 
         public string GetName()          { return _name; }
         public void SetName(string name) { _name = name; }
