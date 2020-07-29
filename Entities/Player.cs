@@ -38,8 +38,7 @@ namespace JustCombat
 
             for (int i = 0; i < 4; i++)
             {
-                // TODO: Refactor SpriteSheet class to reference cells by index rather than by pixels.
-                playerDirections[i] = spriteSheet.GetTexture(24, (counter * 32), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+                playerDirections[i] = spriteSheet.GetTexture(1, (counter), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
                 counter = counter + 1;
             }
         }
