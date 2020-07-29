@@ -9,7 +9,7 @@ namespace JustCombat
 
         public BoundingBox(int x, int y, int width, int height)
         {
-            _rectangle = new Rectangle(x, x, width, height);
+            _rectangle = new Rectangle(x, y, width, height);
         }
         
         public bool Intersects(Rectangle other)
