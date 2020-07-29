@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace JustCombat
 {
@@ -26,6 +26,11 @@ namespace JustCombat
         public abstract bool MoveX(float dx, float dy, long delta);
         public abstract bool MoveY(float dx, float dy, long delta);
         
+        public bool Intersects(BoundingBox other)
+        {
+            return _boundingBox.Intersects(other.GetRectangle());
+        }
+
         public void SetHeading(float heading)
         {
             _heading.SetHeading(heading);
