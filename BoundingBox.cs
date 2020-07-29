@@ -23,6 +23,11 @@ namespace JustCombat
             throw new NotImplementedException();
         }
 
+        public Rectangle GetRectangle()
+        {
+            return _rectangle;
+        }
+
         public float GetPosX()
         {
             return _rectangle.X;
