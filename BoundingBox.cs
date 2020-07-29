@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace JustCombat
@@ -7,9 +7,9 @@ namespace JustCombat
     {
         private Rectangle _rectangle;
 
-        public BoundingBox(int x, int y, int width, int height)
+        public BoundingBox(float x, float y, float width, float height)
         {
-            _rectangle = new Rectangle(x, y, width, height);
+            _rectangle = new Rectangle((int)(x), (int)(y), (int)(width), (int)(height));
         }
         
         public bool Intersects(Rectangle other)
@@ -23,44 +23,44 @@ namespace JustCombat
             throw new NotImplementedException();
         }
 
-        public int GetPosX()
+        public float GetPosX()
         {
             return _rectangle.X;
         }
 
-        public void SetPosX(int x)
+        public void SetPosX(float x)
         {
-            _rectangle.X = x;
+            _rectangle.X = (int)(x);
         }
 
-        public int GetPosY()
+        public float GetPosY()
         {
             return _rectangle.Y;
         }
 
-        public void SetPosY(int y)
+        public void SetPosY(float y)
         {
-            _rectangle.Y = y;
+            _rectangle.Y = (int)(y);
         }
 
-        public int GetWidth()
+        public float GetWidth()
         {
             return _rectangle.Width;
         }
 
-        public void SetWidth(int width)
+        public void SetWidth(float width)
         {
-            _rectangle.Width = width;
+            _rectangle.Width = (int)(width);
         }
 
-        public int GetHeight()
+        public float GetHeight()
         {
             return _rectangle.Height;
         }
 
-        public void SetHeight(int height)
+        public void SetHeight(float height)
         {
-            _rectangle.Height = height;
+            _rectangle.Height = (int)(height);
         }
     }
 }
