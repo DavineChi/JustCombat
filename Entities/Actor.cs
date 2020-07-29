@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace JustCombat
 {
@@ -16,6 +16,7 @@ namespace JustCombat
             _y = y;
             _width = width;
             _height = height;
+            _boundingBox = new BoundingBox(x, y, width, height);
             _hitPoints = 80;
             _maxHitPoints = _hitPoints;
             _heading = heading;
