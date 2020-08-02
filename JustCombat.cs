@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 
 namespace JustCombat
 {
@@ -117,8 +118,9 @@ namespace JustCombat
             // TODO: Add your drawing code here
 
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
-            player.Draw(spriteBatch);
+
             spriteBatch.DrawString(gameContent.LabelFont, player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 10.0f), Color.White);
+            player.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
