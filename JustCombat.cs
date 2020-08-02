@@ -10,12 +10,12 @@ namespace JustCombat
     /// </summary>
     public class JustCombat : Game
     {
-        private Player player;
+        private Player _player;
 
         public static GraphicsDeviceManager graphics;
+        public static GameContent gameContent;
 
         SpriteBatch spriteBatch;
-        GameContent gameContent;
 
         public JustCombat()
         {
@@ -52,7 +52,7 @@ namespace JustCombat
             graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
             graphics.ApplyChanges();
 
-            player = new Player("Fumiko", 168, 425, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, new Direction(180.0f), gameContent);
+            _player = Player.Instance();
         }
 
         /// <summary>
@@ -80,22 +80,22 @@ namespace JustCombat
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                player.WalkNorth();
+                _player.WalkNorth();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                player.WalkEast();
+                _player.WalkEast();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                player.WalkSouth();
+                _player.WalkSouth();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                player.WalkWest();
+                _player.WalkWest();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.T))
@@ -103,7 +103,8 @@ namespace JustCombat
                 Teleport();
             }
 
-            player.Update(gameTime);
+            _player.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -119,8 +120,8 @@ namespace JustCombat
 
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
-            spriteBatch.DrawString(gameContent.LabelFont, player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 10.0f), Color.White);
-            player.Draw(spriteBatch);
+            spriteBatch.DrawString(gameContent.LabelFont, _player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 10.0f), Color.White);
+            _player.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -128,8 +129,8 @@ namespace JustCombat
 
         private void Teleport()
         {
-            player.SetX(300.0f);
-            player.SetY(300.0f);
+            _player.SetX(300.0f);
+            _player.SetY(300.0f);
         }
     }
 }
