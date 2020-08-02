@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
   <PropertyGroup>
@@ -55,6 +55,9 @@
     <Compile Include="ICollision.cs" />
     <Compile Include="JustCombat.cs" />
     <Compile Include="PrimitiveRectangle.cs" />
+    <Compile Include="PrimLine.cs" />
+    <Compile Include="PrimRectangle.cs" />
+    <Compile Include="PrimShape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteSheet.cs" />
@@ -63,8 +66,14 @@
     <Reference Include="MonoGame.Extended, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MonoGame.Extended.3.7.0\lib\net472\MonoGame.Extended.dll</HintPath>
     </Reference>
+    <Reference Include="MonoGame.Extended.Content.Pipeline, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoGame.Extended.Content.Pipeline.3.7.0\lib\net472\MonoGame.Extended.Content.Pipeline.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Extended.Graphics, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MonoGame.Extended.Graphics.3.7.0\lib\net472\MonoGame.Extended.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Extended.Tiled, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoGame.Extended.Tiled.3.7.0\lib\net472\MonoGame.Extended.Tiled.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
