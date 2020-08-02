@@ -45,6 +45,16 @@ namespace JustCombat
             _fill = fill;
         }
 
+        public float GetWidth()
+        {
+            return _width;
+        }
+
+        public void SetWidth(float width)
+        {
+            _width = width;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (_fill)
