@@ -18,5 +18,6 @@ namespace JustCombat
 
         public abstract PrimRectangle GetFrame();
         public abstract PrimRectangle GetFillBar();
+        public abstract void Update();
     }
 }
