@@ -11,7 +11,7 @@ namespace JustCombat
         protected float _height;
         protected Color _color;
         protected float _thickness;
-        protected float _layerDepth;
+        protected int _layerDepth;
 
         public abstract void Draw(SpriteBatch spriteBatch);
     }

@@ -31,7 +31,7 @@ namespace JustCombat
         {
         }
 
-        public PrimLine(float x1, float y1, float x2, float y2, Color color, float thickness, float layerDepth)
+        public PrimLine(float x1, float y1, float x2, float y2, Color color, float thickness, int layerDepth)
         {
             _x1 = x1;
             _x2 = x2;

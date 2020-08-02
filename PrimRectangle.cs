@@ -28,12 +28,12 @@ namespace JustCombat
         {
         }
 
-        public PrimRectangle(float x, float y, float width, float height, Color color, float thickness, float layerDepth) :
+        public PrimRectangle(float x, float y, float width, float height, Color color, float thickness, int layerDepth) :
             this(x, y, width, height, color, thickness, layerDepth, false)
         {
         }
 
-        public PrimRectangle(float x, float y, float width, float height, Color color, float thickness, float layerDepth, bool fill)
+        public PrimRectangle(float x, float y, float width, float height, Color color, float thickness, int layerDepth, bool fill)
         {
             _x = x;
             _y = y;
