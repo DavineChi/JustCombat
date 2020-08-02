@@ -8,27 +8,39 @@ namespace JustCombat
 {
     public class Player : Actor
     {
-        private SpriteSheet spriteSheet;
+        public enum State { NORMAL, RESTED, IN_COMBAT, DEAD };
+
+        protected static Player _player = null;
+
+        private SpriteSheet _spriteSheet;
+
+        private Texture2D _playerSprites;
+        private SpriteSheet _playerSpriteSheet;
+
         private Texture2D currentDirection;
         private Texture2D[] playerDirections;
-        
-        public Texture2D FumikoSheet { get; set; }
 
-        public Player(string name,
-                      float x,
-                      float y,
-                      float width,
-                      float height,
-                      Direction heading,
-                      GameContent gameContent) :
+        private State _state;
+
+        protected Player(string name, float x, float y, float width, float height, Direction heading) :
             base(name, x, y, width, height, heading)
         {
-            FumikoSheet = gameContent.FumikoImage;
-            spriteSheet = new SpriteSheet(FumikoSheet, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+            _playerSprites = JustCombat.gameContent.FumikoImage;
+            _spriteSheet = new SpriteSheet(_playerSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
 
             playerDirections = new Texture2D[4];
 
             InitStaticDirectionSprites();
+        }
+
+        public static Player Instance()
+        {
+            if (_player == null)
+            {
+                _player = new Player("Ayrn", 340.0f, 280.0f, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, new Direction(180.0f));
+            }
+
+            return _player;
         }
 
         // Helper method to initialize the static directional sprites for this Actor.
@@ -38,7 +50,7 @@ namespace JustCombat
 
             for (int i = 0; i < 4; i++)
             {
-                playerDirections[i] = spriteSheet.GetTexture(1, (counter), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+                playerDirections[i] = _spriteSheet.GetTexture(1, (counter), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
                 counter = counter + 1;
             }
         }
@@ -124,6 +136,16 @@ namespace JustCombat
             if (this.GetDirection().GetHeading() == 270.0f) { currentDirection = playerDirections[3]; }
 
             spriteBatch.Draw(currentDirection, position, null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
+        }
+
+        public Player.State GetState()
+        {
+            return _state;
+        }
+
+        public void SetState(Player.State state)
+        {
+            _state = state;
         }
 
         public override bool MoveX(float dx, float dy, long delta)
