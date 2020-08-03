@@ -11,11 +11,17 @@ namespace JustCombat
     public class JustCombat : Game
     {
         private Player _player;
+        private HealthBar _healthBar;
+
+        private SpriteFont _font;
 
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
 
         SpriteBatch spriteBatch;
+
+        PrimRectangle rect1;
+        PrimRectangle rect2;
 
         public JustCombat()
         {
@@ -52,7 +58,14 @@ namespace JustCombat
             graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
             graphics.ApplyChanges();
 
+            _font = gameContent.GameFont;
+            
             _player = Player.Instance();
+
+            _healthBar = new HealthBar(50, 46, 180, 8);
+
+            rect1 = new PrimRectangle(500, 300, 10, 10, Color.Green);
+            rect2 = new PrimRectangle(500, 400, 10, 10, Color.Red);
         }
 
         /// <summary>
@@ -103,6 +116,16 @@ namespace JustCombat
                 Teleport();
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.H))
+            {
+                _player.SetHitPoints(_player.GetHitPoints() / 2);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            {
+                Player.AddLevel();
+            }
+
             _player.Update(gameTime);
 
             base.Update(gameTime);
@@ -115,13 +138,22 @@ namespace JustCombat
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
-            // TODO: Add your drawing code here
-
+            
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            
+            spriteBatch.DrawString(_font, "Level " + _player.GetLevel().ToString(), new Vector2(50.0f, 2.0f), Color.White);
+            spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(50.0f, 20.0f), Color.White);
+            _healthBar.Draw(spriteBatch);
 
-            spriteBatch.DrawString(gameContent.LabelFont, _player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 10.0f), Color.White);
+            spriteBatch.DrawString(_font, "       Player State: " + _player.GetState().ToString(), new Vector2(10.0f, 90.0f), Color.White);
+            spriteBatch.DrawString(_font, "HealthBar State: " + _healthBar.GetState().ToString(), new Vector2(10.0f, 110.0f), Color.White);
+            spriteBatch.DrawString(_font, "            Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 130.0f), Color.White);
+
             _player.Draw(spriteBatch);
+
+            rect1.Draw(spriteBatch);
+            rect2.Draw(spriteBatch);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
