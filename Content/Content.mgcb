@@ -20,6 +20,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Consolas14.spritefont
 
+#begin FrizQuadrataTTRegular.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:FrizQuadrataTTRegular.spritefont
+
 #begin Fumiko.png
 /importer:TextureImporter
 /processor:TextureProcessor
