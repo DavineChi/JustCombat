@@ -148,6 +148,24 @@ namespace JustCombat
             _state = state;
         }
 
+        public static void AddLevel()
+        {
+            if (_player == null)
+            {
+                throw new NullReferenceException("Check the Instance() method for errors.");
+            }
+
+            if (!_player.IsAlive())
+            {
+                throw new ArgumentException("Cannot level up a dead player.");
+            }
+
+            if ((_player.GetLevel() + 1) <= Constants.MAXIMUM_PLAYER_LEVEL)
+            {
+                _player.SetLevel(_player.GetLevel() + 1);
+            }
+        }
+
         public override bool MoveX(float dx, float dy, long delta)
         {
             throw new NotImplementedException();
