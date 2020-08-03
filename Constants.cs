@@ -10,5 +10,7 @@ namespace JustCombat
 
         public const float PLAYER_ANIMATION_SPEED = 0.22f;
         public const float PLAYER_SPEED_WALK = 2.0f;
+
+        public const int MAXIMUM_PLAYER_LEVEL = 60;
     }
 }
