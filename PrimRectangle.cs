@@ -13,13 +13,23 @@ namespace JustCombat
         {
         }
 
+        public PrimRectangle(float x, float y, float width, float height, Color color) :
+            this(x, y, width, height, color, 1)
+        {
+        }
+
         public PrimRectangle(float x, float y, float width, float height, float thickness) :
             this(x, y, width, height, Color.White, thickness)
         {
         }
 
-        public PrimRectangle(float x, float y, float width, float height, Color color) :
-            this(x, y, width, height, color, 1)
+        public PrimRectangle(float x, float y, float width, float height, bool fill) :
+            this(x, y, width, height, Color.White, 1, 0, fill)
+        {
+        }
+
+        public PrimRectangle(float x, float y, float width, float height, float thickness, bool fill) :
+            this(x, y, width, height, Color.White, thickness, 0, fill)
         {
         }
 
