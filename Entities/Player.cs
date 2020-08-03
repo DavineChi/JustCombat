@@ -163,7 +163,16 @@ namespace JustCombat
             if ((_player.GetLevel() + 1) <= Constants.MAXIMUM_PLAYER_LEVEL)
             {
                 _player.SetLevel(_player.GetLevel() + 1);
+
+                UpdateAttributes();
             }
+        }
+
+        private static void UpdateAttributes()
+        {
+            _player.SetMaxHitPoints(HitPoints.Calculate(_player));
+            _player.SetHitPoints(_player.GetMaxHitPoints());
+            // TODO: set player experience points
         }
 
         public override bool MoveX(float dx, float dy, long delta)
