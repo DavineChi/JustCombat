@@ -1,18 +1,19 @@
-﻿
+﻿using Microsoft.Xna.Framework.Graphics;
+
 namespace JustCombat
 {
     public abstract class CommonBar
     {
-        private const float FRAME_THICKNESS = 0.5f;
+        private const int FRAME_THICKNESS = 1;
 
         protected float _width;
         protected PrimRectangle _frame;
         protected PrimRectangle _fillBar;
 
-        public CommonBar(float xPosition, float yPosition, float width, float height)
+        public CommonBar(int xPosition, int yPosition, int width, int height)
         {
             _frame = new PrimRectangle((xPosition - FRAME_THICKNESS), (yPosition - FRAME_THICKNESS), (width + (FRAME_THICKNESS * 2)), (height + (FRAME_THICKNESS * 2)));
-            _fillBar = new PrimRectangle(xPosition, yPosition, width, height);
+            _fillBar = new PrimRectangle(xPosition + 1, yPosition + 1, width - 2, height - 2, true);
             _width = width;
         }
 
