@@ -54,6 +54,7 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="GameContent.cs" />
     <Compile Include="HealthBar.cs" />
+    <Compile Include="HitPoints.cs" />
     <Compile Include="ICollision.cs" />
     <Compile Include="JustCombat.cs" />
     <Compile Include="PrimitiveRectangle.cs" />
