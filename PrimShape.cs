@@ -13,6 +13,16 @@ namespace JustCombat
         protected float _thickness;
         protected int _layerDepth;
 
+        public Color GetColor()
+        {
+            return _color;
+        }
+
+        public void SetColor(Color color)
+        {
+            _color = color;
+        }
+
         public abstract void Draw(SpriteBatch spriteBatch);
     }
 }
