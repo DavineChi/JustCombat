@@ -175,5 +175,11 @@ namespace JustCombat
             _hitPoints = (int)(Math.Ceiling(_maxHitPoints * 0.25));
             _alive = true;
         }
+
+        public void Teleport(float x, float y)
+        {
+            this.SetX(x);
+            this.SetY(y);
+        }
     }
 }
