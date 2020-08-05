@@ -89,42 +89,7 @@ namespace JustCombat
                 Exit();
             }
 
-            // TODO: Add your update logic here
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                _player.WalkNorth();
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                _player.WalkEast();
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                _player.WalkSouth();
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                _player.WalkWest();
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.T))
-            {
-                Teleport();
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.H))
-            {
-                _player.SetHitPoints(_player.GetHitPoints() / 2);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.L))
-            {
-                Player.AddLevel();
-            }
+            InputHandler.HandleInput();
 
             _player.Update(gameTime);
 
@@ -157,12 +122,6 @@ namespace JustCombat
             spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-
-        private void Teleport()
-        {
-            _player.SetX(300.0f);
-            _player.SetY(300.0f);
         }
     }
 }
