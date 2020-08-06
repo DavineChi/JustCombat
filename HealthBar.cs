@@ -21,10 +21,9 @@ namespace JustCombat
         private GameTime _timer;
         private GameTime _cooldownTimer;
 
-        private float _secondsCounterTimer;
-        private float _secondsCounterCooldownTimer;
+        private float _secondsCounter;
 
-        private bool _cooldown;
+        private bool _inCooldown;
 
         public HealthBar(int xPosition, int yPosition, int width, int height) :
             base(xPosition, yPosition, width, height)
@@ -39,10 +38,9 @@ namespace JustCombat
             _timer = new GameTime();
             _cooldownTimer = new GameTime();
             
-            _cooldown = false;
+            _inCooldown = false;
 
-            _secondsCounterTimer = 0;
-            _secondsCounterCooldownTimer = 0;
+            _secondsCounter = 0;
         }
 
         private void QueryState()
@@ -106,38 +104,33 @@ namespace JustCombat
 
         public void ResetTimer()
         {
-            _secondsCounterTimer = 0;
-        }
-
-        public void ResetCooldownTimer()
-        {
-            _secondsCounterCooldownTimer = 0;
+            _secondsCounter = 0;
         }
 
         private void Tick(GameTime gameTime)
         {
-            _secondsCounterTimer = _secondsCounterTimer + (float)(gameTime.ElapsedGameTime.TotalSeconds);
-            _secondsCounterCooldownTimer = _secondsCounterCooldownTimer + (float)(gameTime.ElapsedGameTime.TotalSeconds);
+            _secondsCounter = _secondsCounter + (float)(gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public override void Update(GameTime gameTime)
         {
             QueryState();
-            Tick(gameTime);
-
+            
             if (_state == State.REGEN)
             {
-                if (_secondsCounterCooldownTimer < 3)
+                Tick(gameTime);
+
+                if (_secondsCounter < 3)
                 {
-                    _cooldown = true;
+                    _inCooldown = true;
                 }
 
                 else
                 {
-                    _cooldown = false;
+                    _inCooldown = false;
                 }
 
-                if (!_cooldown && _secondsCounterTimer > REGEN_DELAY)
+                if (!_inCooldown && _secondsCounter > REGEN_DELAY)
                 {
                     ResetTimer();
 
