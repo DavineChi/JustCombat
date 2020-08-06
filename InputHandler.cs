@@ -23,6 +23,8 @@ namespace JustCombat
 
         public static void HandleInput(HealthBar healthBar)
         {
+            UpdateKeyboardState();
+
             KeyboardState state = Keyboard.GetState();
             Player player = Player.Instance();
             
