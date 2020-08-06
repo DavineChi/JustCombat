@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 
 namespace JustCombat
 {
@@ -19,6 +19,6 @@ namespace JustCombat
 
         public abstract PrimRectangle GetFrame();
         public abstract PrimRectangle GetFillBar();
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
     }
 }
