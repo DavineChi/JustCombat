@@ -5,6 +5,22 @@ namespace JustCombat
 {
     public class InputHandler
     {
+        // Implementation reference: https://community.monogame.net/t/one-shot-key-press/11669
+
+        private static KeyboardState _currentKeyState;
+        private static KeyboardState _previousKeyState;
+
+        public static void UpdateKeyboardState()
+        {
+            _previousKeyState = _currentKeyState;
+            _currentKeyState = Keyboard.GetState();
+        }
+
+        public static bool IsKeyPressed(Keys key)
+        {
+            return _currentKeyState.IsKeyDown(key) && !(_previousKeyState.IsKeyDown(key));
+        }
+
         public static void HandleInput(HealthBar healthBar)
         {
             KeyboardState state = Keyboard.GetState();
@@ -44,30 +60,30 @@ namespace JustCombat
                 player.Move(dx, dy, isRunning);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.OemOpenBrackets))
+            if (IsKeyPressed(Keys.OemOpenBrackets))
             {
                 player.SetState(Player.State.IN_COMBAT);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.OemCloseBrackets))
+            if (IsKeyPressed(Keys.OemCloseBrackets))
             {
                 player.SetState(Player.State.NORMAL);
                 healthBar.ResetTimer(); // TODO: ???
                 //healthBar.ResetCooldownTimer();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.T))
+            if (IsKeyPressed(Keys.T))
             {
                 player.Teleport(300.0f, 300.0f);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.H))
+            if (IsKeyPressed(Keys.H))
             {
                 player.SetHitPoints(player.GetHitPoints() / 2);
                 healthBar.ResetTimer();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            if (IsKeyPressed(Keys.L))
             {
                 Player.AddLevel();
             }
