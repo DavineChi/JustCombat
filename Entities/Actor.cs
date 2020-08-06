@@ -23,9 +23,8 @@ namespace JustCombat
             _alive = true;
         }
 
-        public abstract bool MoveX(float dx, float dy, long delta);
-        public abstract bool MoveY(float dx, float dy, long delta);
-        
+        public abstract bool Move(float dx, float dy, bool isRunning);
+
         public bool Intersects(BoundingBox other)
         {
             return _boundingBox.Intersects(other.GetRectangle());
