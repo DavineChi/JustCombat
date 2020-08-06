@@ -13,8 +13,8 @@ namespace JustCombat
         public CommonBar(int xPosition, int yPosition, int width, int height)
         {
             _frame = new PrimRectangle((xPosition - FRAME_THICKNESS), (yPosition - FRAME_THICKNESS), (width + (FRAME_THICKNESS * 2)), (height + (FRAME_THICKNESS * 2)));
-            _fillBar = new PrimRectangle(xPosition + 1, yPosition + 1, width - 2, height - 2, true);
-            _width = width;
+            _fillBar = new PrimRectangle((xPosition + 1), (yPosition + 1), (width - 2), (height - 2), true);
+            _width = width - 2;
         }
 
         public abstract PrimRectangle GetFrame();
