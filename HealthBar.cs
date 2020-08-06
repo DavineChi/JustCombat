@@ -21,7 +21,8 @@ namespace JustCombat
         private GameTime _timer;
         private GameTime _cooldownTimer;
 
-        private int _secondsCounter;
+        private float _secondsCounterTimer;
+        private float _secondsCounterCooldownTimer;
 
         private bool _cooldown;
 
@@ -37,8 +38,11 @@ namespace JustCombat
             _state = State.FULL;
             _timer = new GameTime();
             _cooldownTimer = new GameTime();
-
+            
             _cooldown = false;
+
+            _secondsCounterTimer = 0;
+            _secondsCounterCooldownTimer = 0;
         }
 
         private void QueryState()
@@ -100,15 +104,30 @@ namespace JustCombat
             return _frame;
         }
 
+        public void ResetTimer()
+        {
+            _secondsCounterTimer = 0;
+        }
+
+        public void ResetCooldownTimer()
+        {
+            _secondsCounterCooldownTimer = 0;
+        }
+
+        private void Tick()
+        {
+            _secondsCounterTimer = _secondsCounterTimer + (float)(_cooldownTimer.ElapsedGameTime.TotalSeconds);
+            _secondsCounterCooldownTimer = _secondsCounterCooldownTimer + (float)(_cooldownTimer.ElapsedGameTime.TotalSeconds);
+        }
+
         public override void Update()
         {
             QueryState();
-
-            _secondsCounter = _secondsCounter + _cooldownTimer.ElapsedGameTime.Seconds;
-
+            Tick();
+            
             if (_state == State.REGEN)
             {
-                if (_secondsCounter < 3)
+                if (_secondsCounterCooldownTimer < 3)
                 {
                     _cooldown = true;
                 }
@@ -118,11 +137,9 @@ namespace JustCombat
                     _cooldown = false;
                 }
 
-                if (!_cooldown && _secondsCounter > REGEN_DELAY)
+                if (!_cooldown && _secondsCounterTimer > REGEN_DELAY)
                 {
-                    // TODO: reset the timer
-                    //_timer.ElapsedGameTime.Seconds;
-                    _secondsCounter = 0;
+                    ResetTimer();
 
                     int level = Player.Instance().GetLevel();
                     int fillValue = 0;
@@ -151,14 +168,13 @@ namespace JustCombat
 
                     float fillFactor = (float)(Player.Instance().GetHitPoints()) / (float)(Player.Instance().GetMaxHitPoints());
 
-                    _fillBar.SetWidth(_width*  fillFactor);
+                    _fillBar.SetWidth(_width * fillFactor);
                 }
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
             _frame.Draw(spriteBatch);
             _fillBar.Draw(spriteBatch);
         }
