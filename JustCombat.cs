@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using System;
 
 namespace JustCombat
 {
@@ -18,10 +19,12 @@ namespace JustCombat
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
 
-        SpriteBatch spriteBatch;
+        public SpriteBatch spriteBatch;
 
         PrimRectangle rect1;
         PrimRectangle rect2;
+
+        float seconds = 0;
 
         public JustCombat()
         {
@@ -89,9 +92,11 @@ namespace JustCombat
                 Exit();
             }
 
-            InputHandler.HandleInput();
+            InputHandler.HandleInput(_healthBar);
 
             _player.Update(gameTime);
+
+            _healthBar.Update();
 
             base.Update(gameTime);
         }
@@ -102,6 +107,8 @@ namespace JustCombat
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            seconds = seconds + (float)(gameTime.ElapsedGameTime.TotalSeconds);
+
             GraphicsDevice.Clear(Color.Black);
             
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
@@ -118,6 +125,11 @@ namespace JustCombat
 
             rect1.Draw(spriteBatch);
             rect2.Draw(spriteBatch);
+
+            spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(600.0f, 600.0f), Color.White);
+
+            spriteBatch.DrawString(_font, "Timer: " + Math.Floor(seconds), new Vector2(600.0f, 620.0f), Color.White);
+            spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(600.0f, 640.0f), Color.White);
 
             spriteBatch.End();
 
