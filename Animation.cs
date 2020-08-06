@@ -10,15 +10,20 @@ namespace JustCombat
         private List<Frame> _frames = new List<Frame>();
         private SpriteSheet _spriteSheet;
         private int _currentFrame = 0;
+        private bool _looping = false;
 
         public Animation()
         {
-            
         }
 
         public Animation(SpriteSheet spriteSheet)
         {
             _spriteSheet = spriteSheet;
+        }
+
+        public Animation(Texture2D[] frames, int duration)
+        {
+            // TODO: implementation
         }
 
         public void AddFrame(TimeSpan timeSpan, int x, int y)
@@ -72,6 +77,11 @@ namespace JustCombat
         public int GetHeight()
         {
             return _frames[_currentFrame]._texture.Height;
+        }
+
+        public void SetLooping(bool looping)
+        {
+            _looping = looping;
         }
 
         private class Frame
