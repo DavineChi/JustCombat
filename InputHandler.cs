@@ -1,39 +1,59 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
 {
     public class InputHandler
     {
-        public static void HandleInput()
+        public static void HandleInput(HealthBar healthBar)
         {
             KeyboardState state = Keyboard.GetState();
             Player player = Player.Instance();
+            
+            bool isRunning = Keyboard.GetState().IsKeyDown(Keys.LeftShift);
 
             if (IsValidMovementKey(state))
             {
-                bool running = Keyboard.GetState().IsKeyDown(Keys.LeftShift);
+                int dx = 0;
+                int dy = 0;
 
-
-
+                // North
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
-                    player.WalkNorth();
+                    dy = -1;
                 }
 
+                // East
                 if (Keyboard.GetState().IsKeyDown(Keys.D))
                 {
-                    player.WalkEast();
+                    dx = 1;
                 }
 
+                // South
                 if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
-                    player.WalkSouth();
+                    dy = 1;
                 }
 
+                // West
                 if (Keyboard.GetState().IsKeyDown(Keys.A))
                 {
-                    player.WalkWest();
+                    dx = -1;
                 }
+
+                player.Move(dx, dy, isRunning);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.OemOpenBrackets))
+            {
+                player.SetState(Player.State.IN_COMBAT);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.OemCloseBrackets))
+            {
+                player.SetState(Player.State.NORMAL);
+                healthBar.ResetTimer(); // TODO: ???
+                //healthBar.ResetCooldownTimer();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.T))
@@ -44,6 +64,7 @@ namespace JustCombat
             if (Keyboard.GetState().IsKeyDown(Keys.H))
             {
                 player.SetHitPoints(player.GetHitPoints() / 2);
+                healthBar.ResetTimer();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.L))
@@ -57,8 +78,7 @@ namespace JustCombat
             return (state.IsKeyDown(Keys.W) ||
                     state.IsKeyDown(Keys.A) ||
                     state.IsKeyDown(Keys.S) ||
-                    state.IsKeyDown(Keys.D) ||
-                    state.IsKeyDown(Keys.LeftShift));
+                    state.IsKeyDown(Keys.D));
         }
     }
 }
