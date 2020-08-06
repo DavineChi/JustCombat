@@ -114,17 +114,17 @@ namespace JustCombat
             _secondsCounterCooldownTimer = 0;
         }
 
-        private void Tick()
+        private void Tick(GameTime gameTime)
         {
-            _secondsCounterTimer = _secondsCounterTimer + (float)(_cooldownTimer.ElapsedGameTime.TotalSeconds);
-            _secondsCounterCooldownTimer = _secondsCounterCooldownTimer + (float)(_cooldownTimer.ElapsedGameTime.TotalSeconds);
+            _secondsCounterTimer = _secondsCounterTimer + (float)(gameTime.ElapsedGameTime.TotalSeconds);
+            _secondsCounterCooldownTimer = _secondsCounterCooldownTimer + (float)(gameTime.ElapsedGameTime.TotalSeconds);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             QueryState();
-            Tick();
-            
+            Tick(gameTime);
+
             if (_state == State.REGEN)
             {
                 if (_secondsCounterCooldownTimer < 3)
