@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -82,30 +82,6 @@ namespace JustCombat
             if (heading == 180.0f) { _currentDirection = _playerDirections[2]; }
             if (heading == 270.0f) { _currentDirection = _playerDirections[3]; }
         }
-        
-        public void Update(GameTime gameTime)
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) { this.SetDirection(0.0f);   }
-            if (Keyboard.GetState().IsKeyDown(Keys.D)) { this.SetDirection(90.0f);  }
-            if (Keyboard.GetState().IsKeyDown(Keys.S)) { this.SetDirection(180.0f); }
-            if (Keyboard.GetState().IsKeyDown(Keys.A)) { this.SetDirection(270.0f); }
-
-            _healthBar.Update(this, gameTime);
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            Vector2 position = new Vector2(this._x, this._y);
-
-            if (this.GetDirection().GetHeading() == 0.0f)   { _currentDirection = _playerDirections[0]; }
-            if (this.GetDirection().GetHeading() == 90.0f)  { _currentDirection = _playerDirections[1]; }
-            if (this.GetDirection().GetHeading() == 180.0f) { _currentDirection = _playerDirections[2]; }
-            if (this.GetDirection().GetHeading() == 270.0f) { _currentDirection = _playerDirections[3]; }
-
-            _healthBar.Draw(spriteBatch);
-
-            spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
-        }
 
         public static void AddLevel()
         {
@@ -132,6 +108,17 @@ namespace JustCombat
             _player.SetMaxHitPoints(HitPoints.Calculate(_player));
             _player.SetHitPoints(_player.GetMaxHitPoints());
             // TODO: set player experience points
+        }
+
+        public override bool Move(float dx, float dy, bool isRunning)
+        {
+            bool result = false; // TODO: for collision-detection
+            int[] newPositions = GetNewPosition(dx, dy, isRunning);
+
+            this.SetX(newPositions[0]);
+            this.SetY(newPositions[1]);
+
+            return result;
         }
 
         private int[] GetNewPosition(float dx, float dy, bool isRunning)
@@ -172,15 +159,28 @@ namespace JustCombat
             return result;
         }
 
-        public override bool Move(float dx, float dy, bool isRunning)
+        public void Update(GameTime gameTime)
         {
-            bool result = false; // TODO: for collision-detection
-            int[] newPositions = GetNewPosition(dx, dy, isRunning);
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) { this.SetDirection(0.0f); }
+            if (Keyboard.GetState().IsKeyDown(Keys.D)) { this.SetDirection(90.0f); }
+            if (Keyboard.GetState().IsKeyDown(Keys.S)) { this.SetDirection(180.0f); }
+            if (Keyboard.GetState().IsKeyDown(Keys.A)) { this.SetDirection(270.0f); }
 
-            this.SetX(newPositions[0]);
-            this.SetY(newPositions[1]);
+            _healthBar.Update(this, gameTime);
+        }
 
-            return result;
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            Vector2 position = new Vector2(this._x, this._y);
+
+            if (this.GetDirection().GetHeading() == 0.0f) { _currentDirection = _playerDirections[0]; }
+            if (this.GetDirection().GetHeading() == 90.0f) { _currentDirection = _playerDirections[1]; }
+            if (this.GetDirection().GetHeading() == 180.0f) { _currentDirection = _playerDirections[2]; }
+            if (this.GetDirection().GetHeading() == 270.0f) { _currentDirection = _playerDirections[3]; }
+
+            _healthBar.Draw(spriteBatch);
+
+            spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
         }
     }
 }
