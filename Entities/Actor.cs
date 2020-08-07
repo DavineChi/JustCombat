@@ -4,9 +4,15 @@ namespace JustCombat
 {
     public abstract class Actor : Entity
     {
+        public enum State { NORMAL, RESTED, IN_COMBAT, DEAD };
+
         private Direction _heading;
         private bool _alive;
+
         protected int _level;
+        protected HealthBar _healthBar;
+
+        private State _state;
 
         public Actor(string name, float x, float y, float width, float height, Direction heading)
         {
@@ -156,6 +162,21 @@ namespace JustCombat
             {
                 _hitPoints = maxHitPoints;
             }
+        }
+
+        public HealthBar GetHealthBar()
+        {
+            return _healthBar;
+        }
+
+        public Actor.State GetState()
+        {
+            return _state;
+        }
+
+        public void SetState(Actor.State state)
+        {
+            _state = state;
         }
 
         public bool IsAlive()
