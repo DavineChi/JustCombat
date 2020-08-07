@@ -16,9 +16,11 @@ namespace JustCombat
             _fillBar = new PrimRectangle((xPosition + 1), (yPosition + 1), (width - 2), (height - 2), true);
             _width = width - 2;
         }
-
+        
         public abstract PrimRectangle GetFrame();
         public abstract PrimRectangle GetFillBar();
-        public abstract void Update(GameTime gameTime);
+        public abstract void Update(Actor actor, GameTime gameTime);
+
+        public float GetWidth() { return _width; }
     }
 }
