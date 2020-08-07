@@ -39,25 +39,25 @@ namespace JustCombat
             _secondsCounter = 0;
         }
 
-        private void QueryState()
+        private void QueryState(Actor actor)
         {
-            float hitPoints = (float)(Player.Instance().GetHitPoints());
-            float maxHitPoints = (float)(Player.Instance().GetMaxHitPoints());
+            float hitPoints = (float)(actor.GetHitPoints());
+            float maxHitPoints = (float)(actor.GetMaxHitPoints());
             float fillFactor = hitPoints / maxHitPoints;
 
-            if (hitPoints < maxHitPoints)
+            if (actor.GetState() == Actor.State.IN_COMBAT)
+            {
+                _state = State.COMBAT;
+            }
+
+            else if (hitPoints < maxHitPoints)
             {
                 _state = State.REGEN;
             }
 
-            if (hitPoints == maxHitPoints)
+            else if (hitPoints == maxHitPoints)
             {
                 _state = State.FULL;
-            }
-
-            if (Player.Instance().GetState() == Player.State.IN_COMBAT)
-            {
-                _state = State.COMBAT;
             }
 
             _fillBar.SetWidth(_width * fillFactor);
@@ -98,10 +98,10 @@ namespace JustCombat
             _secondsCounter = _secondsCounter + (float)(gameTime.ElapsedGameTime.TotalSeconds);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(Actor actor, GameTime gameTime)
         {
-            QueryState();
-            
+            QueryState(actor);
+
             if (_state == State.REGEN)
             {
                 Tick(gameTime);
