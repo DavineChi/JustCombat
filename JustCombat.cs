@@ -82,7 +82,7 @@ namespace JustCombat
                 Exit();
             }
 
-            InputHandler.HandleInput(_healthBar);
+            InputHandler.HandleInput();
 
             _player.Update(gameTime);
 
