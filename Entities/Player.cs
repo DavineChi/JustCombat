@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,12 +24,14 @@ namespace JustCombat
         private Animation _animatePlayerIdle;
         
         protected Player(string name, float x, float y, float width, float height, Direction heading) :
-            base(name, x, y, width, height, heading)
+            base(name, x, y, width, height, Constants.SPRITE_SCALE, heading)
         {
             _playerSprites = JustCombat.gameContent.FumikoImage;
             _spriteSheet = new SpriteSheet(_playerSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
             _playerDirections = new Texture2D[4];
             _healthBar = new HealthBar(50, 46, 180, 8);
+
+            _boundingBox.GetPrimRectangle().SetColor(Color.Green);
 
             InitStaticDirectionSprites();
 
@@ -161,8 +163,8 @@ namespace JustCombat
 
         public void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) { this.SetDirection(0.0f); }
-            if (Keyboard.GetState().IsKeyDown(Keys.D)) { this.SetDirection(90.0f); }
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) { this.SetDirection(0.0f);   }
+            if (Keyboard.GetState().IsKeyDown(Keys.D)) { this.SetDirection(90.0f);  }
             if (Keyboard.GetState().IsKeyDown(Keys.S)) { this.SetDirection(180.0f); }
             if (Keyboard.GetState().IsKeyDown(Keys.A)) { this.SetDirection(270.0f); }
 
@@ -173,14 +175,15 @@ namespace JustCombat
         {
             Vector2 position = new Vector2(this._x, this._y);
 
-            if (this.GetDirection().GetHeading() == 0.0f) { _currentDirection = _playerDirections[0]; }
-            if (this.GetDirection().GetHeading() == 90.0f) { _currentDirection = _playerDirections[1]; }
+            if (this.GetDirection().GetHeading() == 0.0f)   { _currentDirection = _playerDirections[0]; }
+            if (this.GetDirection().GetHeading() == 90.0f)  { _currentDirection = _playerDirections[1]; }
             if (this.GetDirection().GetHeading() == 180.0f) { _currentDirection = _playerDirections[2]; }
             if (this.GetDirection().GetHeading() == 270.0f) { _currentDirection = _playerDirections[3]; }
 
             _healthBar.Draw(spriteBatch);
+            _boundingBox.Draw(spriteBatch);
 
-            spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
         }
     }
 }
