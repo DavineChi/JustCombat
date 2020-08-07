@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Timers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace JustCombat
@@ -17,8 +15,7 @@ namespace JustCombat
         private const float STEP_FN_LEVEL_10_AND_UP = 0.005f;
 
         private HealthBar.State _state;
-
-        private GameTime _timer;
+        
         private GameTime _cooldownTimer;
 
         private float _secondsCounter;
@@ -35,7 +32,6 @@ namespace JustCombat
             _fillBar.SetColor(fillBarColor);
 
             _state = State.FULL;
-            _timer = new GameTime();
             _cooldownTimer = new GameTime();
             
             _inCooldown = false;
@@ -75,16 +71,6 @@ namespace JustCombat
         public void SetState(HealthBar.State state)
         {
             _state = state;
-        }
-
-        public int GetTime()
-        {
-            return _timer.ElapsedGameTime.Seconds;
-        }
-
-        public GameTime GetTimer()
-        {
-            return _timer;
         }
 
         public GameTime GetCooldownTimer()
