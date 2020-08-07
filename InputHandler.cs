@@ -70,7 +70,6 @@ namespace JustCombat
             if (IsKeyPressed(Keys.OemCloseBrackets))
             {
                 player.SetState(Player.State.NORMAL);
-                healthBar.ResetTimer(); // TODO: ???
             }
 
             if (IsKeyPressed(Keys.T))
