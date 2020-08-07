@@ -21,7 +21,7 @@ namespace JustCombat
             return _currentKeyState.IsKeyDown(key) && !(_previousKeyState.IsKeyDown(key));
         }
 
-        public static void HandleInput(HealthBar healthBar)
+        public static void HandleInput()
         {
             UpdateKeyboardState();
 
@@ -80,7 +80,7 @@ namespace JustCombat
             if (IsKeyPressed(Keys.H))
             {
                 player.SetHitPoints(player.GetHitPoints() / 2);
-                healthBar.ResetTimer();
+                player.GetHealthBar().ResetTimer();
             }
 
             if (IsKeyPressed(Keys.L))
