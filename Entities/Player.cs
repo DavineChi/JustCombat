@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,8 +8,6 @@ namespace JustCombat
 {
     public class Player : Actor
     {
-        public enum State { NORMAL, RESTED, IN_COMBAT, DEAD };
-
         protected static Player _player = null;
 
         private Texture2D _playerSprites;
@@ -24,9 +22,7 @@ namespace JustCombat
         private Animation _animatePlayerWestWalking;
 
         private Animation _animatePlayerIdle;
-
-        private State _state;
-
+        
         protected Player(string name, float x, float y, float width, float height, Direction heading) :
             base(name, x, y, width, height, heading)
         {
@@ -105,16 +101,6 @@ namespace JustCombat
             if (this.GetDirection().GetHeading() == 270.0f) { _currentDirection = _playerDirections[3]; }
 
             spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
-        }
-
-        public Player.State GetState()
-        {
-            return _state;
-        }
-
-        public void SetState(Player.State state)
-        {
-            _state = state;
         }
 
         public static void AddLevel()
