@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
+using MonoGame.Extended.Tiled;
 using System;
 
 namespace JustCombat
@@ -20,12 +20,7 @@ namespace JustCombat
         public static GameContent gameContent;
 
         public SpriteBatch spriteBatch;
-
-        PrimRectangle rect1;
-        PrimRectangle rect2;
-
-        float seconds = 0;
-
+        
         public JustCombat()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -62,13 +57,8 @@ namespace JustCombat
             graphics.ApplyChanges();
 
             _font = gameContent.GameFont;
-            
             _player = Player.Instance();
-
             _healthBar = new HealthBar(50, 46, 180, 8);
-
-            rect1 = new PrimRectangle(500, 300, 10, 10, Color.Green);
-            rect2 = new PrimRectangle(500, 400, 10, 10, Color.Red);
         }
 
         /// <summary>
@@ -96,8 +86,6 @@ namespace JustCombat
 
             _player.Update(gameTime);
 
-            _healthBar.Update();
-
             base.Update(gameTime);
         }
 
@@ -107,29 +95,22 @@ namespace JustCombat
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            seconds = seconds + (float)(gameTime.ElapsedGameTime.TotalSeconds);
-
             GraphicsDevice.Clear(Color.Black);
             
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
             
             spriteBatch.DrawString(_font, "Level " + _player.GetLevel().ToString(), new Vector2(50.0f, 2.0f), Color.White);
             spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(50.0f, 20.0f), Color.White);
-            _healthBar.Draw(spriteBatch);
-
+            
             spriteBatch.DrawString(_font, "       Player State: " + _player.GetState().ToString(), new Vector2(10.0f, 90.0f), Color.White);
-            spriteBatch.DrawString(_font, "HealthBar State: " + _healthBar.GetState().ToString(), new Vector2(10.0f, 110.0f), Color.White);
+            spriteBatch.DrawString(_font, "HealthBar State: " + _player.GetHealthBar().GetState().ToString(), new Vector2(10.0f, 110.0f), Color.White);
             spriteBatch.DrawString(_font, "            Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 130.0f), Color.White);
 
             _player.Draw(spriteBatch);
-
-            rect1.Draw(spriteBatch);
-            rect2.Draw(spriteBatch);
-
+            
             spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(600.0f, 600.0f), Color.White);
 
-            spriteBatch.DrawString(_font, "Timer: " + Math.Floor(seconds), new Vector2(600.0f, 620.0f), Color.White);
-            spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(600.0f, 640.0f), Color.White);
+            spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(600.0f, 620.0f), Color.White);
 
             spriteBatch.End();
 
