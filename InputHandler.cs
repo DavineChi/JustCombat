@@ -71,7 +71,6 @@ namespace JustCombat
             {
                 player.SetState(Player.State.NORMAL);
                 healthBar.ResetTimer(); // TODO: ???
-                //healthBar.ResetCooldownTimer();
             }
 
             if (IsKeyPressed(Keys.T))
