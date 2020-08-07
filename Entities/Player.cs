@@ -120,6 +120,9 @@ namespace JustCombat
             this.SetX(newPositions[0]);
             this.SetY(newPositions[1]);
 
+            _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
+            _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
+
             return result;
         }
 
