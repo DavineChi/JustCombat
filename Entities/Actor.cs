@@ -14,7 +14,7 @@ namespace JustCombat
 
         private State _state;
 
-        public Actor(string name, float x, float y, float width, float height, Direction heading)
+        public Actor(string name, float x, float y, float width, float height, float scale, Direction heading)
         {
             _level = 1;
             _name = name;
@@ -22,7 +22,7 @@ namespace JustCombat
             _y = y;
             _width = width;
             _height = height;
-            _boundingBox = new BoundingBox(x, y, width, height);
+            _boundingBox = new BoundingBox(x, y, width, height, scale);
             _hitPoints = 80;
             _maxHitPoints = _hitPoints;
             _heading = heading;
