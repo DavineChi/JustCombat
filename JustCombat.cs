@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Tiled;
@@ -58,7 +58,6 @@ namespace JustCombat
 
             _font = gameContent.GameFont;
             _player = Player.Instance();
-            _healthBar = new HealthBar(50, 46, 180, 8);
         }
 
         /// <summary>
