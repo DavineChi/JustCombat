@@ -17,7 +17,7 @@ namespace JustCombat
 
         public float GetX()      { return _x; }
         public float GetY()      { return _y; }
-        public float GetWidth()  { return _width; }
+        public float GetWidth()  { return _width;  }
         public float GetHeight() { return _height; }
 
         public void SetX(float x) { _x = x; }
