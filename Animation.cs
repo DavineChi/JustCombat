@@ -1,125 +1,94 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace JustCombat
 {
     public class Animation
     {
-        private List<Frame> _frames = new List<Frame>();
-        private SpriteSheet _spriteSheet;
-        private int _currentFrame = 0;
-        private bool _looping = false;
+        private List<Texture2D> _framesList;
+        private Texture2D _currentFrame;
+        private float _speed = 1.0f;
+        private int _duration;
+        private int _frameIndex = 0;
+        private int _time = 0;
 
         public Animation()
         {
         }
 
-        public Animation(SpriteSheet spriteSheet)
-        {
-            _spriteSheet = spriteSheet;
-        }
-
         public Animation(Texture2D[] frames, int duration)
         {
-            // TODO: implementation
+            _framesList = Animation.FramesArrayToList(frames);
+            _duration = duration;
         }
 
-        public void AddFrame(TimeSpan timeSpan, int x, int y)
+        public Animation(List<Texture2D> frames, int duration)
         {
-
+            _framesList = frames;
+            _duration = duration;
         }
 
-        public void AddFrame(int duration, int x, int y)
+        private static List<Texture2D> FramesArrayToList(Texture2D[] frames)
         {
+            List<Texture2D> result = new List<Texture2D>();
 
+            for (int i = 0; i < frames.Length; i++)
+            {
+                result.Add(frames[i]);
+            }
+
+            return result;
+        }
+
+        public void SetFramesList(Texture2D[] frames)
+        {
+            _framesList = Animation.FramesArrayToList(frames);
+        }
+
+        public void SetFramesList(List<Texture2D> framesList)
+        {
+            _framesList = framesList;
+        }
+
+        public int GetDuration()
+        {
+            return _duration;
+        }
+
+        public void SetDuration(int duration)
+        {
+            _duration = duration;
         }
 
         public void Update(GameTime gameTime)
         {
-            
-        }
+            int delta = gameTime.ElapsedGameTime.Milliseconds;
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            this.Draw(spriteBatch, 0, 0);
-        }
+            _time = _time + delta;
 
-        public void Draw(SpriteBatch spriteBatch, float x, float y)
-        {
-            this.Draw(spriteBatch, x, y, this.GetWidth(), this.GetHeight());
-        }
-
-        public void Draw(SpriteBatch spriteBatch, float x, float y, float width, float height)
-        {
-            this.Draw(spriteBatch, x, y, width, height, Color.White);
-        }
-
-        public void Draw(SpriteBatch spriteBatch, float x, float y, float width, float height, Color color)
-        {
-            if (_frames.Count == 0)
+            if (_time > (_duration * _speed))
             {
-                return;
+                _frameIndex++;
+
+                if (_frameIndex > (_framesList.Count - 1))
+                {
+                    _frameIndex = 0;
+                }
+
+                _time = 0;
+                _currentFrame = _framesList[_frameIndex];
+            }
+        }
+
+        public void Draw(int x, int y, SpriteBatch spriteBatch)
+        {
+            if (_currentFrame == null)
+            {
+                _currentFrame = _framesList[0];
             }
 
-            Frame frame = (Frame)_frames[_currentFrame];
-
-            //spriteBatch.Draw(FumikoSheet, topLeftOfSprite, sourceRectangle, Color.White);
-            //spriteBatch.Draw();
-        }
-
-        public int GetWidth()
-        {
-            return _frames[_currentFrame]._texture.Width;
-        }
-
-        public int GetHeight()
-        {
-            return _frames[_currentFrame]._texture.Height;
-        }
-
-        public void SetLooping(bool looping)
-        {
-            _looping = looping;
-        }
-
-        private class Frame
-        {
-            public Rectangle _rectangle;
-            public Texture2D _texture;
-            public TimeSpan _timeSpan;
-            public int _duration;
-            public int _x = 0;
-            public int _y = 0;
-
-            public Frame(Texture2D texture, TimeSpan timeSpan)
-            {
-                _texture = texture;
-                _timeSpan = timeSpan;
-            }
-
-            public Frame(Texture2D texture, int duration)
-            {
-                _texture = texture;
-                _duration = duration;
-            }
-
-            public Frame(TimeSpan timeSpan, int x, int y)
-            {
-                //_texture = _spriteSheet.GetTexture(x, y);
-                _timeSpan = timeSpan;
-                _x = x;
-                _y = y;
-            }
-
-            public Frame(int duration, int x, int y)
-            {
-                //_texture = _spriteSheet.GetTexture(x, y);
-                _duration = duration;
-                _x = x;
-                _y = y;
-            }
+            spriteBatch.Draw(_currentFrame, new Vector2(x, y), Color.White);
         }
     }
 }
