@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -85,14 +85,14 @@ namespace JustCombat
             }
         }
 
-        public void Draw(int x, int y, SpriteBatch spriteBatch)
+        public void Draw(int x, int y, float scale, SpriteBatch spriteBatch)
         {
             if (_currentFrame == null)
             {
                 _currentFrame = _framesList[0];
             }
 
-            spriteBatch.Draw(_currentFrame, new Vector2(x, y), Color.White);
+            spriteBatch.Draw(_currentFrame, new Vector2(x, y), null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
     }
 }
