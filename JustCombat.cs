@@ -12,7 +12,6 @@ namespace JustCombat
     public class JustCombat : Game
     {
         private Player _player;
-        private HealthBar _healthBar;
 
         private SpriteFont _font;
 
