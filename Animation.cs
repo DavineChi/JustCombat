@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -6,6 +6,7 @@ namespace JustCombat
 {
     public class Animation
     {
+        private string _id;
         private List<Texture2D> _framesList;
         private Texture2D _currentFrame;
         private float _speed = 1.0f;
@@ -13,18 +14,21 @@ namespace JustCombat
         private int _frameIndex = 0;
         private int _time = 0;
 
-        public Animation()
+        public Animation(string id)
         {
+            _id = id;
         }
 
-        public Animation(Texture2D[] frames, int duration)
+        public Animation(string id, Texture2D[] frames, int duration)
         {
+            _id = id;
             _framesList = Animation.FramesArrayToList(frames);
             _duration = duration;
         }
 
-        public Animation(List<Texture2D> frames, int duration)
+        public Animation(string id, List<Texture2D> frames, int duration)
         {
+            _id = id;
             _framesList = frames;
             _duration = duration;
         }
