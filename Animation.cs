@@ -85,6 +85,11 @@ namespace JustCombat
             }
         }
 
+        public void Draw(Vector2 position, float scale, SpriteBatch spriteBatch)
+        {
+            Draw((int)(position.X), (int)(position.Y), scale, spriteBatch);
+        }
+
         public void Draw(int x, int y, float scale, SpriteBatch spriteBatch)
         {
             if (_currentFrame == null)
