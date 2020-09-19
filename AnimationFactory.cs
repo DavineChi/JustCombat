@@ -6,7 +6,7 @@ namespace JustCombat
 {
     public class AnimationFactory
     {
-        public static Animation CreateAnimationHorizontal(SpriteSheet spriteSheet, int x, int y, int nSprites, int duration)
+        public static Animation CreateAnimationHorizontal(SpriteSheet spriteSheet, string id, int x, int y, int nSprites, int duration)
         {
             Texture2D[] frames = new Texture2D[nSprites + 1];
             Animation result = null;
@@ -22,14 +22,14 @@ namespace JustCombat
             }
 
             frames[3] = frames[1];
-            result = new Animation(frames, duration);
+            result = new Animation(id, frames, duration);
 
-            result.SetLooping(true);
+            //result.SetLooping(true);
             
             return result;
         }
 
-        public static Animation CreateAnimationIdlePlayer(SpriteSheet spriteSheet, int x, int y, int duration)
+        public static Animation CreateAnimationIdlePlayer(SpriteSheet spriteSheet, string id, int x, int y, int duration)
         {
             Animation result;
             Texture2D[] frames;
@@ -64,7 +64,7 @@ namespace JustCombat
                 frames[i] = spriteSheet.GetTexture(x, yOffset);
             }
 
-            result = new Animation(frames, duration);
+            result = new Animation(id, frames, duration);
 
             return result;
         }
