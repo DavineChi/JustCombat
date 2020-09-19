@@ -45,6 +45,11 @@ namespace JustCombat
             return result;
         }
 
+        public string GetID()
+        {
+            return _id;
+        }
+
         public void SetFramesList(Texture2D[] frames)
         {
             _framesList = Animation.FramesArrayToList(frames);
