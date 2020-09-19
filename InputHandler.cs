@@ -88,7 +88,7 @@ namespace JustCombat
             }
         }
 
-        private static bool IsValidMovementKey(KeyboardState state)
+        public static bool IsValidMovementKey(KeyboardState state)
         {
             return (state.IsKeyDown(Keys.W) ||
                     state.IsKeyDown(Keys.A) ||
