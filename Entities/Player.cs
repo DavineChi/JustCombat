@@ -10,6 +10,10 @@ namespace JustCombat
     {
         protected static Player _player = null;
 
+        private const int ANIMATION_SPEED_WALKING = 180;
+        private const int ANIMATION_SPEED_RUNNING = 130;
+        private const int ANIMATION_SPEED_IDLE = 80;
+
         private Texture2D _playerSprites;
         private SpriteSheet _spriteSheet;
 
@@ -20,9 +24,15 @@ namespace JustCombat
         private Animation _animatePlayerEastWalking;
         private Animation _animatePlayerSouthWalking;
         private Animation _animatePlayerWestWalking;
-
+        private Animation _animatePlayerNorthRunning;
+        private Animation _animatePlayerEastRunning;
+        private Animation _animatePlayerSouthRunning;
+        private Animation _animatePlayerWestRunning;
         private Animation _animatePlayerIdle;
-        
+        private Animation _currentAnimation;
+
+        private bool _moving;
+
         protected Player(string name, float x, float y, float width, float height, Direction heading) :
             base(name, x, y, width, height, Constants.SPRITE_SCALE, heading)
         {
@@ -35,12 +45,21 @@ namespace JustCombat
 
             InitStaticDirectionSprites();
 
-            _animatePlayerNorthWalking = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, 0, 0, 3, 180);
-            _animatePlayerEastWalking  = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, 0, 1, 3, 180);
-            _animatePlayerSouthWalking = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, 0, 2, 3, 180);
-            _animatePlayerWestWalking  = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, 0, 3, 3, 180);
+            _animatePlayerNorthWalking = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "nWalk", 0, 0, 3, ANIMATION_SPEED_WALKING);
+            _animatePlayerEastWalking  = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "eWalk", 0, 1, 3, ANIMATION_SPEED_WALKING);
+            _animatePlayerSouthWalking = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "sWalk", 0, 2, 3, ANIMATION_SPEED_WALKING);
+            _animatePlayerWestWalking  = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "wWalk", 0, 3, 3, ANIMATION_SPEED_WALKING);
 
-            _animatePlayerIdle = AnimationFactory.CreateAnimationIdlePlayer(_spriteSheet, 16, 0, 80);
+            _animatePlayerNorthRunning = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "nRun", 3, 0, 3, ANIMATION_SPEED_RUNNING);
+            _animatePlayerEastRunning  = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "eRun", 3, 1, 3, ANIMATION_SPEED_RUNNING);
+            _animatePlayerSouthRunning = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "sRun", 3, 2, 3, ANIMATION_SPEED_RUNNING);
+            _animatePlayerWestRunning  = AnimationFactory.CreateAnimationHorizontal(_spriteSheet, "wRun", 3, 3, 3, ANIMATION_SPEED_RUNNING);
+
+            _animatePlayerIdle = AnimationFactory.CreateAnimationIdlePlayer(_spriteSheet, "idle", 16, 0, ANIMATION_SPEED_IDLE);
+
+            _currentAnimation = _animatePlayerIdle;
+
+            _moving = false;
         }
 
         public static Player Instance()
@@ -166,27 +185,122 @@ namespace JustCombat
 
         public void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) { this.SetDirection(0.0f);   }
-            if (Keyboard.GetState().IsKeyDown(Keys.D)) { this.SetDirection(90.0f);  }
-            if (Keyboard.GetState().IsKeyDown(Keys.S)) { this.SetDirection(180.0f); }
-            if (Keyboard.GetState().IsKeyDown(Keys.A)) { this.SetDirection(270.0f); }
+            KeyboardState keyState = Keyboard.GetState();
+            float heading = this.GetDirection().GetHeading();
+
+            if (keyState.IsKeyDown(Keys.W)) { this.SetDirection(0.0f);   }
+            if (keyState.IsKeyDown(Keys.D)) { this.SetDirection(90.0f);  }
+            if (keyState.IsKeyDown(Keys.S)) { this.SetDirection(180.0f); }
+            if (keyState.IsKeyDown(Keys.A)) { this.SetDirection(270.0f); }
+
+            if (heading == 0.0f)   { _currentDirection = _playerDirections[0]; }
+            if (heading == 90.0f)  { _currentDirection = _playerDirections[1]; }
+            if (heading == 180.0f) { _currentDirection = _playerDirections[2]; }
+            if (heading == 270.0f) { _currentDirection = _playerDirections[3]; }
+            
+            if (keyState.IsKeyDown(Keys.LeftShift))
+            {
+                if (keyState.IsKeyDown(Keys.W))
+                {
+                    _currentAnimation = _animatePlayerNorthRunning;
+                    _moving = true;
+                }
+
+                else if (keyState.IsKeyDown(Keys.D))
+                {
+                    _currentAnimation = _animatePlayerEastRunning;
+                    _moving = true;
+                }
+
+                else if (keyState.IsKeyDown(Keys.S))
+                {
+                    _currentAnimation = _animatePlayerSouthRunning;
+                    _moving = true;
+                }
+
+                else if (keyState.IsKeyDown(Keys.A))
+                {
+                    _currentAnimation = _animatePlayerWestRunning;
+                    _moving = true;
+                }
+
+                else
+                {
+                    _moving = false;
+                }
+            }
+
+            else if (!keyState.IsKeyDown(Keys.LeftShift))
+            {
+                if (keyState.IsKeyDown(Keys.W))
+                {
+                    _currentAnimation = _animatePlayerNorthWalking;
+                    _moving = true;
+                }
+
+                else if (keyState.IsKeyDown(Keys.D))
+                {
+                    _currentAnimation = _animatePlayerEastWalking;
+                    _moving = true;
+                }
+
+                else if (keyState.IsKeyDown(Keys.S))
+                {
+                    _currentAnimation = _animatePlayerSouthWalking;
+                    _moving = true;
+                }
+
+                else if (keyState.IsKeyDown(Keys.A))
+                {
+                    _currentAnimation = _animatePlayerWestWalking;
+                    _moving = true;
+                }
+
+                else
+                {
+                    _moving = false;
+
+                    if (heading == 180)
+                    {
+                        _currentAnimation = _animatePlayerIdle;
+                    }
+                }
+            }
 
             _healthBar.Update(this, gameTime);
+            _currentAnimation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 position = new Vector2(this._x, this._y);
-
-            if (this.GetDirection().GetHeading() == 0.0f)   { _currentDirection = _playerDirections[0]; }
-            if (this.GetDirection().GetHeading() == 90.0f)  { _currentDirection = _playerDirections[1]; }
-            if (this.GetDirection().GetHeading() == 180.0f) { _currentDirection = _playerDirections[2]; }
-            if (this.GetDirection().GetHeading() == 270.0f) { _currentDirection = _playerDirections[3]; }
-
             _healthBar.Draw(spriteBatch);
             _boundingBox.Draw(spriteBatch);
 
-            spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
+            DrawPlayer(spriteBatch);
+        }
+
+        private void DrawPlayer(SpriteBatch spriteBatch)
+        {
+            Vector2 position = new Vector2(this._x, this._y);
+            float heading = this.GetDirection().GetHeading();
+
+            if (_moving)
+            {
+                _currentAnimation.Draw(position, Constants.SPRITE_SCALE, spriteBatch);
+            }
+
+            if (!_moving)
+            {
+                if (heading == 0 || heading == 90 || heading == 270)
+                {
+                    spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
+                }
+
+                else
+                {
+                    _currentAnimation.Draw(position, Constants.SPRITE_SCALE, spriteBatch);
+                }
+            }
         }
     }
 }
