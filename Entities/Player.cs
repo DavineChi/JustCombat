@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -188,6 +188,8 @@ namespace JustCombat
             KeyboardState keyState = Keyboard.GetState();
             float heading = this.GetDirection().GetHeading();
 
+            _moving = false;
+
             if (keyState.IsKeyDown(Keys.W)) { this.SetDirection(0.0f);   }
             if (keyState.IsKeyDown(Keys.D)) { this.SetDirection(90.0f);  }
             if (keyState.IsKeyDown(Keys.S)) { this.SetDirection(180.0f); }
@@ -198,72 +200,66 @@ namespace JustCombat
             if (heading == 180.0f) { _currentDirection = _playerDirections[2]; }
             if (heading == 270.0f) { _currentDirection = _playerDirections[3]; }
             
+            if (InputHandler.IsValidMovementKey(keyState))
+            {
+                _moving = true;
+            }
+
             if (keyState.IsKeyDown(Keys.LeftShift))
             {
                 if (keyState.IsKeyDown(Keys.W))
                 {
                     _currentAnimation = _animatePlayerNorthRunning;
-                    _moving = true;
                 }
 
                 else if (keyState.IsKeyDown(Keys.D))
                 {
                     _currentAnimation = _animatePlayerEastRunning;
-                    _moving = true;
                 }
 
                 else if (keyState.IsKeyDown(Keys.S))
                 {
                     _currentAnimation = _animatePlayerSouthRunning;
-                    _moving = true;
                 }
 
                 else if (keyState.IsKeyDown(Keys.A))
                 {
                     _currentAnimation = _animatePlayerWestRunning;
-                    _moving = true;
                 }
 
-                else
+                else if (heading == 180)
                 {
+                    _currentAnimation = _animatePlayerIdle;
                     _moving = false;
                 }
             }
 
-            else if (!keyState.IsKeyDown(Keys.LeftShift))
+            else if (!(keyState.IsKeyDown(Keys.LeftShift)))
             {
                 if (keyState.IsKeyDown(Keys.W))
                 {
                     _currentAnimation = _animatePlayerNorthWalking;
-                    _moving = true;
                 }
 
                 else if (keyState.IsKeyDown(Keys.D))
                 {
                     _currentAnimation = _animatePlayerEastWalking;
-                    _moving = true;
                 }
 
                 else if (keyState.IsKeyDown(Keys.S))
                 {
                     _currentAnimation = _animatePlayerSouthWalking;
-                    _moving = true;
                 }
 
                 else if (keyState.IsKeyDown(Keys.A))
                 {
                     _currentAnimation = _animatePlayerWestWalking;
-                    _moving = true;
                 }
 
-                else
+                else if (heading == 180)
                 {
+                    _currentAnimation = _animatePlayerIdle;
                     _moving = false;
-
-                    if (heading == 180)
-                    {
-                        _currentAnimation = _animatePlayerIdle;
-                    }
                 }
             }
 
@@ -289,7 +285,7 @@ namespace JustCombat
                 _currentAnimation.Draw(position, Constants.SPRITE_SCALE, spriteBatch);
             }
 
-            if (!_moving)
+            else
             {
                 if (heading == 0 || heading == 90 || heading == 270)
                 {
