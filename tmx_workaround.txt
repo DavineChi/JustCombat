@@ -1,0 +1,8 @@
+Borrowed from here:
+https://community.monogame.net/t/solved-no-default-importer-tmx-files/12293
+
+Add the following lines to the Content.mcgb file, in the "References" section:
+
+/reference:..\..\JustCombat\MonoGame.Extended.dll
+/reference:..\..\JustCombat\MonoGame.Extended.Content.Pipeline.dll
+/reference:..\..\JustCombat\MonoGame.Extended.Tiled.dll
