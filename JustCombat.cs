@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Renderers;
 using System;
 
 namespace JustCombat
@@ -14,7 +15,9 @@ namespace JustCombat
         private Player _player;
 
         private SpriteFont _font;
-
+        private TiledMap _gameMap;
+        private TiledMapRenderer _gameMapRenderer;
+        
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
 
@@ -37,6 +40,9 @@ namespace JustCombat
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            _gameMap = gameContent.GameMap;
+            _gameMapRenderer = new TiledMapRenderer(GraphicsDevice, _gameMap);
         }
 
         /// <summary>
@@ -82,6 +88,7 @@ namespace JustCombat
 
             InputHandler.HandleInput();
 
+            _gameMapRenderer.Update(gameTime);
             _player.Update(gameTime);
 
             base.Update(gameTime);
@@ -103,6 +110,8 @@ namespace JustCombat
             spriteBatch.DrawString(_font, "       Player State: " + _player.GetState().ToString(), new Vector2(10.0f, 90.0f), Color.White);
             spriteBatch.DrawString(_font, "HealthBar State: " + _player.GetHealthBar().GetState().ToString(), new Vector2(10.0f, 110.0f), Color.White);
             spriteBatch.DrawString(_font, "            Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 130.0f), Color.White);
+
+            _gameMapRenderer.Draw();
 
             _player.Draw(spriteBatch);
             

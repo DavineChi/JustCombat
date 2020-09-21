@@ -10,8 +10,23 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\JustCombat\MonoGame.Extended.dll
+/reference:..\..\JustCombat\MonoGame.Extended.Content.Pipeline.dll
+/reference:..\..\JustCombat\MonoGame.Extended.Tiled.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin atlas.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:atlas.bmp
 
 #begin Consolas14.spritefont
 /importer:FontDescriptionImporter
@@ -38,4 +53,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Fumiko.png
+
+#begin northshire_test.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:northshire_test.tmx
 
