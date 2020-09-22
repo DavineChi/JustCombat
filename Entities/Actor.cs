@@ -33,7 +33,7 @@ namespace JustCombat
 
         public bool Intersects(BoundingBox other)
         {
-            return _boundingBox.Intersects(other.GetRectangle());
+            return _boundingBox.Intersects(other.GetPrimRectangle());
         }
 
         public void SetHeading(float heading)
