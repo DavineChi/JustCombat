@@ -45,7 +45,8 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationFactory.cs" />
-    <Compile Include="BoundingBox.cs" />
+    <Compile Include="Collision\BoundingBox.cs" />
+    <Compile Include="Collision\BoundingCircle.cs" />
     <Compile Include="CommonBar.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Direction.cs" />
@@ -55,10 +56,11 @@
     <Compile Include="GameContent.cs" />
     <Compile Include="HealthBar.cs" />
     <Compile Include="HitPoints.cs" />
-    <Compile Include="ICollision.cs" />
+    <Compile Include="Collision\ICollision.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="JustCombat.cs" />
-    <Compile Include="Primitives\PrimitiveRectangle.cs" />
+    <Compile Include="Primitives\PrimCircle.cs" />
+    <Compile Include="Primitives\PrimEllipse.cs" />
     <Compile Include="Primitives\PrimLine.cs" />
     <Compile Include="Primitives\PrimRectangle.cs" />
     <Compile Include="Primitives\PrimShape.cs" />
