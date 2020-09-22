@@ -57,6 +57,11 @@ namespace JustCombat
 
         public static Texture2D Create(int x, int y, int width, int height)
         {
+            return PrimRectangle.Create(x, y, width, height, Color.White);
+        }
+
+        public static Texture2D Create(int x, int y, int width, int height, Color color)
+        {
             Texture2D result;
 
             GraphicsDevice graphicsDevice = JustCombat.graphics.GraphicsDevice;
@@ -67,7 +72,7 @@ namespace JustCombat
 
             for (int i = 0; i < data.Length; i++)
             {
-                data[i] = Color.White;
+                data[i] = color;
             }
 
             result.SetData(data);
