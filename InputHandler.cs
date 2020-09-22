@@ -86,6 +86,26 @@ namespace JustCombat
             {
                 Player.AddLevel();
             }
+
+            if (IsKeyPressed(Keys.I) && !(JustCombat.InvPanel.IsDisplayed()))
+            {
+                JustCombat.InvPanel.SetDisplayed(true);
+            }
+
+            else if (IsKeyPressed(Keys.I) && JustCombat.InvPanel.IsDisplayed())
+            {
+                JustCombat.InvPanel.SetDisplayed(false);
+            }
+
+            if (IsKeyPressed(Keys.C) && !(JustCombat.CharPanel.IsDisplayed()))
+            {
+                JustCombat.CharPanel.SetDisplayed(true);
+            }
+
+            else if (IsKeyPressed(Keys.C) && JustCombat.CharPanel.IsDisplayed())
+            {
+                JustCombat.CharPanel.SetDisplayed(false);
+            }
         }
 
         public static bool IsValidMovementKey(KeyboardState state)
