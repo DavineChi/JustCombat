@@ -1,3 +1,4 @@
+using JustCombat.Panels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,7 +18,10 @@ namespace JustCombat
         private SpriteFont _font;
         private TiledMap _gameMap;
         private TiledMapRenderer _gameMapRenderer;
-        
+
+        public static CharacterPanel CharPanel;
+        public static InventoryPanel InvPanel;
+
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
 
@@ -60,6 +64,9 @@ namespace JustCombat
             graphics.PreferredBackBufferWidth = Constants.SCREEN_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
             graphics.ApplyChanges();
+
+            CharPanel = new CharacterPanel("character", 20, 20, 220, 440, Color.Wheat);
+            InvPanel = new InventoryPanel("inventory", 960, 440, 220, 220, Color.CornflowerBlue);
 
             _font = gameContent.GameFont;
             _player = Player.Instance();
@@ -114,7 +121,17 @@ namespace JustCombat
             _gameMapRenderer.Draw();
 
             _player.Draw(spriteBatch);
-            
+
+            if (JustCombat.InvPanel.IsDisplayed())
+            {
+                InvPanel.Draw(spriteBatch);
+            }
+
+            if (JustCombat.CharPanel.IsDisplayed())
+            {
+                CharPanel.Draw(spriteBatch);
+            }
+
             spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(600.0f, 600.0f), Color.White);
 
             spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(600.0f, 620.0f), Color.White);
