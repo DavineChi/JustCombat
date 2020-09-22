@@ -9,6 +9,7 @@ namespace JustCombat
         protected float _width;
         protected float _height;
         protected BoundingBox _boundingBox;
+        protected BoundingCircle _boundingCircle;
         protected int _hitPoints;
         protected int _maxHitPoints;
 
