@@ -24,13 +24,23 @@ namespace JustCombat
             _primRectangle = new PrimRectangle(x, y, scaledWidth, scaledHeight);
         }
         
-        public bool Intersects(Rectangle other)
+        public bool Intersects(PrimShape other)
         {
-            return _rectangle.Intersects(other);
+            if (other.GetType() == typeof(PrimRectangle))
+            {
+                Rectangle candidate = new Rectangle((int)(other.GetX()), (int)(other.GetY()), (int)(other.GetWidth()), (int)(other.GetHeight()));
+
+                return _rectangle.Intersects(candidate);
+            }
+
+            else
+            {
+                throw new InvalidCastException();
+            }
         }
 
         // TODO: implement
-        public bool WillIntersect(Rectangle other, GameTime delta)
+        public bool WillIntersect(PrimShape other, GameTime delta)
         {
             throw new NotImplementedException();
         }
