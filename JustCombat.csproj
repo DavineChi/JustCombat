@@ -59,6 +59,9 @@
     <Compile Include="Collision\ICollision.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="JustCombat.cs" />
+    <Compile Include="Panels\CharacterPanel.cs" />
+    <Compile Include="Panels\InventoryPanel.cs" />
+    <Compile Include="Panels\Panel.cs" />
     <Compile Include="Primitives\PrimCircle.cs" />
     <Compile Include="Primitives\PrimEllipse.cs" />
     <Compile Include="Primitives\PrimLine.cs" />
