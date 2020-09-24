@@ -10,6 +10,7 @@ namespace JustCombat
         public SpriteFont LabelFont { get; set; }
         public SpriteFont GameFont { get; set; }
         public TiledMap GameMap { get; set; }
+        public Texture2D WraithImage { get; set; }
 
         public GameContent(ContentManager content)
         {
@@ -17,6 +18,7 @@ namespace JustCombat
             LabelFont = content.Load<SpriteFont>("Consolas14");
             GameFont = content.Load<SpriteFont>("FrizQuadrataTTRegular");
             GameMap = content.Load<TiledMap>("northshire_test");
+            WraithImage = content.Load<Texture2D>("wraith");
         }
     }
 }

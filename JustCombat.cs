@@ -1,3 +1,4 @@
+using JustCombat.Entities;
 using JustCombat.Panels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,6 +22,8 @@ namespace JustCombat
 
         public static CharacterPanel CharPanel;
         public static InventoryPanel InvPanel;
+
+        private Wraith _wraith;
 
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
@@ -65,11 +68,13 @@ namespace JustCombat
             graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
             graphics.ApplyChanges();
 
-            CharPanel = new CharacterPanel("character", 20, 20, 220, 440, Color.Wheat);
-            InvPanel = new InventoryPanel("inventory", 960, 440, 220, 220, Color.CornflowerBlue);
+            CharPanel = new CharacterPanel("Character", 20, 20, 220, 440, Color.Wheat);
+            InvPanel = new InventoryPanel("Inventory", 960, 440, 220, 220, Color.CornflowerBlue);
 
             _font = gameContent.GameFont;
             _player = Player.Instance();
+
+            _wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f));
         }
 
         /// <summary>
@@ -131,6 +136,8 @@ namespace JustCombat
             {
                 CharPanel.Draw(spriteBatch);
             }
+
+            _wraith.Draw(spriteBatch);
 
             spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(600.0f, 600.0f), Color.White);
 
