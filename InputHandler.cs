@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JustCombat.Entities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
@@ -105,6 +106,29 @@ namespace JustCombat
             else if (IsKeyPressed(Keys.C) && JustCombat.CharPanel.IsDisplayed())
             {
                 JustCombat.CharPanel.SetDisplayed(false);
+            }
+        }
+
+        public static void OnMouseHover()
+        {
+            MouseState state = Mouse.GetState();
+
+            int mouseX = state.X;
+            int mouseY = state.Y;
+
+            Wraith wraith = JustCombat.Wraith;
+
+            if (mouseX >= wraith.GetX() &&
+                mouseX <= wraith.GetX() + wraith.GetWidth() * Constants.SPRITE_SCALE &&
+                mouseY >= wraith.GetY() &&
+                mouseY <= wraith.GetY() + wraith.GetHeight() * Constants.SPRITE_SCALE)
+            {
+                JustCombat.Cursor = JustCombat.Cursor2[1];
+            }
+
+            else
+            {
+                JustCombat.Cursor = JustCombat.Cursor2[0];
             }
         }
 
