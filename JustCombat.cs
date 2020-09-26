@@ -83,7 +83,6 @@ namespace JustCombat
             _font = gameContent.GameFont;
             _player = Player.Instance();
 
-            _wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f));
             Wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f));
 
             _cursorSheet = new SpriteSheet(gameContent.Cursor, 48, 48);
