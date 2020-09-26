@@ -18,6 +18,8 @@ namespace JustCombat.Entities
             _spriteSheet = new SpriteSheet(_wraithSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
             _wraithDirections = new Texture2D[4];
 
+            _boundingBox.GetPrimRectangle().SetColor(Color.Green);
+
             InitStaticDirectionSprites();
         }
 
@@ -40,6 +42,8 @@ namespace JustCombat.Entities
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            _boundingBox.Draw(spriteBatch);
+
             spriteBatch.Draw(_wraithSprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
         }
     }
