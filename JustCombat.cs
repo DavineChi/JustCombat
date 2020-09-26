@@ -16,6 +16,13 @@ namespace JustCombat
     {
         private Player _player;
 
+        private TargetingSystem _targetingSystem;
+
+        public static Texture2D Cursor;
+        public static Texture2D[] Cursor2 = new Texture2D[2];
+        private SpriteSheet _cursorSheet;
+        private Vector2 _cursorPosition;
+
         private SpriteFont _font;
         private TiledMap _gameMap;
         private TiledMapRenderer _gameMapRenderer;
@@ -23,13 +30,13 @@ namespace JustCombat
         public static CharacterPanel CharPanel;
         public static InventoryPanel InvPanel;
 
-        private Wraith _wraith;
+        public static Wraith Wraith;
 
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
 
         public SpriteBatch spriteBatch;
-        
+
         public JustCombat()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -46,7 +53,7 @@ namespace JustCombat
         {
             // TODO: Add your initialization logic here
 
-            this.IsMouseVisible = true;
+            //this.IsMouseVisible = true;
 
             base.Initialize();
 
@@ -77,6 +84,14 @@ namespace JustCombat
             _player = Player.Instance();
 
             _wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f));
+            Wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f));
+
+            _cursorSheet = new SpriteSheet(gameContent.Cursor, 48, 48);
+
+            Cursor = _cursorSheet.GetTexture(0, 0);
+
+            Cursor2[0] = _cursorSheet.GetTexture(0, 0);
+            Cursor2[1] = _cursorSheet.GetTexture(1, 0);
         }
 
         /// <summary>
@@ -99,8 +114,11 @@ namespace JustCombat
             {
                 Exit();
             }
+            
+            _cursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
             InputHandler.HandleInput();
+            InputHandler.OnMouseHover();
 
             _gameMapRenderer.Update(gameTime);
             _player.Update(gameTime);
@@ -139,11 +157,15 @@ namespace JustCombat
                 CharPanel.Draw(spriteBatch);
             }
 
-            _wraith.Draw(spriteBatch);
+            Wraith.Draw(spriteBatch);
+
+            //spriteBatch.Draw(Cursor, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
 
             spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(600.0f, 600.0f), Color.White);
 
             spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(600.0f, 620.0f), Color.White);
+
+            spriteBatch.Draw(Cursor, _cursorPosition, Color.White);
 
             spriteBatch.End();
 
