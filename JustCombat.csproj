@@ -43,11 +43,12 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="UI\ActorInfoCard.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationFactory.cs" />
     <Compile Include="Collision\BoundingBox.cs" />
     <Compile Include="Collision\BoundingCircle.cs" />
-    <Compile Include="CommonBar.cs" />
+    <Compile Include="UI\CommonBar.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Entities\Actor.cs" />
@@ -56,7 +57,8 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Wraith.cs" />
     <Compile Include="GameContent.cs" />
-    <Compile Include="HealthBar.cs" />
+    <Compile Include="UI\FillBar.cs" />
+    <Compile Include="UI\HealthBar_OBS.cs" />
     <Compile Include="HitPoints.cs" />
     <Compile Include="Collision\ICollision.cs" />
     <Compile Include="InputHandler.cs" />
@@ -74,6 +76,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="TargetingSystem.cs" />
+    <Compile Include="UI\HealthBar.cs" />
+    <Compile Include="UI\ManaBar.cs" />
+    <Compile Include="UI\UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Extended, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
