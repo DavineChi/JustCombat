@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace JustCombat
+namespace JustCombat.UI
 {
     public abstract class CommonBar
     {
