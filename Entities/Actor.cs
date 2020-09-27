@@ -1,5 +1,4 @@
-﻿using JustCombat.UI;
-using System;
+﻿using System;
 
 namespace JustCombat
 {
