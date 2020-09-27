@@ -12,6 +12,8 @@ namespace JustCombat
         public TiledMap GameMap { get; set; }
         public Texture2D WraithImage { get; set; }
         public Texture2D Cursor { get; set; }
+        public Texture2D TopBarBackpanel { get; set; }
+        public Texture2D ActorInfoCard { get; set; }
 
         public GameContent(ContentManager content)
         {
@@ -21,6 +23,8 @@ namespace JustCombat
             GameMap = content.Load<TiledMap>("northshire_test");
             WraithImage = content.Load<Texture2D>("wraith");
             Cursor = content.Load<Texture2D>("cursors_combined");
+            TopBarBackpanel = content.Load<Texture2D>("top_bar_backpanel");
+            ActorInfoCard = content.Load<Texture2D>("actor_card_v6");
         }
     }
 }

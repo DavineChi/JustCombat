@@ -1,5 +1,6 @@
 using JustCombat.Entities;
 using JustCombat.Panels;
+using JustCombat.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,6 +32,8 @@ namespace JustCombat
         public static InventoryPanel InvPanel;
 
         public static Wraith Wraith;
+
+        public static UserInterface UserInterface;
 
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
@@ -87,6 +90,10 @@ namespace JustCombat
 
             Wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f));
 
+            Wraith.SetAlignment(Actor.Alignment.NEUTRAL);
+
+            UserInterface = UserInterface.Instance();
+
             _cursorSheet = new SpriteSheet(gameContent.Cursor, 48, 48);
 
             Cursor = _cursorSheet.GetTexture(0, 0);
@@ -124,6 +131,8 @@ namespace JustCombat
             _gameMapRenderer.Update(gameTime);
             _player.Update(gameTime);
 
+            UserInterface.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -136,16 +145,9 @@ namespace JustCombat
             GraphicsDevice.Clear(Color.Black);
             
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
-            
-            spriteBatch.DrawString(_font, "Level " + _player.GetLevel().ToString(), new Vector2(50.0f, 2.0f), Color.White);
-            spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(50.0f, 20.0f), Color.White);
-            
-            spriteBatch.DrawString(_font, "       Player State: " + _player.GetState().ToString(), new Vector2(10.0f, 90.0f), Color.White);
-            spriteBatch.DrawString(_font, "HealthBar State: " + _player.GetHealthBar().GetState().ToString(), new Vector2(10.0f, 110.0f), Color.White);
-            spriteBatch.DrawString(_font, "            Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(10.0f, 130.0f), Color.White);
 
             _gameMapRenderer.Draw();
-
+            
             _player.Draw(spriteBatch);
 
             if (JustCombat.InvPanel.IsDisplayed())
@@ -161,10 +163,8 @@ namespace JustCombat
             Wraith.Draw(spriteBatch);
 
             //spriteBatch.Draw(Cursor, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
-
-            spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(600.0f, 600.0f), Color.White);
-
-            spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(600.0f, 620.0f), Color.White);
+            
+            UserInterface.Draw(spriteBatch);
 
             spriteBatch.Draw(Cursor, _cursorPosition, Color.White);
 
