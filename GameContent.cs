@@ -17,7 +17,7 @@ namespace JustCombat
 
         public GameContent(ContentManager content)
         {
-            FumikoImage = content.Load<Texture2D>("Fumiko");
+            FumikoImage = content.Load<Texture2D>("Fumiko_v2");
             LabelFont = content.Load<SpriteFont>("Consolas14");
             GameFont = content.Load<SpriteFont>("FrizQuadrataTTRegular");
             GameMap = content.Load<TiledMap>("northshire_test");
