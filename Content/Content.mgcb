@@ -16,6 +16,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin actor_card_v6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:actor_card_v6.png
+
 #begin atlas.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -70,6 +82,18 @@
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:northshire_test.tmx
+
+#begin top_bar_backpanel.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:top_bar_backpanel.png
 
 #begin wraith.png
 /importer:TextureImporter
