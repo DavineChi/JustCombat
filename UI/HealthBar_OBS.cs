@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace JustCombat
+namespace JustCombat.UI
 {
-    public class HealthBar : CommonBar
+    public class HealthBar_OBS : CommonBar
     {
         public enum State { EMPTY, FULL, COMBAT, REGEN };
 
@@ -14,7 +14,7 @@ namespace JustCombat
         private const float STEP_FN_LEVEL_08_TO_09  = 0.025f;
         private const float STEP_FN_LEVEL_10_AND_UP = 0.005f;
 
-        private HealthBar.State _state;
+        private HealthBar_OBS.State _state;
         
         private GameTime _cooldownTimer;
 
@@ -22,7 +22,7 @@ namespace JustCombat
 
         private bool _inCooldown;
 
-        public HealthBar(int xPosition, int yPosition, int width, int height) :
+        public HealthBar_OBS(int xPosition, int yPosition, int width, int height) :
             base(xPosition, yPosition, width, height)
         {
             Color frameColor = Color.Gray;    //new Color(0.0f, 178.0f, 0.0f);
@@ -63,12 +63,12 @@ namespace JustCombat
             _fillBar.SetWidth(_width * fillFactor);
         }
 
-        public HealthBar.State GetState()
+        public HealthBar_OBS.State GetState()
         {
             return _state;
         }
 
-        public void SetState(HealthBar.State state)
+        public void SetState(HealthBar_OBS.State state)
         {
             _state = state;
         }
