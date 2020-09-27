@@ -20,8 +20,6 @@ namespace JustCombat.UI
 
         private bool _inCooldown;
 
-        private string _seconds = "";
-
         public HealthBar(int xPosition, int yPosition, int width, int height) :
             base(xPosition, yPosition, width, height)
         {
@@ -88,8 +86,6 @@ namespace JustCombat.UI
 
         private void Tick(GameTime gameTime)
         {
-            _seconds = ((float)(gameTime.ElapsedGameTime.TotalSeconds)).ToString();
-
             _secondsCounter = _secondsCounter + (float)(gameTime.ElapsedGameTime.TotalSeconds);
         }
 
@@ -151,8 +147,7 @@ namespace JustCombat.UI
         {
             _bar.Draw(spriteBatch);
 
-            spriteBatch.DrawString(JustCombat.gameContent.GameFont, _seconds, new Vector2(400.0f, 100.0f), Color.White);
-            spriteBatch.DrawString(JustCombat.gameContent.GameFont, _secondsCounter.ToString(), new Vector2(400.0f, 120.0f), Color.White);
+            //spriteBatch.DrawString(JustCombat.gameContent.GameFont, _secondsCounter.ToString(), new Vector2(400.0f, 120.0f), Color.White);
         }
     }
 }
