@@ -39,7 +39,6 @@ namespace JustCombat
             _playerSprites = JustCombat.gameContent.FumikoImage;
             _spriteSheet = new SpriteSheet(_playerSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
             _playerDirections = new Texture2D[4];
-            _healthBar = new HealthBar(50, 46, 180, 8);
 
             _boundingBox.GetPrimRectangle().SetColor(Color.Green);
 
@@ -262,17 +261,15 @@ namespace JustCombat
                     _moving = false;
                 }
             }
-
-            _healthBar.Update(this, gameTime);
+            
             _currentAnimation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            _healthBar.Draw(spriteBatch);
-            _boundingBox.Draw(spriteBatch);
-
             DrawPlayer(spriteBatch);
+
+            _boundingBox.Draw(spriteBatch);
         }
 
         private void DrawPlayer(SpriteBatch spriteBatch)

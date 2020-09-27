@@ -1,18 +1,20 @@
-﻿using System;
+﻿using JustCombat.UI;
+using System;
 
 namespace JustCombat
 {
     public abstract class Actor : Entity
     {
         public enum State { NORMAL, RESTED, IN_COMBAT, DEAD };
+        public enum Alignment { FRIENDLY, NEUTRAL, HOSTILE };
 
         private Direction _heading;
         private bool _alive;
 
         protected int _level;
-        protected HealthBar _healthBar;
 
         private State _state;
+        private Alignment _alignment;
 
         public Actor(string name, float x, float y, float width, float height, float scale, Direction heading)
         {
@@ -164,11 +166,6 @@ namespace JustCombat
             }
         }
 
-        public HealthBar GetHealthBar()
-        {
-            return _healthBar;
-        }
-
         public Actor.State GetState()
         {
             return _state;
@@ -177,6 +174,16 @@ namespace JustCombat
         public void SetState(Actor.State state)
         {
             _state = state;
+        }
+
+        public Actor.Alignment GetAlignment()
+        {
+            return _alignment;
+        }
+
+        public void SetAlignment(Actor.Alignment alignment)
+        {
+            _alignment = alignment;
         }
 
         public bool IsAlive()
