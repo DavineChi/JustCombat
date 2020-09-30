@@ -81,7 +81,6 @@ namespace JustCombat
             if (IsKeyPressed(Keys.H))
             {
                 player.SetHitPoints(player.GetHitPoints() / 2);
-                JustCombat.UserInterface.GetPlayerInfoCard().GetHealthBar().ResetTimer();
             }
 
             if (IsKeyPressed(Keys.L))
@@ -107,6 +106,11 @@ namespace JustCombat
             else if (IsKeyPressed(Keys.C) && JustCombat.CharPanel.IsDisplayed())
             {
                 JustCombat.CharPanel.SetDisplayed(false);
+            }
+
+            if (IsKeyPressed(Keys.Q))
+            {
+                JustCombat.UserInterface.CoolDownTimer.Start(2.5f);
             }
         }
 
