@@ -43,6 +43,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ActionHandler.cs" />
+    <Compile Include="CooldownTimer.cs" />
+    <Compile Include="EventHandler.cs" />
     <Compile Include="UI\ActorInfoCard.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationFactory.cs" />
@@ -58,7 +61,6 @@
     <Compile Include="Entities\Wraith.cs" />
     <Compile Include="GameContent.cs" />
     <Compile Include="UI\FillBar.cs" />
-    <Compile Include="UI\HealthBar_OBS.cs" />
     <Compile Include="HitPoints.cs" />
     <Compile Include="Collision\ICollision.cs" />
     <Compile Include="InputHandler.cs" />
