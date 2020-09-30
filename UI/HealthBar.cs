@@ -20,6 +20,8 @@ namespace JustCombat.UI
 
         private bool _inCooldown;
 
+        private CooldownTimer _customTimer;
+
         public HealthBar(int xPosition, int yPosition, int width, int height) :
             base(xPosition, yPosition, width, height)
         {
@@ -33,6 +35,8 @@ namespace JustCombat.UI
             _inCooldown = false;
 
             _secondsCounter = 0;
+
+            _customTimer = new CooldownTimer(REGEN_DELAY);
         }
 
         private void QueryState(Actor actor)
@@ -44,11 +48,18 @@ namespace JustCombat.UI
             if (actor.GetState() == Actor.State.IN_COMBAT)
             {
                 _state = State.COMBAT;
+
+                _customTimer.Reset();
             }
 
             else if (hitPoints < maxHitPoints)
             {
                 _state = State.REGEN;
+
+                if (!_customTimer.IsRunning())
+                {
+                    _customTimer.Start();
+                }
             }
 
             else if (hitPoints == maxHitPoints)
@@ -91,26 +102,16 @@ namespace JustCombat.UI
 
         public override void Update(Actor actor, GameTime gameTime)
         {
-            QueryState(actor);
+            this.QueryState(actor);
 
             if (_state == State.REGEN)
             {
-                Tick(gameTime);
+                _customTimer.Update(gameTime);
 
-                if (_secondsCounter < REGEN_DELAY)
+                float duration = _customTimer.GetDuration();
+
+                if (duration == 0.0f)
                 {
-                    _inCooldown = true;
-                }
-
-                else
-                {
-                    _inCooldown = false;
-                }
-
-                if (!_inCooldown && _secondsCounter > 2)
-                {
-                    ResetTimer();
-
                     int level = Player.Instance().GetLevel();
                     int fillValue = 0;
 
@@ -146,8 +147,6 @@ namespace JustCombat.UI
         public void Draw(SpriteBatch spriteBatch)
         {
             _bar.Draw(spriteBatch);
-
-            //spriteBatch.DrawString(JustCombat.gameContent.GameFont, _secondsCounter.ToString(), new Vector2(400.0f, 120.0f), Color.White);
         }
     }
 }
