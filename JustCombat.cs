@@ -24,7 +24,7 @@ namespace JustCombat
         private SpriteSheet _cursorSheet;
         private Vector2 _cursorPosition;
 
-        private SpriteFont _font;
+        private SpriteFont _frizQuadFont;
         private TiledMap _gameMap;
         private TiledMapRenderer _gameMapRenderer;
 
@@ -83,7 +83,7 @@ namespace JustCombat
             CharPanel = new CharacterPanel("Character", 20, 20, 220, 440, Color.Wheat);
             InvPanel = new InventoryPanel("Inventory", 960, 440, 220, 220, Color.CornflowerBlue);
 
-            _font = gameContent.GameFont;
+            _frizQuadFont = gameContent.FontFrizQuad;
             _player = Player.Instance();
 
             _targetingSystem = TargetingSystem.Instance();
