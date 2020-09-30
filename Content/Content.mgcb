@@ -28,6 +28,18 @@
 /processorParam:TextureFormat=Color
 /build:actor_card_v6.png
 
+#begin actor_card_v7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:actor_card_v7.png
+
 #begin atlas.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -39,6 +51,34 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:atlas.bmp
+
+#begin Consolas10.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Consolas10.spritefont
+
+#begin Consolas11.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Consolas11.spritefont
+
+#begin Consolas12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Consolas12.spritefont
+
+#begin Consolas13.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Consolas13.spritefont
 
 #begin Consolas14.spritefont
 /importer:FontDescriptionImporter
