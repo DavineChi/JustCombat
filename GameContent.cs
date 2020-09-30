@@ -34,7 +34,7 @@ namespace JustCombat
             WraithImage = content.Load<Texture2D>("wraith");
             Cursor = content.Load<Texture2D>("cursors_combined");
             TopBarBackpanel = content.Load<Texture2D>("top_bar_backpanel");
-            ActorInfoCard = content.Load<Texture2D>("actor_card_v7");
+            ActorInfoCard = content.Load<Texture2D>("actor_card_v8");
         }
     }
 }
