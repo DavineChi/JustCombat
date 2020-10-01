@@ -13,29 +13,15 @@ namespace JustCombat.UI
         private const float STEP_FN_LEVEL_10_AND_UP = 0.005f;
 
         private FillBar.State _state;
-
-        private GameTime _cooldownTimer;
-
-        private float _secondsCounter;
-
-        private bool _inCooldown;
-
         private CooldownTimer _customTimer;
+        private float _secondsCounter;
 
         public HealthBar(int xPosition, int yPosition, int width, int height) :
             base(xPosition, yPosition, width, height)
         {
-            Color barColor = Color.Green;
-
-            _bar.SetColor(barColor);
+            _bar.SetColor(Color.Green);
 
             _state = FillBar.State.FULL;
-            _cooldownTimer = new GameTime();
-
-            _inCooldown = false;
-
-            _secondsCounter = 0;
-
             _customTimer = new CooldownTimer(REGEN_DELAY);
         }
 
@@ -75,16 +61,6 @@ namespace JustCombat.UI
             return _state;
         }
 
-        public void SetState(FillBar.State state)
-        {
-            _state = state;
-        }
-
-        public GameTime GetCooldownTimer()
-        {
-            return _cooldownTimer;
-        }
-
         public override PrimRectangle GetBar()
         {
             return _bar;
@@ -107,10 +83,8 @@ namespace JustCombat.UI
             if (_state == State.REGEN)
             {
                 _customTimer.Update(gameTime);
-
-                float duration = _customTimer.GetDuration();
-
-                if (duration == 0.0f)
+                
+                if (_customTimer.IsComplete())
                 {
                     int level = Player.Instance().GetLevel();
                     int fillValue = 0;
