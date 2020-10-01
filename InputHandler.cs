@@ -112,6 +112,11 @@ namespace JustCombat
             {
                 JustCombat.UserInterface.CoolDownTimer.Start(2.5f);
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                JustCombat.TargetingSystem.Release();
+            }
         }
 
         public static void OnMouseHover()
@@ -128,11 +133,18 @@ namespace JustCombat
                 mouseY >= wraith.GetY() &&
                 mouseY <= wraith.GetY() + wraith.GetHeight() * Constants.SPRITE_SCALE)
             {
+                // Show the attack / sword cursor...
                 JustCombat.Cursor = JustCombat.Cursor2[1];
+
+                if (state.LeftButton == ButtonState.Pressed)
+                {
+                    JustCombat.TargetingSystem.Acquire(JustCombat.Wraith);
+                }
             }
 
             else
             {
+                // Show the select / glove cursor...
                 JustCombat.Cursor = JustCombat.Cursor2[0];
             }
         }

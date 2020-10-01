@@ -34,6 +34,9 @@ namespace JustCombat
         public static Wraith Wraith;
 
         public static UserInterface UserInterface;
+        public static TargetingSystem TargetingSystem;
+
+        private InfoPanel panel;
 
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
@@ -85,10 +88,8 @@ namespace JustCombat
 
             _frizQuadFont = gameContent.FontFrizQuad;
             _player = Player.Instance();
-
-            _targetingSystem = TargetingSystem.Instance();
-
-            Wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f));
+            
+            Wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
 
             Wraith.SetAlignment(Actor.Alignment.NEUTRAL);
 
@@ -100,6 +101,10 @@ namespace JustCombat
 
             Cursor2[0] = _cursorSheet.GetTexture(0, 0);
             Cursor2[1] = _cursorSheet.GetTexture(1, 0);
+
+            panel = new InfoPanel(1000, 600, 260, 20, new Color(0.0f, 0.004f, 0.125f, 0.5f));
+
+            TargetingSystem = new TargetingSystem();
         }
 
         /// <summary>
@@ -118,10 +123,10 @@ namespace JustCombat
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //{
+            //    Exit();
+            //}
             
             _cursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
@@ -130,6 +135,8 @@ namespace JustCombat
 
             _gameMapRenderer.Update(gameTime);
             _player.Update(gameTime);
+
+            TargetingSystem.Update();
 
             UserInterface.Update(gameTime);
 
@@ -165,6 +172,8 @@ namespace JustCombat
             //spriteBatch.Draw(Cursor, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
             
             UserInterface.Draw(spriteBatch);
+
+            panel.Draw(spriteBatch);
 
             spriteBatch.Draw(Cursor, _cursorPosition, Color.White);
 

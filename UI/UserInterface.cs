@@ -50,9 +50,13 @@ namespace JustCombat.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            string target = JustCombat.TargetingSystem.ToString();
+
             spriteBatch.Draw(_topBarBackpanel, new Vector2(0.0f, 0.0f), Color.White);
 
             _playerInfoCard.Draw(spriteBatch);
+
+            JustCombat.TargetingSystem.Draw(spriteBatch);
 
             spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(550.0f, 10.0f), Color.White);
             spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(550.0f, 30.0f), Color.White);
@@ -63,6 +67,7 @@ namespace JustCombat.UI
             spriteBatch.DrawString(_font, "        Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(800.0f, 50.0f), Color.White);
 
             spriteBatch.DrawString(_font, CoolDownTimer.ToString(), new Vector2(550.0f, 50.0f), Color.White);
+            spriteBatch.DrawString(_font, target, new Vector2(550.0f, 70.0f), Color.White);
         }
     }
 }
