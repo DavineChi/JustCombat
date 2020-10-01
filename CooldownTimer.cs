@@ -59,6 +59,11 @@ namespace JustCombat
             _duration = _timerValue;
         }
 
+        public bool IsComplete()
+        {
+            return _duration == 0.0f;
+        }
+
         public bool IsRunning()
         {
             return _running;
