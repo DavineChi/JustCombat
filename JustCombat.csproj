@@ -46,6 +46,8 @@
     <Compile Include="ActionHandler.cs" />
     <Compile Include="CooldownTimer.cs" />
     <Compile Include="EventHandler.cs" />
+    <Compile Include="Panels\InfoPanel.cs" />
+    <Compile Include="Spells\Fireball.cs" />
     <Compile Include="UI\ActorInfoCard.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationFactory.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="TargetingSystem.cs" />
     <Compile Include="UI\HealthBar.cs" />
     <Compile Include="UI\ManaBar.cs" />
+    <Compile Include="Spells\Spell.cs" />
     <Compile Include="UI\UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
