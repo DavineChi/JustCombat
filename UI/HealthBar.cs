@@ -12,17 +12,13 @@ namespace JustCombat.UI
         private const float STEP_FN_LEVEL_08_TO_09  = 0.025f;
         private const float STEP_FN_LEVEL_10_AND_UP = 0.005f;
 
-        private FillBar.State _state;
-        private CooldownTimer _customTimer;
-        private float _secondsCounter;
-
         public HealthBar(int xPosition, int yPosition, int width, int height) :
             base(xPosition, yPosition, width, height)
         {
             _bar.SetColor(Color.Green);
 
-            _state = FillBar.State.FULL;
-            _customTimer = new CooldownTimer(REGEN_DELAY);
+            _state = State.FULL;
+            _timer = new CooldownTimer(REGEN_DELAY);
         }
 
         private void QueryState(Actor actor)
@@ -35,16 +31,16 @@ namespace JustCombat.UI
             {
                 _state = State.COMBAT;
 
-                _customTimer.Reset();
+                _timer.Reset();
             }
 
             else if (hitPoints < maxHitPoints)
             {
                 _state = State.REGEN;
 
-                if (!_customTimer.IsRunning())
+                if (!_timer.IsRunning())
                 {
-                    _customTimer.Start();
+                    _timer.Start();
                 }
             }
 
@@ -66,25 +62,15 @@ namespace JustCombat.UI
             return _bar;
         }
 
-        public void ResetTimer()
-        {
-            _secondsCounter = 0;
-        }
-
-        private void Tick(GameTime gameTime)
-        {
-            _secondsCounter = _secondsCounter + (float)(gameTime.ElapsedGameTime.TotalSeconds);
-        }
-
         public override void Update(Actor actor, GameTime gameTime)
         {
             this.QueryState(actor);
 
             if (_state == State.REGEN)
             {
-                _customTimer.Update(gameTime);
+                _timer.Update(gameTime);
                 
-                if (_customTimer.IsComplete())
+                if (_timer.IsComplete())
                 {
                     int level = Player.Instance().GetLevel();
                     int fillValue = 0;

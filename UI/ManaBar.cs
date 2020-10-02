@@ -12,27 +12,13 @@ namespace JustCombat.UI
         private const float STEP_FN_LEVEL_08_TO_09  = 0.025f;
         private const float STEP_FN_LEVEL_10_AND_UP = 0.005f;
 
-        private FillBar.State _state;
-
-        private GameTime _cooldownTimer;
-
-        private float _secondsCounter;
-
-        private bool _inCooldown;
-
         public ManaBar(int xPosition, int yPosition, int width, int height) :
             base(xPosition, yPosition, width, height)
         {
-            Color barColor = new Color(0, 100, 200);
+            _bar.SetColor(new Color(0, 100, 200));
 
-            _bar.SetColor(barColor);
-
-            _state = FillBar.State.FULL;
-            _cooldownTimer = new GameTime();
-
-            _inCooldown = false;
-
-            _secondsCounter = 0;
+            _state = State.FULL;
+            _timer = new CooldownTimer(REGEN_DELAY);
         }
 
         private void QueryState(Actor actor)
@@ -43,17 +29,24 @@ namespace JustCombat.UI
 
             if (actor.GetState() == Actor.State.IN_COMBAT)
             {
-                _state = FillBar.State.COMBAT;
+                _state = State.COMBAT;
+
+                _timer.Reset();
             }
 
             else if (hitPoints < maxHitPoints)
             {
-                _state = FillBar.State.REGEN;
+                _state = State.REGEN;
+
+                if (!_timer.IsRunning())
+                {
+                    _timer.Start();
+                }
             }
 
             else if (hitPoints == maxHitPoints)
             {
-                _state = FillBar.State.FULL;
+                _state = State.FULL;
             }
 
             _bar.SetWidth(_width * fillFactor);
@@ -64,29 +57,9 @@ namespace JustCombat.UI
             return _state;
         }
 
-        public void SetState(FillBar.State state)
-        {
-            _state = state;
-        }
-
-        public GameTime GetCooldownTimer()
-        {
-            return _cooldownTimer;
-        }
-
         public override PrimRectangle GetBar()
         {
             return _bar;
-        }
-
-        public void ResetTimer()
-        {
-            _secondsCounter = 0;
-        }
-
-        private void Tick(GameTime gameTime)
-        {
-            _secondsCounter = _secondsCounter + (float)(gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public override void Update(Actor actor, GameTime gameTime)

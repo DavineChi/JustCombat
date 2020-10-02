@@ -6,8 +6,10 @@ namespace JustCombat.UI
     {
         public enum State { EMPTY, FULL, COMBAT, REGEN };
 
+        protected State _state;
         protected float _width;
         protected PrimRectangle _bar;
+        protected CooldownTimer _timer;
 
         public FillBar(int xPosition, int yPosition, int width, int height)
         {
