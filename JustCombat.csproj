@@ -43,9 +43,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ActionHandler.cs" />
     <Compile Include="CooldownTimer.cs" />
-    <Compile Include="EventHandler.cs" />
     <Compile Include="Panels\InfoPanel.cs" />
     <Compile Include="Spells\Fireball.cs" />
     <Compile Include="UI\ActorInfoCard.cs" />
@@ -66,7 +64,6 @@
     <Compile Include="HitPoints.cs" />
     <Compile Include="Collision\ICollision.cs" />
     <Compile Include="InputHandler.cs" />
-    <Compile Include="ITargetable.cs" />
     <Compile Include="JustCombat.cs" />
     <Compile Include="Panels\CharacterPanel.cs" />
     <Compile Include="Panels\InventoryPanel.cs" />
