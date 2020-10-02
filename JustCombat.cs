@@ -31,12 +31,13 @@ namespace JustCombat
         public static CharacterPanel CharPanel;
         public static InventoryPanel InvPanel;
 
-        public static Wraith Wraith;
+        public static Wraith WraithOne;
+        public static Wraith WraithTwo;
 
         public static UserInterface UserInterface;
         public static TargetingSystem TargetingSystem;
 
-        private InfoPanel panel;
+        private InfoPanel _testInfoPanel;
 
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
@@ -89,9 +90,11 @@ namespace JustCombat
             _frizQuadFont = gameContent.FontFrizQuad;
             _player = Player.Instance();
             
-            Wraith = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
+            WraithOne = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
+            WraithTwo = new Wraith("Wraith", 420, 300, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
 
-            Wraith.SetAlignment(Actor.Alignment.NEUTRAL);
+            WraithOne.SetAlignment(Actor.Alignment.NEUTRAL);
+            WraithTwo.SetAlignment(Actor.Alignment.HOSTILE);
 
             UserInterface = UserInterface.Instance();
 
@@ -102,7 +105,7 @@ namespace JustCombat
             Cursor2[0] = _cursorSheet.GetTexture(0, 0);
             Cursor2[1] = _cursorSheet.GetTexture(1, 0);
 
-            panel = new InfoPanel(1000, 600, 260, 20, new Color(0.0f, 0.004f, 0.125f, 0.5f));
+            _testInfoPanel = new InfoPanel(1000, 600, 260, 20, new Color(0.0f, 0.004f, 0.125f, 0.5f));
 
             TargetingSystem = new TargetingSystem();
         }
@@ -167,13 +170,14 @@ namespace JustCombat
                 CharPanel.Draw(spriteBatch);
             }
 
-            Wraith.Draw(spriteBatch);
+            WraithOne.Draw(spriteBatch);
+            WraithTwo.Draw(spriteBatch);
 
             //spriteBatch.Draw(Cursor, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
-            
-            UserInterface.Draw(spriteBatch);
 
-            panel.Draw(spriteBatch);
+            UserInterface.Draw(spriteBatch);
+            
+            _testInfoPanel.Draw(spriteBatch);
 
             spriteBatch.Draw(Cursor, _cursorPosition, Color.White);
 
