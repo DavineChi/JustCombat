@@ -108,10 +108,10 @@ namespace JustCombat
                 JustCombat.CharPanel.SetDisplayed(false);
             }
 
-            if (IsKeyPressed(Keys.Q))
-            {
-                JustCombat.UserInterface.CoolDownTimer.Start(2.5f);
-            }
+            //if (IsKeyPressed(Keys.Q))
+            //{
+            //    JustCombat.UserInterface.CoolDownTimer.Start(2.5f);
+            //}
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -126,7 +126,7 @@ namespace JustCombat
             int mouseX = state.X;
             int mouseY = state.Y;
 
-            Wraith wraith = JustCombat.Wraith;
+            Wraith wraith = JustCombat.WraithOne;
 
             if (mouseX >= wraith.GetX() &&
                 mouseX <= wraith.GetX() + wraith.GetWidth() * Constants.SPRITE_SCALE &&
@@ -138,7 +138,7 @@ namespace JustCombat
 
                 if (state.LeftButton == ButtonState.Pressed)
                 {
-                    JustCombat.TargetingSystem.Acquire(JustCombat.Wraith);
+                    JustCombat.TargetingSystem.Acquire(JustCombat.WraithOne);
                 }
             }
 
@@ -146,6 +146,11 @@ namespace JustCombat
             {
                 // Show the select / glove cursor...
                 JustCombat.Cursor = JustCombat.Cursor2[0];
+
+                if (state.LeftButton == ButtonState.Pressed)
+                {
+                    JustCombat.TargetingSystem.Release();
+                }
             }
         }
 
