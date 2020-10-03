@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace JustCombat.UI
 {
-    public class HealthBar : FillBar
+    public class HealthBar : FillBar, IDrawable
     {
         private const float REGEN_DELAY = 2.0f;
 
@@ -12,8 +12,8 @@ namespace JustCombat.UI
         private const float STEP_FN_LEVEL_08_TO_09  = 0.025f;
         private const float STEP_FN_LEVEL_10_AND_UP = 0.005f;
 
-        public HealthBar(int xPosition, int yPosition, int width, int height) :
-            base(xPosition, yPosition, width, height)
+        public HealthBar(int xPosition, int yPosition, int width, int height, Actor actor) :
+            base(xPosition, yPosition, width, height, actor)
         {
             _bar.SetColor(Color.Green);
 
@@ -21,13 +21,13 @@ namespace JustCombat.UI
             _timer = new CooldownTimer(REGEN_DELAY);
         }
 
-        private void QueryState(Actor actor)
+        private void QueryState()
         {
-            float hitPoints = (float)(actor.GetHitPoints());
-            float maxHitPoints = (float)(actor.GetMaxHitPoints());
+            float hitPoints = (float)(_actor.GetHitPoints());
+            float maxHitPoints = (float)(_actor.GetMaxHitPoints());
             float fillFactor = hitPoints / maxHitPoints;
 
-            if (actor.GetState() == Actor.State.IN_COMBAT)
+            if (_actor.GetState() == Actor.State.IN_COMBAT)
             {
                 _state = State.COMBAT;
 
@@ -52,19 +52,9 @@ namespace JustCombat.UI
             _bar.SetWidth(_width * fillFactor);
         }
 
-        public FillBar.State GetState()
+        public void Update(GameTime gameTime)
         {
-            return _state;
-        }
-
-        public override PrimRectangle GetBar()
-        {
-            return _bar;
-        }
-
-        public override void Update(Actor actor, GameTime gameTime)
-        {
-            this.QueryState(actor);
+            this.QueryState();
 
             if (_state == State.REGEN)
             {
