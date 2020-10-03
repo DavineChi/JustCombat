@@ -78,6 +78,7 @@
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="TargetingSystem.cs" />
     <Compile Include="UI\HealthBar.cs" />
+    <Compile Include="UI\IDrawable.cs" />
     <Compile Include="UI\ManaBar.cs" />
     <Compile Include="Spells\Spell.cs" />
     <Compile Include="UI\UserInterface.cs" />
