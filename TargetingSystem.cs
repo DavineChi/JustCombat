@@ -6,52 +6,59 @@ namespace JustCombat
 {
     public class TargetingSystem
     {
-        //private static TargetingSystem _targetingSystem = null;
+        private static TargetingSystem _targetingSystem = null;
 
-        private ActorInfoCard _targetInfoCard;
         private Entity _currentTarget;
 
-        public TargetingSystem()
+        private TargetingSystem()
         {
+            _currentTarget = null;
         }
 
-        //public static TargetingSystem Instance()
-        //{
-        //    if (_targetingSystem == null)
-        //    {
-        //        _targetingSystem = new TargetingSystem();
-        //    }
+        public static TargetingSystem Instance()
+        {
+            if (_targetingSystem == null)
+            {
+                _targetingSystem = new TargetingSystem();
+            }
 
-        //    return _targetingSystem;
-        //}
+            return _targetingSystem;
+        }
 
         public void Acquire(Entity target)
         {
+            Release();
+
             _currentTarget = target;
 
-            if (target is Actor)
-            {
-                _targetInfoCard = new ActorInfoCard((Actor)(_currentTarget), new Vector2(244.0f, 4.0f));
-            }
+            UserInterface.Instance().GetTargetInfoCard().SetActor((Actor)(target));
+
+            _currentTarget.GetBoundingBox().GetPrimRectangle().SetColor(Color.Gold);
         }
 
         public void Release()
         {
+            if (_currentTarget != null)
+            {
+                _currentTarget.GetBoundingBox().GetPrimRectangle().SetColor(Color.Green);
+
+                UserInterface.Instance().ClearTarget();
+            }
+
             _currentTarget = null;
-            _targetInfoCard = null;
         }
 
-        public void Update()
+        public Entity GetCurrentTarget()
         {
+            return _currentTarget;
+        }
 
+        public void Update(GameTime gameTime)
+        {
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_targetInfoCard != null)
-            {
-                _targetInfoCard.Draw(spriteBatch);
-            }
         }
 
         public override string ToString()
