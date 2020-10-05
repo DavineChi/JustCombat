@@ -15,5 +15,10 @@ namespace JustCombat
         public const float PLAYER_SPEED_RUN  = 2.0f;
 
         public const int MAXIMUM_PLAYER_LEVEL = 60;
+
+        public const float STEP_FN_LEVEL_01_TO_04  = 0.2f;
+        public const float STEP_FN_LEVEL_05_TO_07  = 0.065f;
+        public const float STEP_FN_LEVEL_08_TO_09  = 0.025f;
+        public const float STEP_FN_LEVEL_10_AND_UP = 0.005f;
     }
 }
