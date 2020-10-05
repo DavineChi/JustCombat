@@ -44,6 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CooldownTimer.cs" />
+    <Compile Include="IEventHandler.cs" />
     <Compile Include="Panels\InfoPanel.cs" />
     <Compile Include="Spells\Fireball.cs" />
     <Compile Include="UI\ActorInfoCard.cs" />
