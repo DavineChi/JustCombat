@@ -11,6 +11,7 @@ namespace JustCombat
         protected BoundingBox _boundingBox;
         protected BoundingCircle _boundingCircle;
         protected int _hitPoints;
+        protected int _previousHitPoints;
         protected int _maxHitPoints;
 
         public string GetName()          { return _name; }
