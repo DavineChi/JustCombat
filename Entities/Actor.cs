@@ -1,28 +1,43 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
 {
-    public abstract class Actor : Entity
+    public abstract class Actor : Entity, IEventHandler
     {
-        public enum State { NORMAL, RESTED, IN_COMBAT, DEAD };
+        private const float REGEN_DELAY  = 2.0f;
+        private const float COMBAT_DELAY = 3.0f;
+
+        public enum ActorState { NORMAL, RESTED, IN_COMBAT, DEAD };
+        public enum HealthBarState { EMPTY, REGEN, FULL, COMBAT };
         public enum Alignment { FRIENDLY, NEUTRAL, HOSTILE };
+
+        protected int _level;
+        protected ActorState _actorState;
+        protected HealthBarState _healthBarState;
+        protected Alignment _alignment;
+        protected float _hitPointsFillFactor;
+        protected CooldownTimer _hitPointsTimer;
+        protected CooldownTimer _combatExitTimer;
+
+        public bool _takingDamage;
 
         private Direction _heading;
         private bool _alive;
 
-        protected int _level;
-
-        private State _state;
-        private Alignment _alignment;
-
         public Actor(string name, float x, float y, float width, float height, float scale, Direction heading) :
-            this(name, x, y, width, height, scale, heading, 80)
+            this(1, name, x, y, width, height, scale, heading, 80)
         {
         }
 
-        public Actor(string name, float x, float y, float width, float height, float scale, Direction heading, int hitPoints)
+        public Actor(int level, string name, float x, float y, float width, float height, float scale, Direction heading) :
+            this(level, name, x, y, width, height, scale, heading, 80)
         {
-            _level = 1;
+        }
+
+        public Actor(int level, string name, float x, float y, float width, float height, float scale, Direction heading, int hitPoints)
+        {
+            _level = level;
             _name = name;
             _x = x;
             _y = y;
@@ -30,9 +45,15 @@ namespace JustCombat
             _height = height;
             _boundingBox = new BoundingBox(x, y, width, height, scale);
             _hitPoints = hitPoints;
+            _previousHitPoints = _hitPoints;
             _maxHitPoints = _hitPoints;
             _heading = heading;
             _alive = true;
+
+            _hitPointsFillFactor = _hitPoints / _maxHitPoints;
+            _hitPointsTimer = new CooldownTimer(REGEN_DELAY);
+            _combatExitTimer = new CooldownTimer(COMBAT_DELAY);
+            _takingDamage = false;
         }
 
         public abstract bool Move(float dx, float dy, bool isRunning);
@@ -79,6 +100,16 @@ namespace JustCombat
 
         public int GetHitPoints() { return _hitPoints; }
 
+        public void CompareLastHitPoints()
+        {
+            if (_hitPoints < _previousHitPoints)
+            {
+                _previousHitPoints = _hitPoints;
+                _takingDamage = true;
+                _combatExitTimer.Reset();
+            }
+        }
+
         public void SetHitPoints(int hitPoints)
         {
             /* Qualify the hitPoints parameter, ensuring that
@@ -88,6 +119,7 @@ namespace JustCombat
              */
             if ((hitPoints >= 0) && (hitPoints <= _maxHitPoints))
             {
+                _previousHitPoints = _hitPoints;
                 _hitPoints = hitPoints;
 
                 if (hitPoints > 0)
@@ -119,6 +151,8 @@ namespace JustCombat
         {
             // Still need to determine how to handle overkill cases.
             // int overkillAmount;
+
+            _previousHitPoints = _hitPoints;
 
             if (removeHitPointsAmount >= _hitPoints)
             {
@@ -170,22 +204,80 @@ namespace JustCombat
             }
         }
 
-        public Actor.State GetState()
+        public ActorState GetState()
         {
-            return _state;
+            return _actorState;
         }
 
-        public void SetState(Actor.State state)
+        public HealthBarState GetHealthBarState()
         {
-            _state = state;
+            return _healthBarState;
         }
 
-        public Actor.Alignment GetAlignment()
+        public void SetState(ActorState state)
+        {
+            _actorState = state;
+        }
+
+        protected void QueryState()
+        {
+            _hitPointsFillFactor = (float)(_hitPoints) / (float)(_maxHitPoints);
+
+            CompareLastHitPoints();
+
+            if (_takingDamage)
+            {
+                _actorState = ActorState.IN_COMBAT;
+                _healthBarState = HealthBarState.COMBAT;
+
+                bool timerComplete = _combatExitTimer.IsComplete();
+                int iterations = _combatExitTimer.Iterations();
+
+                if (timerComplete && (iterations > 0))
+                {
+                    _takingDamage = false;
+                }
+
+                if (!_combatExitTimer.IsRunning())
+                {
+                    _combatExitTimer.Start();
+                }
+            }
+
+            else
+            {
+                if (_hitPoints < _maxHitPoints)
+                {
+                    if (_combatExitTimer.IsComplete())
+                    {
+                        _actorState = ActorState.NORMAL;
+                        _healthBarState = HealthBarState.REGEN;
+
+                        if (!_hitPointsTimer.IsRunning())
+                        {
+                            _hitPointsTimer.Start();
+                        }
+                    }
+                }
+
+                if (_hitPoints == _maxHitPoints)
+                {
+                    _healthBarState = HealthBarState.FULL;
+                }
+            }
+        }
+
+        public float GetHitPointsFillFactor()
+        {
+            return _hitPointsFillFactor;
+        }
+
+        public Alignment GetAlignment()
         {
             return _alignment;
         }
 
-        public void SetAlignment(Actor.Alignment alignment)
+        public void SetAlignment(Alignment alignment)
         {
             _alignment = alignment;
         }
@@ -211,6 +303,24 @@ namespace JustCombat
         {
             this.SetX(x);
             this.SetY(y);
+        }
+
+        public bool MouseOver(MouseState state)
+        {
+            bool result = false;
+
+            int mouseX = state.X;
+            int mouseY = state.Y;
+
+            if (mouseX >= this._x &&
+                mouseX <= this._x + this._width * Constants.SPRITE_SCALE &&
+                mouseY >= this._y &&
+                mouseY <= this._y + this._height * Constants.SPRITE_SCALE)
+            {
+                result = true;
+            }
+
+            return result;
         }
     }
 }
