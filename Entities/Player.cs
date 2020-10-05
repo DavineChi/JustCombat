@@ -263,6 +263,47 @@ namespace JustCombat
             }
             
             _currentAnimation.Update(gameTime);
+            _combatExitTimer.Update(gameTime);
+            UpdateFillTimer(gameTime);
+        }
+
+        public void UpdateFillTimer(GameTime gameTime)
+        {
+            this.QueryState();
+
+            if (_healthBarState == HealthBarState.REGEN)
+            {
+                _hitPointsTimer.Update(gameTime);
+
+                if (_hitPointsTimer.IsComplete())
+                {
+                    int fillValue = 0;
+
+                    if (_level >= 1 && _level <= 4)
+                    {
+                        fillValue = (int)(_maxHitPoints * Constants.STEP_FN_LEVEL_01_TO_04);
+                    }
+
+                    else if (_level >= 5 && _level <= 7)
+                    {
+                        fillValue = (int)(_maxHitPoints * Constants.STEP_FN_LEVEL_05_TO_07);
+                    }
+
+                    else if (_level >= 8 && _level <= 9)
+                    {
+                        fillValue = (int)(_maxHitPoints * Constants.STEP_FN_LEVEL_08_TO_09);
+                    }
+
+                    else if (_level >= 10)
+                    {
+                        fillValue = (int)(_maxHitPoints * Constants.STEP_FN_LEVEL_10_AND_UP);
+                    }
+
+                    this.AddHitPoints(fillValue);
+
+                    _hitPointsFillFactor = (float)(_hitPoints) / (float)(_maxHitPoints);
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
