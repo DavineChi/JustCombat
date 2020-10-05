@@ -14,7 +14,7 @@ namespace JustCombat
 
         protected int _level;
         protected ActorState _actorState;
-        protected HealthBarState _healthBarState;
+        protected HealthBarState _healthState;
         protected Alignment _alignment;
         protected float _hitPointsFillFactor;
         protected CooldownTimer _hitPointsTimer;
@@ -211,7 +211,7 @@ namespace JustCombat
 
         public HealthBarState GetHealthBarState()
         {
-            return _healthBarState;
+            return _healthState;
         }
 
         public void SetState(ActorState state)
@@ -228,7 +228,7 @@ namespace JustCombat
             if (_takingDamage)
             {
                 _actorState = ActorState.IN_COMBAT;
-                _healthBarState = HealthBarState.COMBAT;
+                _healthState = HealthBarState.COMBAT;
 
                 bool timerComplete = _combatExitTimer.IsComplete();
                 int iterations = _combatExitTimer.Iterations();
@@ -251,7 +251,7 @@ namespace JustCombat
                     if (_combatExitTimer.IsComplete())
                     {
                         _actorState = ActorState.NORMAL;
-                        _healthBarState = HealthBarState.REGEN;
+                        _healthState = HealthBarState.REGEN;
 
                         if (!_hitPointsTimer.IsRunning())
                         {
@@ -262,7 +262,7 @@ namespace JustCombat
 
                 if (_hitPoints == _maxHitPoints)
                 {
-                    _healthBarState = HealthBarState.FULL;
+                    _healthState = HealthBarState.FULL;
                 }
             }
         }
