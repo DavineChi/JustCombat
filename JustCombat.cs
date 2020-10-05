@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using System;
+using System.Collections.Generic;
 
 namespace JustCombat
 {
@@ -38,6 +39,8 @@ namespace JustCombat
         public static TargetingSystem TargetingSystem;
 
         private InfoPanel _testInfoPanel;
+
+        public static List<Entity> EntityContainer = new List<Entity>();
 
         public static GraphicsDeviceManager graphics;
         public static GameContent gameContent;
@@ -90,8 +93,8 @@ namespace JustCombat
             _frizQuadFont = gameContent.FontFrizQuad;
             _player = Player.Instance();
             
-            WraithOne = new Wraith("Wraith", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
-            WraithTwo = new Wraith("Wraith", 420, 300, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
+            WraithOne = new Wraith(2, "Wraith One", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
+            WraithTwo = new Wraith(3, "Wraith Two", 420, 300, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
 
             WraithOne.SetAlignment(Actor.Alignment.NEUTRAL);
             WraithTwo.SetAlignment(Actor.Alignment.HOSTILE);
@@ -100,14 +103,18 @@ namespace JustCombat
 
             _cursorSheet = new SpriteSheet(gameContent.Cursor, 48, 48);
 
-            Cursor = _cursorSheet.GetTexture(0, 0);
+            Cursor2[0] = _cursorSheet.GetTexture("glove", 0, 0);
+            Cursor2[1] = _cursorSheet.GetTexture("sword", 1, 0);
 
-            Cursor2[0] = _cursorSheet.GetTexture(0, 0);
-            Cursor2[1] = _cursorSheet.GetTexture(1, 0);
+            Cursor = Cursor2[0];
 
-            _testInfoPanel = new InfoPanel(1000, 600, 260, 20, new Color(0.0f, 0.004f, 0.125f, 0.5f));
+            _testInfoPanel = new InfoPanel("Wraith", 998, (Constants.SCREEN_HEIGHT - 22), 200, 20, new Color(0.0f, 0.004f, 0.125f, 0.5f));
 
-            TargetingSystem = new TargetingSystem();
+            TargetingSystem = TargetingSystem.Instance();
+
+            //EntityContainer.Add(Player.Instance());
+            EntityContainer.Add(WraithOne);
+            EntityContainer.Add(WraithTwo);
         }
 
         /// <summary>
@@ -139,7 +146,7 @@ namespace JustCombat
             _gameMapRenderer.Update(gameTime);
             _player.Update(gameTime);
 
-            TargetingSystem.Update();
+            TargetingSystem.Update(gameTime);
 
             UserInterface.Update(gameTime);
 
