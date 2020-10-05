@@ -11,10 +11,19 @@ namespace JustCombat
         private static KeyboardState _currentKeyState;
         private static KeyboardState _previousKeyState;
 
+        private static MouseState _currentMouseState;
+        private static MouseState _previousMouseState;
+
         public static void UpdateKeyboardState()
         {
             _previousKeyState = _currentKeyState;
             _currentKeyState = Keyboard.GetState();
+        }
+
+        public static void UpdateMouseState()
+        {
+            _previousMouseState = _currentMouseState;
+            _currentMouseState = Mouse.GetState();
         }
 
         public static bool IsKeyPressed(Keys key)
@@ -22,16 +31,24 @@ namespace JustCombat
             return _currentKeyState.IsKeyDown(key) && !(_previousKeyState.IsKeyDown(key));
         }
 
+        public static bool RightButtonPressed()
+        {
+            return (_currentMouseState.RightButton == ButtonState.Pressed) &&
+                  !(_previousMouseState.RightButton == ButtonState.Pressed);
+        }
+
         public static void HandleInput()
         {
             UpdateKeyboardState();
+            UpdateMouseState();
 
-            KeyboardState state = Keyboard.GetState();
+            KeyboardState keyboardState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
             Player player = Player.Instance();
             
             bool isRunning = Keyboard.GetState().IsKeyDown(Keys.LeftShift);
 
-            if (IsValidMovementKey(state))
+            if (IsValidMovementKey(keyboardState))
             {
                 int dx = 0;
                 int dy = 0;
@@ -65,17 +82,22 @@ namespace JustCombat
 
             if (IsKeyPressed(Keys.OemOpenBrackets))
             {
-                player.SetState(Player.State.IN_COMBAT);
+                player.SetState(Player.ActorState.IN_COMBAT);
             }
 
             if (IsKeyPressed(Keys.OemCloseBrackets))
             {
-                player.SetState(Player.State.NORMAL);
+                player.SetState(Player.ActorState.NORMAL);
             }
 
             if (IsKeyPressed(Keys.T))
             {
                 player.Teleport(300.0f, 300.0f);
+            }
+
+            if (IsKeyPressed(Keys.G))
+            {
+                player.RemoveHitPoints(10);
             }
 
             if (IsKeyPressed(Keys.H))
@@ -117,39 +139,55 @@ namespace JustCombat
             {
                 JustCombat.TargetingSystem.Release();
             }
+
+            if (RightButtonPressed())
+            {
+                Entity entity = TargetingSystem.Instance().GetCurrentTarget();
+
+                if (entity != null)
+                {
+                    if (entity is Actor)
+                    {
+                        Actor victim = (Actor)(entity);
+
+                        victim.RemoveHitPoints(13);
+                    }
+                }
+            }
         }
 
         public static void OnMouseHover()
         {
             MouseState state = Mouse.GetState();
-
-            int mouseX = state.X;
-            int mouseY = state.Y;
-
-            Wraith wraith = JustCombat.WraithOne;
-
-            if (mouseX >= wraith.GetX() &&
-                mouseX <= wraith.GetX() + wraith.GetWidth() * Constants.SPRITE_SCALE &&
-                mouseY >= wraith.GetY() &&
-                mouseY <= wraith.GetY() + wraith.GetHeight() * Constants.SPRITE_SCALE)
+            
+            foreach (Entity entity in JustCombat.EntityContainer)
             {
-                // Show the attack / sword cursor...
-                JustCombat.Cursor = JustCombat.Cursor2[1];
-
-                if (state.LeftButton == ButtonState.Pressed)
+                if (entity is Actor)
                 {
-                    JustCombat.TargetingSystem.Acquire(JustCombat.WraithOne);
-                }
-            }
+                    Actor actor = (Actor)(entity);
 
-            else
-            {
-                // Show the select / glove cursor...
-                JustCombat.Cursor = JustCombat.Cursor2[0];
+                    if (actor.MouseOver(state))
+                    {
+                        // Show the attack / sword cursor...
+                        JustCombat.Cursor = JustCombat.Cursor2[1];
 
-                if (state.LeftButton == ButtonState.Pressed)
-                {
-                    JustCombat.TargetingSystem.Release();
+                        if (state.LeftButton == ButtonState.Pressed)
+                        {
+                            JustCombat.TargetingSystem.Acquire(actor);
+                            break;
+                        }
+                    }
+
+                    else
+                    {
+                        // Show the select / glove cursor...
+                        JustCombat.Cursor = JustCombat.Cursor2[0];
+
+                        if (state.LeftButton == ButtonState.Pressed)
+                        {
+                            JustCombat.TargetingSystem.Release();
+                        }
+                    }
                 }
             }
         }
