@@ -79,11 +79,11 @@ namespace JustCombat.UI
             spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(550.0f, 30.0f), Color.White);
 
             //spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(744.0f, 6.0f), Color.White);
-            spriteBatch.DrawString(_font, "   Player State: " + _player.GetState().ToString(), new Vector2(800.0f, 10.0f), Color.White);
-            spriteBatch.DrawString(_font, "HealthBar State: " + _player.GetHealthBarState().ToString(), new Vector2(800.0f, 30.0f), Color.White);
-            spriteBatch.DrawString(_font, "        Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(800.0f, 50.0f), Color.White);
-            spriteBatch.DrawString(_font, "  Taking Damage: " + _player._takingDamage.ToString(), new Vector2(800.0f, 70.0f), Color.White);
-
+            spriteBatch.DrawString(_font, "   Player State: " + _player.GetState().ToString(), new Vector2(750.0f, 10.0f), Color.White);
+            spriteBatch.DrawString(_font, "HealthBar State: " + _player.GetHealthBarState().ToString(), new Vector2(750.0f, 30.0f), Color.White);
+            spriteBatch.DrawString(_font, "        Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(750.0f, 50.0f), Color.White);
+            spriteBatch.DrawString(_font, "  Taking Damage: " + _player._takingDamage.ToString(), new Vector2(750.0f, 70.0f), Color.White);
+            
             //spriteBatch.DrawString(_font, "CD: " + CoolDownTimer.ToString(), new Vector2(550.0f, 50.0f), Color.White);
             spriteBatch.DrawString(_font, target, new Vector2(550.0f, 70.0f), Color.White);
         }
