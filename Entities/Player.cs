@@ -271,7 +271,7 @@ namespace JustCombat
         {
             this.QueryState();
 
-            if (_healthBarState == HealthBarState.REGEN)
+            if (_healthState == HealthBarState.REGEN)
             {
                 _hitPointsTimer.Update(gameTime);
 
