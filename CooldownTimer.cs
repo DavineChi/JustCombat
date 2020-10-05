@@ -1,29 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace JustCombat
 {
     public class CooldownTimer
     {
         private float _timerValue;
-        private float _duration;
-        private bool _running = false;
-
+        private float _remainingTime;
+        private bool _running;
+        private int _counter;
         private GameTime _gameTime;
-
-        public CooldownTimer()
-        {
-            _duration = 0;
-        }
 
         public CooldownTimer(float timerValue)
         {
             _timerValue = timerValue;
-            _duration = 0;
-        }
+            _remainingTime = 0;
+            _running = false;
+            _counter = 0;
+    }
 
-        public float GetDuration()
+        public float GetRemainingTime()
         {
-            return _duration;
+            return _remainingTime;
         }
 
         public void Update(GameTime gameTime)
@@ -31,12 +29,19 @@ namespace JustCombat
             if (_running)
             {
                 _gameTime = gameTime;
-                _duration = _duration - (float)(_gameTime.ElapsedGameTime.TotalSeconds);
+                _remainingTime = _remainingTime - (float)(_gameTime.ElapsedGameTime.TotalSeconds);
 
-                if (_duration <= 0)
+                if (_remainingTime <= 0)
                 {
-                    _duration = 0;
+                    _remainingTime = 0;
                     _running = false;
+
+                    _counter++;
+                }
+
+                if (_counter >= Int32.MaxValue)
+                {
+                    throw new OverflowException("Internal counter overflow: " + _counter);
                 }
             }
         }
@@ -48,25 +53,26 @@ namespace JustCombat
             _running = true;
         }
 
-        public void Start(float duration)
-        {
-            _duration = duration;
-            _running = true;
-        }
-
         public void Reset()
         {
-            _duration = _timerValue;
+            _remainingTime = _timerValue;
+            _counter = 0;
+            _running = false;
         }
 
         public bool IsComplete()
         {
-            return _duration == 0.0f;
+            return _remainingTime == 0.0f;
         }
 
         public bool IsRunning()
         {
             return _running;
+        }
+
+        public int Iterations()
+        {
+            return _counter;
         }
 
         public override string ToString()
@@ -80,7 +86,7 @@ namespace JustCombat
 
             else
             {
-                result = _duration.ToString("0.0");
+                result = _remainingTime.ToString("0.0");
             }
 
             return result;
