@@ -9,6 +9,7 @@ namespace JustCombat.UI
         private static UserInterface _userInterface = null;
 
         private Player _player;
+        private Actor _target;
         private Texture2D _topBarBackpanel;
         private ActorInfoCard _playerInfoCard;
         private ActorInfoCard _targetInfoCard;
@@ -16,11 +17,12 @@ namespace JustCombat.UI
 
         //public CooldownTimer CoolDownTimer = new CooldownTimer();
 
-        protected UserInterface()
+        private UserInterface()
         {
             _player = Player.Instance();
             _topBarBackpanel = JustCombat.gameContent.TopBarBackpanel;
-            _playerInfoCard = new ActorInfoCard(_player);
+            _playerInfoCard = new ActorInfoCard(_player, new Vector2(16.0f, 4.0f));
+            _targetInfoCard = new ActorInfoCard(null); 
             _font = JustCombat.gameContent.FontConsolas13;
         }
 
@@ -34,14 +36,26 @@ namespace JustCombat.UI
             return _userInterface;
         }
 
-        public ActorInfoCard GetPlayerInfoCard()
+        public void ClearTarget()
         {
-            return _playerInfoCard;
+            _targetInfoCard.SetActor(null);
+        }
+
+        public ActorInfoCard GetTargetInfoCard()
+        {
+            return _targetInfoCard;
         }
 
         public void Update(GameTime gameTime)
         {
+            _target = (Actor)(JustCombat.TargetingSystem.GetCurrentTarget());
+
             _playerInfoCard.Update(gameTime);
+
+            if (_target != null)
+            {
+                _targetInfoCard.Update(gameTime);
+            }
 
             //CoolDownTimer.Update(gameTime);
         }
@@ -54,15 +68,21 @@ namespace JustCombat.UI
 
             _playerInfoCard.Draw(spriteBatch);
 
-            JustCombat.TargetingSystem.Draw(spriteBatch);
+            //JustCombat.TargetingSystem.Draw(spriteBatch);
+
+            if (_target != null)
+            {
+                _targetInfoCard.Draw(spriteBatch);
+            }
 
             spriteBatch.DrawString(_font, DateTime.Now.ToString(), new Vector2(550.0f, 10.0f), Color.White);
             spriteBatch.DrawString(_font, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(550.0f, 30.0f), Color.White);
 
             //spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(744.0f, 6.0f), Color.White);
             spriteBatch.DrawString(_font, "   Player State: " + _player.GetState().ToString(), new Vector2(800.0f, 10.0f), Color.White);
-            spriteBatch.DrawString(_font, "HealthBar State: " + _playerInfoCard.GetHealthBar().GetState().ToString(), new Vector2(800.0f, 30.0f), Color.White);
+            spriteBatch.DrawString(_font, "HealthBar State: " + _player.GetHealthBarState().ToString(), new Vector2(800.0f, 30.0f), Color.White);
             spriteBatch.DrawString(_font, "        Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(800.0f, 50.0f), Color.White);
+            spriteBatch.DrawString(_font, "  Taking Damage: " + _player._takingDamage.ToString(), new Vector2(800.0f, 70.0f), Color.White);
 
             //spriteBatch.DrawString(_font, "CD: " + CoolDownTimer.ToString(), new Vector2(550.0f, 50.0f), Color.White);
             spriteBatch.DrawString(_font, target, new Vector2(550.0f, 70.0f), Color.White);
