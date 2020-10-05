@@ -11,8 +11,8 @@ namespace JustCombat.Entities
 
         private Texture2D[] _wraithDirections;
 
-        public Wraith(string name, float x, float y, float width, float height, float scale, Direction heading, int hitPoints) :
-            base(name, x, y, width, height, scale, heading, hitPoints)
+        public Wraith(int level, string name, float x, float y, float width, float height, float scale, Direction heading, int hitPoints) :
+            base(level, name, x, y, width, height, scale, heading, hitPoints)
         {
             _wraithSprites = JustCombat.gameContent.WraithImage;
             _spriteSheet = new SpriteSheet(_wraithSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
