@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
@@ -225,44 +225,54 @@ namespace JustCombat
 
             CompareLastHitPoints();
 
-            if (_takingDamage)
+            if (!_alive)
             {
-                _actorState = ActorState.IN_COMBAT;
-                _healthState = HealthBarState.COMBAT;
-
-                bool timerComplete = _combatExitTimer.IsComplete();
-                int iterations = _combatExitTimer.Iterations();
-
-                if (timerComplete && (iterations > 0))
-                {
-                    _takingDamage = false;
-                }
-
-                if (!_combatExitTimer.IsRunning())
-                {
-                    _combatExitTimer.Start();
-                }
+                _actorState = ActorState.DEAD;
+                _healthState = HealthBarState.EMPTY;
+                _takingDamage = false;
             }
 
             else
             {
-                if (_hitPoints < _maxHitPoints)
+                if (_takingDamage)
                 {
-                    if (_combatExitTimer.IsComplete())
-                    {
-                        _actorState = ActorState.NORMAL;
-                        _healthState = HealthBarState.REGEN;
+                    _actorState = ActorState.IN_COMBAT;
+                    _healthState = HealthBarState.COMBAT;
 
-                        if (!_hitPointsTimer.IsRunning())
-                        {
-                            _hitPointsTimer.Start();
-                        }
+                    bool timerComplete = _combatExitTimer.IsComplete();
+                    int iterations = _combatExitTimer.Iterations();
+
+                    if (timerComplete && (iterations > 0))
+                    {
+                        _takingDamage = false;
+                    }
+
+                    if (!_combatExitTimer.IsRunning())
+                    {
+                        _combatExitTimer.Start();
                     }
                 }
 
-                if (_hitPoints == _maxHitPoints)
+                else
                 {
-                    _healthState = HealthBarState.FULL;
+                    if (_hitPoints < _maxHitPoints)
+                    {
+                        if (_combatExitTimer.IsComplete())
+                        {
+                            _actorState = ActorState.NORMAL;
+                            _healthState = HealthBarState.REGEN;
+
+                            if (!_hitPointsTimer.IsRunning())
+                            {
+                                _hitPointsTimer.Start();
+                            }
+                        }
+                    }
+
+                    if (_hitPoints == _maxHitPoints)
+                    {
+                        _healthState = HealthBarState.FULL;
+                    }
                 }
             }
         }
