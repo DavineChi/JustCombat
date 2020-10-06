@@ -310,7 +310,10 @@ namespace JustCombat
         {
             DrawPlayer(spriteBatch);
 
-            _boundingBox.Draw(spriteBatch);
+            if (JustCombat.UserInterface.InDebugMode())
+            {
+                _boundingBox.Draw(spriteBatch);
+            }
         }
 
         private void DrawPlayer(SpriteBatch spriteBatch)

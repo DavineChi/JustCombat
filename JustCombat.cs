@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
-using System;
 using System.Collections.Generic;
 
 namespace JustCombat
@@ -28,6 +27,7 @@ namespace JustCombat
         private SpriteFont _frizQuadFont;
         private TiledMap _gameMap;
         private TiledMapRenderer _gameMapRenderer;
+        private PrimRectangle _mapTransformBounds;
 
         public static CharacterPanel CharPanel;
         public static InventoryPanel InvPanel;
@@ -115,6 +115,8 @@ namespace JustCombat
             //EntityContainer.Add(Player.Instance());
             EntityContainer.Add(WraithOne);
             EntityContainer.Add(WraithTwo);
+
+            _mapTransformBounds = new PrimRectangle(300, 270, 600, 340, Color.Magenta, 1.0f, 0, false);
         }
 
         /// <summary>
@@ -146,6 +148,9 @@ namespace JustCombat
             _gameMapRenderer.Update(gameTime);
             _player.Update(gameTime);
 
+            WraithOne.Update(gameTime);
+            WraithTwo.Update(gameTime);
+
             TargetingSystem.Update(gameTime);
 
             UserInterface.Update(gameTime);
@@ -164,7 +169,12 @@ namespace JustCombat
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
             _gameMapRenderer.Draw();
-            
+
+            if (UserInterface.InDebugMode())
+            {
+                _mapTransformBounds.Draw(spriteBatch);
+            }
+
             _player.Draw(spriteBatch);
 
             if (JustCombat.InvPanel.IsDisplayed())

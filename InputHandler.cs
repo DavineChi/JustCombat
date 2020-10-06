@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
 {
@@ -163,6 +163,19 @@ namespace JustCombat
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 JustCombat.TargetingSystem.Release();
+            }
+
+            if (IsKeyPressed(Keys.F5))
+            {
+                if (JustCombat.UserInterface.InDebugMode())
+                {
+                    JustCombat.UserInterface.SetDebug(false);
+                }
+
+                else
+                {
+                    JustCombat.UserInterface.SetDebug(true);
+                }
             }
 
             if (RightButtonPressed())

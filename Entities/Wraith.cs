@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -35,16 +35,25 @@ namespace JustCombat.Entities
             }
         }
 
+        // TODO: implementation
         public override bool Move(float dx, float dy, bool isRunning)
         {
             throw new NotImplementedException();
         }
 
+        public void Update(GameTime gameTime)
+        {
+            this.QueryState();
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            _boundingBox.Draw(spriteBatch);
-
             spriteBatch.Draw(_wraithSprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
+
+            if (JustCombat.UserInterface.InDebugMode())
+            {
+                _boundingBox.Draw(spriteBatch);
+            }
         }
     }
 }
