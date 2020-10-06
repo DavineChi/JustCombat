@@ -1,5 +1,3 @@
-﻿using JustCombat.Entities;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
@@ -92,7 +90,34 @@ namespace JustCombat
 
             if (IsKeyPressed(Keys.T))
             {
-                player.Teleport(300.0f, 300.0f);
+                float heading = player.GetDirection().GetHeading();
+
+                float currentX = player.GetX();
+                float currentY = player.GetY();
+
+                float distance = 150.0f;
+
+                if (heading == 0)
+                {
+                    player.Teleport(currentX, (currentY - distance));
+                }
+
+                if (heading == 90)
+                {
+                    player.Teleport((currentX + distance), currentY);
+                }
+
+                if (heading == 180)
+                {
+                    player.Teleport(currentX, (currentY + distance));
+                }
+
+                if (heading == 270)
+                {
+                    player.Teleport((currentX - distance), currentY);
+                }
+
+                //player.Teleport(300.0f, 300.0f);
             }
 
             if (IsKeyPressed(Keys.G))
