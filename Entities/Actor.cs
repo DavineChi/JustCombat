@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
@@ -313,6 +313,8 @@ namespace JustCombat
         {
             this.SetX(x);
             this.SetY(y);
+            this.GetBoundingBox().GetPrimRectangle().SetX(x);
+            this.GetBoundingBox().GetPrimRectangle().SetY(y);
         }
 
         public bool MouseOver(MouseState state)
