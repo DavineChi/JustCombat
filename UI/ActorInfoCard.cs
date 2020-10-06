@@ -48,6 +48,9 @@ namespace JustCombat.UI
         public void SetActor(Actor actor)
         {
             _actor = actor;
+
+            _healthBar.SetActor(actor);
+            _manaBar.SetActor(actor);
         }
 
         public HealthBar GetHealthBar()
