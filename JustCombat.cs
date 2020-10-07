@@ -38,8 +38,6 @@ namespace JustCombat
         public static UserInterface UserInterface;
         public static TargetingSystem TargetingSystem;
 
-        private InfoPanel _testInfoPanel;
-
         public static List<Entity> EntityContainer = new List<Entity>();
 
         public static GraphicsDeviceManager graphics;
@@ -94,7 +92,7 @@ namespace JustCombat
             _player = Player.Instance();
             
             WraithOne = new Wraith(2, "Wraith One", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
-            WraithTwo = new Wraith(3, "Wraith Two", 420, 300, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
+            WraithTwo = new Wraith(3, "Snot Maggot", 420, 300, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
 
             WraithOne.SetAlignment(Actor.Alignment.NEUTRAL);
             WraithTwo.SetAlignment(Actor.Alignment.HOSTILE);
@@ -107,9 +105,7 @@ namespace JustCombat
             Cursor2[1] = _cursorSheet.GetTexture("sword", 1, 0);
 
             Cursor = Cursor2[0];
-
-            _testInfoPanel = new InfoPanel("Wraith", 998, (Constants.SCREEN_HEIGHT - 22), 200, 20, new Color(0.0f, 0.004f, 0.125f, 0.5f));
-
+            
             TargetingSystem = TargetingSystem.Instance();
 
             //EntityContainer.Add(Player.Instance());
@@ -193,8 +189,6 @@ namespace JustCombat
             //spriteBatch.Draw(Cursor, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
 
             UserInterface.Draw(spriteBatch);
-            
-            _testInfoPanel.Draw(spriteBatch);
 
             spriteBatch.Draw(Cursor, _cursorPosition, Color.White);
 
