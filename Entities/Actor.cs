@@ -230,49 +230,48 @@ namespace JustCombat
                 _actorState = ActorState.DEAD;
                 _healthState = HealthBarState.EMPTY;
                 _takingDamage = false;
+
+                return;
+            }
+
+            if (_takingDamage)
+            {
+                _actorState = ActorState.IN_COMBAT;
+                _healthState = HealthBarState.COMBAT;
+
+                bool timerComplete = _combatExitTimer.IsComplete();
+                int iterations = _combatExitTimer.Iterations();
+
+                if (timerComplete && (iterations > 0))
+                {
+                    _takingDamage = false;
+                }
+
+                if (!_combatExitTimer.IsRunning())
+                {
+                    _combatExitTimer.Start();
+                }
             }
 
             else
             {
-                if (_takingDamage)
+                if (_hitPoints < _maxHitPoints)
                 {
-                    _actorState = ActorState.IN_COMBAT;
-                    _healthState = HealthBarState.COMBAT;
-
-                    bool timerComplete = _combatExitTimer.IsComplete();
-                    int iterations = _combatExitTimer.Iterations();
-
-                    if (timerComplete && (iterations > 0))
+                    if (_combatExitTimer.IsComplete())
                     {
-                        _takingDamage = false;
-                    }
+                        _actorState = ActorState.NORMAL;
+                        _healthState = HealthBarState.REGEN;
 
-                    if (!_combatExitTimer.IsRunning())
-                    {
-                        _combatExitTimer.Start();
+                        if (!_hitPointsTimer.IsRunning())
+                        {
+                            _hitPointsTimer.Start();
+                        }
                     }
                 }
 
-                else
+                if (_hitPoints == _maxHitPoints)
                 {
-                    if (_hitPoints < _maxHitPoints)
-                    {
-                        if (_combatExitTimer.IsComplete())
-                        {
-                            _actorState = ActorState.NORMAL;
-                            _healthState = HealthBarState.REGEN;
-
-                            if (!_hitPointsTimer.IsRunning())
-                            {
-                                _hitPointsTimer.Start();
-                            }
-                        }
-                    }
-
-                    if (_hitPoints == _maxHitPoints)
-                    {
-                        _healthState = HealthBarState.FULL;
-                    }
+                    _healthState = HealthBarState.FULL;
                 }
             }
         }
@@ -333,6 +332,11 @@ namespace JustCombat
             }
 
             return result;
+        }
+
+        public override string ToString()
+        {
+            return "Level " + _level + " " + _name;
         }
     }
 }
