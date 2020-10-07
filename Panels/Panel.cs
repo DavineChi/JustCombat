@@ -10,8 +10,10 @@ namespace JustCombat
         protected float _y;
         protected float _width;
         protected float _height;
+        protected SpriteFont _font;
         protected Color _color;
         protected Texture2D _panel;
+        protected PrimRectangle _border;
         protected bool _displayed = false;
 
         public string GetID()        { return _id; }
@@ -50,6 +52,7 @@ namespace JustCombat
             _displayed = displayed;
         }
 
+        public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch spriteBatch);
     }
 }

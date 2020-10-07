@@ -21,6 +21,10 @@ namespace JustCombat.Panels
             _panel = PrimRectangle.Create(x, y, width, height, color);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_panel, new Vector2(_x, _y), Color.White);
