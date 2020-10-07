@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
 {
@@ -208,6 +208,8 @@ namespace JustCombat
                     {
                         // Show the attack / sword cursor...
                         JustCombat.Cursor = JustCombat.Cursor2[1];
+                        JustCombat.UserInterface.GetCursorInfoPanel().SetText(actor.ToString());
+                        JustCombat.UserInterface.GetCursorInfoPanel().SetDisplayed(true);
 
                         if (state.LeftButton == ButtonState.Pressed)
                         {
@@ -222,6 +224,8 @@ namespace JustCombat
                     {
                         // Show the select / glove cursor...
                         JustCombat.Cursor = JustCombat.Cursor2[0];
+                        JustCombat.UserInterface.GetCursorInfoPanel().SetText(string.Empty);
+                        JustCombat.UserInterface.GetCursorInfoPanel().SetDisplayed(false);
 
                         if (state.LeftButton == ButtonState.Pressed)
                         {
