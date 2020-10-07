@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using JustCombat.Common;
 
 namespace JustCombat
 {
@@ -133,51 +134,13 @@ namespace JustCombat
         public override bool Move(float dx, float dy, bool isRunning)
         {
             bool result = false; // TODO: for collision-detection
-            int[] newPositions = GetNewPosition(dx, dy, isRunning);
+            int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
 
             this.SetX(newPositions[0]);
             this.SetY(newPositions[1]);
 
             _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
             _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
-
-            return result;
-        }
-
-        private int[] GetNewPosition(float dx, float dy, bool isRunning)
-        {
-            int[] result = new int[2];
-
-            float newX = _x + dx;
-            float newY = _y + dy;
-
-            if (isRunning)
-            {
-                newX = (newX + (dx * Constants.PLAYER_SPEED_RUN));
-                newY = (newY + (dy * Constants.PLAYER_SPEED_RUN));
-            }
-
-            else
-            {
-                newX = (newX + (dx * Constants.PLAYER_SPEED_WALK));
-                newY = (newY + (dy * Constants.PLAYER_SPEED_WALK));
-            }
-
-            // Round up or down depending on the direction moved.
-            if (dx > 0 || dy > 0)
-            {
-                newX = (int)(Math.Ceiling(newX));
-                newY = (int)(Math.Ceiling(newY));
-            }
-
-            else
-            {
-                newX = (int)(Math.Floor(newX));
-                newY = (int)(Math.Floor(newY));
-            }
-
-            result[0] = (int)(newX);
-            result[1] = (int)(newY);
 
             return result;
         }
