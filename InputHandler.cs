@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input;
 
 namespace JustCombat
 {
@@ -214,6 +214,8 @@ namespace JustCombat
                             JustCombat.TargetingSystem.Acquire(actor);
                             break;
                         }
+
+                        return;
                     }
 
                     else
