@@ -14,7 +14,7 @@ namespace JustCombat.Entities
         public Wraith(int level, string name, float x, float y, float width, float height, float scale, Direction heading, int hitPoints) :
             base(level, name, x, y, width, height, scale, heading, hitPoints)
         {
-            _wraithSprites = JustCombat.gameContent.WraithImage;
+            _wraithSprites = JustCombat.GameContent.WraithImage;
             _spriteSheet = new SpriteSheet(_wraithSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
             _wraithDirections = new Texture2D[4];
 
@@ -33,12 +33,6 @@ namespace JustCombat.Entities
                 _wraithDirections[i] = _spriteSheet.GetTexture(0, (counter), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
                 counter = counter + 1;
             }
-        }
-
-        // TODO: implementation
-        public override bool Move(float dx, float dy, bool isRunning)
-        {
-            throw new NotImplementedException();
         }
 
         public void Update(GameTime gameTime)
