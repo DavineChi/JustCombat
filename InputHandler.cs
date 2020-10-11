@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using JustCombat.Common;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using System;
 
 namespace JustCombat
 {
@@ -35,7 +39,7 @@ namespace JustCombat
                   !(_previousMouseState.RightButton == ButtonState.Pressed);
         }
 
-        public static void HandleInput()
+        public static void HandleInput(OrthographicCamera camera)
         {
             UpdateKeyboardState();
             UpdateMouseState();
@@ -45,7 +49,7 @@ namespace JustCombat
             Player player = Player.Instance();
             
             bool isRunning = Keyboard.GetState().IsKeyDown(Keys.LeftShift);
-
+            
             if (IsValidMovementKey(keyboardState))
             {
                 int dx = 0;
@@ -58,24 +62,59 @@ namespace JustCombat
                 }
 
                 // East
-                if (Keyboard.GetState().IsKeyDown(Keys.D))
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
                 {
                     dx = 1;
                 }
 
                 // South
-                if (Keyboard.GetState().IsKeyDown(Keys.S))
+                else if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
                     dy = 1;
                 }
 
                 // West
-                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                else if (Keyboard.GetState().IsKeyDown(Keys.A))
                 {
                     dx = -1;
                 }
+                
+                BoundingBox bb = Player.Instance().GetBoundingBox();
+                bool qualifies = !(bb.Intersects(JustCombat.MapTransformBounds));
 
-                player.Move(dx, dy, isRunning);
+                if (qualifies)
+                {
+                    int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
+
+                    int oldX = (int)(player.GetX());
+                    int oldY = (int)(player.GetY());
+                    int newX = newPositions[0];
+                    int newY = newPositions[1];
+
+                    int diffX = (oldX - newX);
+                    int diffY = (oldY - newY);
+
+                    if (isRunning)
+                    {
+                        camera.Move(new Vector2(dx * Constants.PLAYER_SPEED_RUN, dy * Constants.PLAYER_SPEED_RUN));
+                    }
+
+                    else
+                    {
+                        camera.Move(new Vector2(dx, dy));
+                    }
+
+                    player.SetX(player.GetX() + diffX);
+                    player.SetY(player.GetY() + diffY);
+
+                    player.GetBoundingBox().GetPrimRectangle().SetX(player.GetX() + diffX);
+                    player.GetBoundingBox().GetPrimRectangle().SetY(player.GetY() + diffY);
+                }
+
+                else
+                {
+                    player.Move(dx, dy, isRunning);
+                }
             }
 
             if (IsKeyPressed(Keys.OemOpenBrackets))
@@ -90,34 +129,7 @@ namespace JustCombat
 
             if (IsKeyPressed(Keys.T))
             {
-                float heading = player.GetDirection().GetHeading();
-
-                float currentX = player.GetX();
-                float currentY = player.GetY();
-
-                float distance = 150.0f;
-
-                if (heading == 0)
-                {
-                    player.Teleport(currentX, (currentY - distance));
-                }
-
-                if (heading == 90)
-                {
-                    player.Teleport((currentX + distance), currentY);
-                }
-
-                if (heading == 180)
-                {
-                    player.Teleport(currentX, (currentY + distance));
-                }
-
-                if (heading == 270)
-                {
-                    player.Teleport((currentX - distance), currentY);
-                }
-
-                //player.Teleport(300.0f, 300.0f);
+                Blink();
             }
 
             if (IsKeyPressed(Keys.G))
@@ -191,6 +203,38 @@ namespace JustCombat
                         victim.RemoveHitPoints(13);
                     }
                 }
+            }
+        }
+
+        private static void Blink()
+        {
+            Player player = Player.Instance();
+
+            float heading = player.GetDirection().GetHeading();
+
+            float currentX = player.GetX();
+            float currentY = player.GetY();
+
+            float distance = 150.0f;
+
+            if (heading == 0)
+            {
+                player.Teleport(currentX, (currentY - distance));
+            }
+
+            if (heading == 90)
+            {
+                player.Teleport((currentX + distance), currentY);
+            }
+
+            if (heading == 180)
+            {
+                player.Teleport(currentX, (currentY + distance));
+            }
+
+            if (heading == 270)
+            {
+                player.Teleport((currentX - distance), currentY);
             }
         }
 
