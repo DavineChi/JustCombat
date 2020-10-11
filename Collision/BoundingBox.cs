@@ -24,6 +24,31 @@ namespace JustCombat
             _primRectangle = new PrimRectangle(x, y, scaledWidth, scaledHeight);
         }
         
+        public bool Intersects(BoundingBox other)
+        {
+            bool result = false;
+
+            Rectangle candidate = other.GetRectangle();
+
+            float otherX = candidate.X;
+            float otherY = candidate.Y;
+            float otherW = candidate.Width;
+            float otherH = candidate.Height;
+
+            float thisX = _rectangle.X;
+            float thisY = _rectangle.Y;
+            float thisW = _rectangle.Width;
+            float thisH = _rectangle.Height;
+
+            if ((otherX + otherW) >= _primRectangle.GetX() && otherX <= (_primRectangle.GetX() + _primRectangle.GetWidth()) &&
+                (otherY + otherH) >= _primRectangle.GetY() && otherY <= (_primRectangle.GetY() + _primRectangle.GetHeight()))
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
         public bool Intersects(PrimShape other)
         {
             if (other.GetType() == typeof(PrimRectangle))
