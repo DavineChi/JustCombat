@@ -34,10 +34,10 @@ namespace JustCombat.UI
             _xPosition = (int)(_position.X);
             _yPosition = (int)(_position.Y);
 
-            _card = JustCombat.gameContent.ActorInfoCard;
+            _card = JustCombat.GameContent.ActorInfoCard;
             _healthBar = new HealthBar((_xPosition + 8), 66, FILL_BAR_WIDTH, FILL_BAR_HEIGHT, actor);
             _manaBar = new ManaBar((_xPosition + 8), 80, FILL_BAR_WIDTH, FILL_BAR_HEIGHT, actor);
-            _font = JustCombat.gameContent.FontConsolas13;
+            _font = JustCombat.GameContent.FontConsolas13;
         }
 
         public Actor GetActor()

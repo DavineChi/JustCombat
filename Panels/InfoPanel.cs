@@ -52,7 +52,7 @@ namespace JustCombat.Panels
                 }
 
                 spriteBatch.Draw(_panel, new Vector2(_x, _y), Color.White);
-                spriteBatch.DrawString(JustCombat.gameContent.FontConsolas10, _text, new Vector2(_x + 4, _y + 4), Color.White);
+                spriteBatch.DrawString(JustCombat.GameContent.FontConsolas11, _text, new Vector2(_x + 6, _y + 6), Color.White);
             }
         }
     }
