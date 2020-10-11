@@ -35,9 +35,9 @@ namespace JustCombat
         private bool _moving;
 
         protected Player(string name, float x, float y, float width, float height, Direction heading) :
-            base(name, x, y, width, height, Constants.SPRITE_SCALE, heading)
+            base(name, x, y, width, height, 1.0f, heading)
         {
-            _playerSprites = JustCombat.gameContent.FumikoImage;
+            _playerSprites = JustCombat.GameContent.FumikoImage;
             _spriteSheet = new SpriteSheet(_playerSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
             _playerDirections = new Texture2D[4];
 
@@ -66,7 +66,10 @@ namespace JustCombat
         {
             if (_player == null)
             {
-                _player = new Player("Ayrn", 340.0f, 280.0f, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, new Direction(180.0f));
+                float scaledWidth = Constants.PLAYER_WIDTH * Constants.SPRITE_SCALE;
+                float scaledHeight = Constants.PLAYER_HEIGHT * Constants.SPRITE_SCALE;
+
+                _player = new Player("Ayrn", 340.0f, 280.0f, scaledWidth, scaledHeight, new Direction(180.0f));
             }
 
             return _player;
