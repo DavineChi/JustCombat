@@ -43,6 +43,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\Util.cs" />
     <Compile Include="CooldownTimer.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="Panels\InfoPanel.cs" />
