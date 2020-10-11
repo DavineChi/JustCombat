@@ -4,6 +4,7 @@ using JustCombat.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using System.Collections.Generic;
@@ -16,9 +17,7 @@ namespace JustCombat
     public class JustCombat : Game
     {
         private Player _player;
-
-        private TargetingSystem _targetingSystem;
-
+        
         public static Texture2D Cursor;
         public static Texture2D[] Cursor2 = new Texture2D[2];
         private SpriteSheet _cursorSheet;
@@ -27,7 +26,10 @@ namespace JustCombat
         private SpriteFont _frizQuadFont;
         private TiledMap _gameMap;
         private TiledMapRenderer _gameMapRenderer;
-        private PrimRectangle _mapTransformBounds;
+
+        public static BoundingBox ObstacleTest;
+        public static BoundingBox MapTransformBounds;
+        public static OrthographicCamera WorldCamera;
 
         public static CharacterPanel CharPanel;
         public static InventoryPanel InvPanel;
@@ -41,7 +43,7 @@ namespace JustCombat
         public static List<Entity> EntityContainer = new List<Entity>();
 
         public static GraphicsDeviceManager graphics;
-        public static GameContent gameContent;
+        public static GameContent GameContent;
 
         public SpriteBatch spriteBatch;
 
@@ -65,7 +67,7 @@ namespace JustCombat
 
             base.Initialize();
 
-            _gameMap = gameContent.GameMap;
+            _gameMap = GameContent.GameMap;
             _gameMapRenderer = new TiledMapRenderer(GraphicsDevice, _gameMap);
         }
 
@@ -79,7 +81,7 @@ namespace JustCombat
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            gameContent = new GameContent(Content);
+            GameContent = new GameContent(Content);
 
             graphics.PreferredBackBufferWidth = Constants.SCREEN_WIDTH;
             graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
@@ -88,7 +90,7 @@ namespace JustCombat
             CharPanel = new CharacterPanel("Character", 20, 20, 220, 440, Color.Wheat);
             InvPanel = new InventoryPanel("Inventory", 960, 440, 220, 220, Color.CornflowerBlue);
 
-            _frizQuadFont = gameContent.FontFrizQuad;
+            _frizQuadFont = GameContent.FontFrizQuad;
             _player = Player.Instance();
             
             WraithOne = new Wraith(2, "Wraith One", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
@@ -99,7 +101,7 @@ namespace JustCombat
 
             UserInterface = UserInterface.Instance();
 
-            _cursorSheet = new SpriteSheet(gameContent.Cursor, 48, 48);
+            _cursorSheet = new SpriteSheet(GameContent.Cursor, 48, 48);
 
             Cursor2[0] = _cursorSheet.GetTexture("glove", 0, 0);
             Cursor2[1] = _cursorSheet.GetTexture("sword", 1, 0);
@@ -112,7 +114,13 @@ namespace JustCombat
             EntityContainer.Add(WraithOne);
             EntityContainer.Add(WraithTwo);
 
-            _mapTransformBounds = new PrimRectangle(300, 270, 600, 340, Color.Magenta, 1.0f, 0, false);
+            ObstacleTest = new BoundingBox(590, 390, 50, 50);
+            MapTransformBounds = new BoundingBox(300, 270, 600, 340);
+
+            ObstacleTest.GetPrimRectangle().SetColor(Color.Red);
+            MapTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
+
+            WorldCamera = new OrthographicCamera(GraphicsDevice);
         }
 
         /// <summary>
@@ -138,7 +146,7 @@ namespace JustCombat
             
             _cursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-            InputHandler.HandleInput();
+            InputHandler.HandleInput(WorldCamera);
             InputHandler.OnMouseHover();
 
             _gameMapRenderer.Update(gameTime);
@@ -150,7 +158,7 @@ namespace JustCombat
             TargetingSystem.Update(gameTime);
 
             UserInterface.Update(gameTime);
-
+            
             base.Update(gameTime);
         }
 
@@ -164,12 +172,14 @@ namespace JustCombat
             
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
-            _gameMapRenderer.Draw();
+            _gameMapRenderer.Draw(WorldCamera.GetViewMatrix(), null, null, 0);
 
             if (UserInterface.InDebugMode())
             {
-                _mapTransformBounds.Draw(spriteBatch);
+                MapTransformBounds.Draw(spriteBatch);
             }
+
+            ObstacleTest.Draw(spriteBatch);
 
             _player.Draw(spriteBatch);
 
