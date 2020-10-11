@@ -44,5 +44,23 @@ namespace JustCombat.Common
 
             return result;
         }
+
+        public static bool ValidWorldLocation(int[] positions, int width, int height)
+        {
+            bool result = true;
+
+            int futureX = positions[0];
+            int futureY = positions[1];
+
+            BoundingBox candidate = new BoundingBox(futureX, futureY, width, height);
+            BoundingBox obstacle = JustCombat.ObstacleTest;
+
+            if (candidate.Intersects(obstacle))
+            {
+                result = false;
+            }
+
+            return result;
+        }
     }
 }
