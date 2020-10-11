@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Input;
+using JustCombat.Common;
 
 namespace JustCombat
 {
@@ -56,7 +57,33 @@ namespace JustCombat
             _takingDamage = false;
         }
 
-        public abstract bool Move(float dx, float dy, bool isRunning);
+        public bool Move(float dx, float dy, bool isRunning)
+        {
+            bool validLocation = false;
+
+            int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
+
+            validLocation = Util.ValidWorldLocation(newPositions, (int)(_width), (int)(_height));
+
+            if (validLocation)
+            {
+                int oldX = (int)(_x);
+                int oldY = (int)(_y);
+                int newX = newPositions[0];
+                int newY = newPositions[1];
+
+                int diffX = (oldX - newX);
+                int diffY = (oldY - newY);
+
+                this.SetX(newPositions[0]);
+                this.SetY(newPositions[1]);
+
+                _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
+                _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
+            }
+
+            return validLocation;
+        }
 
         public bool Intersects(BoundingBox other)
         {

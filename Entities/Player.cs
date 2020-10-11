@@ -131,20 +131,6 @@ namespace JustCombat
             // TODO: set player experience points
         }
 
-        public override bool Move(float dx, float dy, bool isRunning)
-        {
-            bool result = false; // TODO: for collision-detection
-            int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
-
-            this.SetX(newPositions[0]);
-            this.SetY(newPositions[1]);
-
-            _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
-            _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
-
-            return result;
-        }
-
         public void Update(GameTime gameTime)
         {
             KeyboardState keyState = Keyboard.GetState();
