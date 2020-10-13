@@ -68,7 +68,7 @@ namespace JustCombat
                 float scaledWidth = Constants.PLAYER_WIDTH * Constants.SPRITE_SCALE;
                 float scaledHeight = Constants.PLAYER_HEIGHT * Constants.SPRITE_SCALE;
 
-                _player = new Player("Ayrn", 340.0f, 280.0f, scaledWidth, scaledHeight, new Direction(180.0f));
+                _player = new Player("Ayrn", 576.0f, 408.0f, scaledWidth, scaledHeight, new Direction(180.0f));
             }
 
             return _player;

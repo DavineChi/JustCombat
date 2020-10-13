@@ -115,7 +115,7 @@ namespace JustCombat
             EntityContainer.Add(WraithTwo);
 
             ObstacleTest = new BoundingBox(590, 390, 50, 50);
-            MapTransformBounds = new BoundingBox(348, 318, 504, 244);
+            MapTransformBounds = new BoundingBox(480, 370, 240, 135);
 
             ObstacleTest.GetPrimRectangle().SetColor(Color.Red);
             MapTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
@@ -179,7 +179,7 @@ namespace JustCombat
                 MapTransformBounds.Draw(spriteBatch);
             }
 
-            ObstacleTest.Draw(spriteBatch);
+            //ObstacleTest.Draw(spriteBatch);
 
             _player.Draw(spriteBatch);
 
