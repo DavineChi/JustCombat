@@ -53,14 +53,14 @@ namespace JustCombat.Common
             int futureY = positions[1];
 
             BoundingBox candidate = new BoundingBox(futureX, futureY, width, height);
-            BoundingBox obstacle = JustCombat.ObstacleTest;
+            BoundingBox obstacle = JustCombat.MapTransformBounds;
 
             if (candidate.Intersects(obstacle))
             {
                 result = false;
             }
 
-            return result;
+            return !result;
         }
     }
 }

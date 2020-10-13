@@ -57,32 +57,24 @@ namespace JustCombat
             _takingDamage = false;
         }
 
-        public bool Move(float dx, float dy, bool isRunning)
+        public void Move(float dx, float dy, bool isRunning)
         {
-            bool validLocation = false;
-
             int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
+            
+            this.SetX(newPositions[0]);
+            this.SetY(newPositions[1]);
 
-            validLocation = Util.ValidWorldLocation(newPositions, (int)(_width), (int)(_height));
+            _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
+            _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
+        }
 
-            if (validLocation)
-            {
-                int oldX = (int)(_x);
-                int oldY = (int)(_y);
-                int newX = newPositions[0];
-                int newY = newPositions[1];
+        public void Move(int[] dxdy, bool isRunning)
+        {
+            this.SetX(dxdy[0]);
+            this.SetY(dxdy[1]);
 
-                int diffX = (oldX - newX);
-                int diffY = (oldY - newY);
-
-                this.SetX(newPositions[0]);
-                this.SetY(newPositions[1]);
-
-                _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
-                _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
-            }
-
-            return validLocation;
+            _boundingBox.GetPrimRectangle().SetX(dxdy[0]);
+            _boundingBox.GetPrimRectangle().SetY(dxdy[1]);
         }
 
         public bool Intersects(BoundingBox other)

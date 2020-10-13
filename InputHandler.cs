@@ -39,7 +39,7 @@ namespace JustCombat
                   !(_previousMouseState.RightButton == ButtonState.Pressed);
         }
 
-        public static void HandleInput(OrthographicCamera camera)
+        public static void HandleInput()
         {
             UpdateKeyboardState();
             UpdateMouseState();
@@ -62,59 +62,24 @@ namespace JustCombat
                 }
 
                 // East
-                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                if (Keyboard.GetState().IsKeyDown(Keys.D))
                 {
                     dx = 1;
                 }
 
                 // South
-                else if (Keyboard.GetState().IsKeyDown(Keys.S))
+                if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
                     dy = 1;
                 }
 
                 // West
-                else if (Keyboard.GetState().IsKeyDown(Keys.A))
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
                 {
                     dx = -1;
                 }
-                
-                BoundingBox bb = Player.Instance().GetBoundingBox();
-                bool qualifies = !(bb.Intersects(JustCombat.MapTransformBounds));
 
-                if (qualifies)
-                {
-                    int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
-
-                    int oldX = (int)(player.GetX());
-                    int oldY = (int)(player.GetY());
-                    int newX = newPositions[0];
-                    int newY = newPositions[1];
-
-                    int diffX = (oldX - newX);
-                    int diffY = (oldY - newY);
-
-                    if (isRunning)
-                    {
-                        camera.Move(new Vector2(dx * Constants.PLAYER_SPEED_RUN, dy * Constants.PLAYER_SPEED_RUN));
-                    }
-
-                    else
-                    {
-                        camera.Move(new Vector2(dx, dy));
-                    }
-
-                    player.SetX(player.GetX() + diffX);
-                    player.SetY(player.GetY() + diffY);
-
-                    player.GetBoundingBox().GetPrimRectangle().SetX(player.GetX() + diffX);
-                    player.GetBoundingBox().GetPrimRectangle().SetY(player.GetY() + diffY);
-                }
-
-                else
-                {
-                    player.Move(dx, dy, isRunning);
-                }
+                InputHandler.TranslateMovement(dx, dy, isRunning);
             }
 
             if (IsKeyPressed(Keys.OemOpenBrackets))
@@ -286,6 +251,37 @@ namespace JustCombat
                     state.IsKeyDown(Keys.A) ||
                     state.IsKeyDown(Keys.S) ||
                     state.IsKeyDown(Keys.D));
+        }
+
+        private static void TranslateMovement(float dx, float dy, bool isRunning)
+        {
+            Player player = Player.Instance();
+            OrthographicCamera camera = JustCombat.WorldCamera;
+
+            bool validLocation = false;
+
+            int oldX = (int)(player.GetX());
+            int oldY = (int)(player.GetY());
+
+            int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
+
+            validLocation = Util.ValidWorldLocation(newPositions, (int)(player.GetWidth()), (int)(player.GetHeight()));
+
+            if (validLocation)
+            {
+                player.Move(newPositions, isRunning);
+            }
+
+            else
+            {
+                int newX = newPositions[0];
+                int newY = newPositions[1];
+
+                int diffX = (oldX - newX) * (-1);
+                int diffY = (oldY - newY) * (-1);
+
+                camera.Move(new Vector2(diffX, diffY));
+            }
         }
     }
 }

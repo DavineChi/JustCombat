@@ -115,7 +115,7 @@ namespace JustCombat
             EntityContainer.Add(WraithTwo);
 
             ObstacleTest = new BoundingBox(590, 390, 50, 50);
-            MapTransformBounds = new BoundingBox(300, 270, 600, 340);
+            MapTransformBounds = new BoundingBox(348, 318, 504, 244);
 
             ObstacleTest.GetPrimRectangle().SetColor(Color.Red);
             MapTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
@@ -146,7 +146,7 @@ namespace JustCombat
             
             _cursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-            InputHandler.HandleInput(WorldCamera);
+            InputHandler.HandleInput();
             InputHandler.OnMouseHover();
 
             _gameMapRenderer.Update(gameTime);
