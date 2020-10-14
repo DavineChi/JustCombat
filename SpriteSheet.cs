@@ -23,7 +23,7 @@ namespace JustCombat
 
         public static Texture2D GetTexture(string name, Texture2D texture, int x, int y, int width, int height)
         {
-            Texture2D result = new Texture2D(JustCombat.graphics.GraphicsDevice, width, height);
+            Texture2D result = new Texture2D(JustCombat.GraphicsManager.GraphicsDevice, width, height);
             Rectangle cropRectangle = new Rectangle((x * width), (y * height), width, height);
             Color[] colorData = new Color[width * height];
 

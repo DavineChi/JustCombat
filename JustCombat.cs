@@ -21,35 +21,29 @@ namespace JustCombat
         public static Texture2D Cursor;
         public static Texture2D[] Cursor2 = new Texture2D[2];
         private SpriteSheet _cursorSheet;
-        private Vector2 _cursorPosition;
 
         private SpriteFont _frizQuadFont;
         private TiledMap _gameMap;
-        private TiledMapRenderer _gameMapRenderer;
 
+        public static Vector2 CursorPosition;
+        public static TiledMapRenderer GameMapRenderer;
         public static BoundingBox ObstacleTest;
         public static BoundingBox MapTransformBounds;
         public static OrthographicCamera WorldCamera;
-
         public static CharacterPanel CharPanel;
         public static InventoryPanel InvPanel;
-
         public static Wraith WraithOne;
         public static Wraith WraithTwo;
-
         public static UserInterface UserInterface;
         public static TargetingSystem TargetingSystem;
-
         public static List<Entity> EntityContainer = new List<Entity>();
-
-        public static GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager GraphicsManager;
         public static GameContent GameContent;
-
         public SpriteBatch spriteBatch;
 
         public JustCombat()
         {
-            graphics = new GraphicsDeviceManager(this);
+            GraphicsManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -68,7 +62,7 @@ namespace JustCombat
             base.Initialize();
 
             _gameMap = GameContent.GameMap;
-            _gameMapRenderer = new TiledMapRenderer(GraphicsDevice, _gameMap);
+            GameMapRenderer = new TiledMapRenderer(GraphicsDevice, _gameMap);
         }
 
         /// <summary>
@@ -83,9 +77,9 @@ namespace JustCombat
             // TODO: use this.Content to load your game content here
             GameContent = new GameContent(Content);
 
-            graphics.PreferredBackBufferWidth = Constants.SCREEN_WIDTH;
-            graphics.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
-            graphics.ApplyChanges();
+            GraphicsManager.PreferredBackBufferWidth = Constants.SCREEN_WIDTH;
+            GraphicsManager.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
+            GraphicsManager.ApplyChanges();
 
             CharPanel = new CharacterPanel("Character", 20, 20, 220, 440, Color.Wheat);
             InvPanel = new InventoryPanel("Inventory", 960, 440, 220, 220, Color.CornflowerBlue);
@@ -144,12 +138,12 @@ namespace JustCombat
             //    Exit();
             //}
             
-            _cursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            CursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
             InputHandler.HandleInput();
             InputHandler.OnMouseHover();
 
-            _gameMapRenderer.Update(gameTime);
+            GameMapRenderer.Update(gameTime);
             _player.Update(gameTime);
 
             WraithOne.Update(gameTime);
@@ -169,38 +163,10 @@ namespace JustCombat
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            
+
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
-            _gameMapRenderer.Draw(WorldCamera.GetViewMatrix(), null, null, 0);
-
-            if (UserInterface.InDebugMode())
-            {
-                MapTransformBounds.Draw(spriteBatch);
-            }
-
-            //ObstacleTest.Draw(spriteBatch);
-
-            _player.Draw(spriteBatch);
-
-            if (JustCombat.InvPanel.IsDisplayed())
-            {
-                InvPanel.Draw(spriteBatch);
-            }
-
-            if (JustCombat.CharPanel.IsDisplayed())
-            {
-                CharPanel.Draw(spriteBatch);
-            }
-
-            WraithOne.Draw(spriteBatch);
-            WraithTwo.Draw(spriteBatch);
-
-            //spriteBatch.Draw(Cursor, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
-
-            UserInterface.Draw(spriteBatch);
-
-            spriteBatch.Draw(Cursor, _cursorPosition, Color.White);
+            DrawOrderManager.Draw(spriteBatch);
 
             spriteBatch.End();
 

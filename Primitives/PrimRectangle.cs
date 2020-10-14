@@ -64,7 +64,7 @@ namespace JustCombat
         {
             Texture2D result;
 
-            GraphicsDevice graphicsDevice = JustCombat.graphics.GraphicsDevice;
+            GraphicsDevice graphicsDevice = JustCombat.GraphicsManager.GraphicsDevice;
             Rectangle rectangle = new Rectangle(x, y, width, height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
 
