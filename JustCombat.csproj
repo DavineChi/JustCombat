@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Common\Util.cs" />
     <Compile Include="CooldownTimer.cs" />
+    <Compile Include="DrawOrderManager.cs" />
+    <Compile Include="EntityBag.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="Panels\InfoPanel.cs" />
     <Compile Include="Spells\Fireball.cs" />
