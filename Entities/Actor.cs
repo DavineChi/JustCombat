@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Input;
 using JustCombat.Common;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace JustCombat
 {
@@ -12,6 +14,9 @@ namespace JustCombat
         public enum ActorState { NORMAL, RESTED, IN_COMBAT, DEAD };
         public enum HealthBarState { EMPTY, REGEN, FULL, COMBAT };
         public enum Alignment { FRIENDLY, NEUTRAL, HOSTILE };
+
+        protected Texture2D _sprites;
+        protected SpriteSheet _spriteSheet;
 
         protected int _level;
         protected ActorState _actorState;
@@ -351,6 +356,16 @@ namespace JustCombat
             }
 
             return result;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_sprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
+
+            if (JustCombat.UserInterface.InDebugMode())
+            {
+                _boundingBox.Draw(spriteBatch);
+            }
         }
 
         public override string ToString()

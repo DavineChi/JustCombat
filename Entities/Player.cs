@@ -13,10 +13,7 @@ namespace JustCombat
         private const int ANIMATION_SPEED_WALKING = 180;
         private const int ANIMATION_SPEED_RUNNING = 130;
         private const int ANIMATION_SPEED_IDLE = 80;
-
-        private Texture2D _playerSprites;
-        private SpriteSheet _spriteSheet;
-
+        
         private Texture2D _currentDirection;
         private Texture2D[] _playerDirections;
 
@@ -36,8 +33,8 @@ namespace JustCombat
         protected Player(string name, float x, float y, float width, float height, Direction heading) :
             base(name, x, y, width, height, 1.0f, heading)
         {
-            _playerSprites = JustCombat.GameContent.FumikoImage;
-            _spriteSheet = new SpriteSheet(_playerSprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+            _sprites = JustCombat.GameContent.FumikoImage;
+            _spriteSheet = new SpriteSheet(_sprites, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
             _playerDirections = new Texture2D[4];
 
             _boundingBox.GetPrimRectangle().SetColor(Color.Green);
@@ -257,7 +254,7 @@ namespace JustCombat
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public new void Draw(SpriteBatch spriteBatch)
         {
             DrawPlayer(spriteBatch);
 
