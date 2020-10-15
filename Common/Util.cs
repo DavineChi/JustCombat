@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JustCombat.Collision;
+using JustCombat.Entities;
+using System;
 
 namespace JustCombat.Common
 {

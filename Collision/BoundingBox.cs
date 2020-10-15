@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
 
-namespace JustCombat
+namespace JustCombat.Collision
 {
     public class BoundingBox : ICollision
     {

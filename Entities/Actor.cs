@@ -4,7 +4,7 @@ using JustCombat.Common;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace JustCombat
+namespace JustCombat.Entities
 {
     public abstract class Actor : Entity, IEventHandler
     {
@@ -49,7 +49,7 @@ namespace JustCombat
             _y = y;
             _width = width;
             _height = height;
-            _boundingBox = new BoundingBox(x, y, width, height, scale);
+            _boundingBox = new Collision.BoundingBox(x, y, width, height, scale);
             _hitPoints = hitPoints;
             _previousHitPoints = _hitPoints;
             _maxHitPoints = _hitPoints;
@@ -82,7 +82,7 @@ namespace JustCombat
             _boundingBox.GetPrimRectangle().SetY(dxdy[1]);
         }
 
-        public bool Intersects(BoundingBox other)
+        public bool Intersects(Collision.BoundingBox other)
         {
             return _boundingBox.Intersects(other.GetPrimRectangle());
         }

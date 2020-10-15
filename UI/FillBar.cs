@@ -1,4 +1,5 @@
-﻿
+﻿using JustCombat.Entities;
+
 namespace JustCombat.UI
 {
     public class FillBar

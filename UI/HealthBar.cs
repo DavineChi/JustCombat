@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JustCombat.Entities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace JustCombat.UI

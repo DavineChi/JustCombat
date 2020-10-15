@@ -1,4 +1,5 @@
-﻿using JustCombat.Panels;
+﻿using JustCombat.Entities;
+using JustCombat.Panels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -83,7 +84,7 @@ namespace JustCombat.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            BoundingBox bb = Player.Instance().GetBoundingBox();
+            Collision.BoundingBox bb = Player.Instance().GetBoundingBox();
             bool intersectsResult = !(bb.Intersects(JustCombat.MapTransformBounds));
             
             MouseState mouseState = Mouse.GetState();

@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 
-namespace JustCombat
+namespace JustCombat.Collision
 {
     public class BoundingCircle : ICollision
     {

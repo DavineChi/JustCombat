@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JustCombat.Entities;
+using System;
 
 namespace JustCombat
 {

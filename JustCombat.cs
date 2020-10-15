@@ -1,3 +1,4 @@
+using JustCombat.Collision;
 using JustCombat.Entities;
 using JustCombat.Panels;
 using JustCombat.UI;
@@ -17,18 +18,18 @@ namespace JustCombat
     public class JustCombat : Game
     {
         private Player _player;
-        
-        public static Texture2D Cursor;
-        public static Texture2D[] Cursor2 = new Texture2D[2];
-        private SpriteSheet _cursorSheet;
 
+        private SpriteBatch spriteBatch;
+        private SpriteSheet _cursorSheet;
         private SpriteFont _frizQuadFont;
         private TiledMap _gameMap;
 
+        public static Texture2D Cursor;
+        public static Texture2D[] Cursor2 = new Texture2D[2];
         public static Vector2 CursorPosition;
         public static TiledMapRenderer GameMapRenderer;
-        public static BoundingBox ObstacleTest;
-        public static BoundingBox MapTransformBounds;
+        public static Collision.BoundingBox ObstacleTest;
+        public static Collision.BoundingBox MapTransformBounds;
         public static OrthographicCamera WorldCamera;
         public static CharacterPanel CharPanel;
         public static InventoryPanel InvPanel;
@@ -39,7 +40,6 @@ namespace JustCombat
         public static List<Entity> EntityContainer = new List<Entity>();
         public static GraphicsDeviceManager GraphicsManager;
         public static GameContent GameContent;
-        public SpriteBatch spriteBatch;
 
         public JustCombat()
         {
@@ -108,8 +108,8 @@ namespace JustCombat
             EntityContainer.Add(WraithOne);
             EntityContainer.Add(WraithTwo);
 
-            ObstacleTest = new BoundingBox(590, 390, 50, 50);
-            MapTransformBounds = new BoundingBox(480, 370, 240, 135);
+            ObstacleTest = new Collision.BoundingBox(590, 390, 50, 50);
+            MapTransformBounds = new Collision.BoundingBox(480, 370, 240, 135);
 
             ObstacleTest.GetPrimRectangle().SetColor(Color.Red);
             MapTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);

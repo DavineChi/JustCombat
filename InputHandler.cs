@@ -1,8 +1,8 @@
 ﻿using JustCombat.Common;
+using JustCombat.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using System;
 
 namespace JustCombat
 {

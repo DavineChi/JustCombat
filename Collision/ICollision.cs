@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace JustCombat
+namespace JustCombat.Collision
 {
     public interface ICollision
     {

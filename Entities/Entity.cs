@@ -1,5 +1,7 @@
-﻿
-namespace JustCombat
+﻿using JustCombat.Collision;
+using JustCombat.Primitives;
+
+namespace JustCombat.Entities
 {
     public abstract class Entity
     {
@@ -10,6 +12,7 @@ namespace JustCombat
         protected float _height;
         protected BoundingBox _boundingBox;
         protected BoundingCircle _boundingCircle;
+        protected PrimEllipse _ellipse;
         protected int _hitPoints;
         protected int _previousHitPoints;
         protected int _maxHitPoints;
