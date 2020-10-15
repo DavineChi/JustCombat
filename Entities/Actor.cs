@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using JustCombat.Common;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using JustCombat.Primitives;
 
 namespace JustCombat.Entities
 {
@@ -43,6 +44,9 @@ namespace JustCombat.Entities
 
         public Actor(int level, string name, float x, float y, float width, float height, float scale, Direction heading, int hitPoints)
         {
+            float ellipseX = x + ((width  * scale) / 2);
+            float ellipseY = y +  (height * scale);
+
             _level = level;
             _name = name;
             _x = x;
@@ -50,6 +54,7 @@ namespace JustCombat.Entities
             _width = width;
             _height = height;
             _boundingBox = new Collision.BoundingBox(x, y, width, height, scale);
+            _primEllipse = new PrimEllipse(new Vector2(ellipseX, (ellipseY - 4)), new Vector2(24, 10));
             _hitPoints = hitPoints;
             _previousHitPoints = _hitPoints;
             _maxHitPoints = _hitPoints;
@@ -360,6 +365,17 @@ namespace JustCombat.Entities
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (TargetingSystem.Instance().GetCurrentTarget() != null && TargetingSystem.Instance().GetCurrentTarget().Equals(this))
+            {
+                _primEllipse.SetColor(Color.Gold);
+                _primEllipse.Draw(spriteBatch);
+            }
+
+            else
+            {
+                _primEllipse.SetColor(Color.White);
+            }
+
             spriteBatch.Draw(_sprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
 
             if (JustCombat.UserInterface.InDebugMode())

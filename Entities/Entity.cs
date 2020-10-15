@@ -12,7 +12,7 @@ namespace JustCombat.Entities
         protected float _height;
         protected BoundingBox _boundingBox;
         protected BoundingCircle _boundingCircle;
-        protected PrimEllipse _ellipse;
+        protected PrimEllipse _primEllipse;
         protected int _hitPoints;
         protected int _previousHitPoints;
         protected int _maxHitPoints;
