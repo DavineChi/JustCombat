@@ -18,6 +18,11 @@ namespace JustCombat.Primitives
         {
         }
 
+        public PrimEllipse(Vector2 center, Vector2 radius, float thickness) :
+            this(center.X, center.Y, radius.X, radius.Y, 20, Color.White, thickness, 0)
+        {
+        }
+
         public PrimEllipse(float x, float y, float width, float height, float thickness) :
             this(x, y, width, height, 20, Color.White, thickness, 0)
         {
