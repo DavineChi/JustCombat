@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+using JustCombat.Entities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Tiled.Renderers;
@@ -17,6 +18,9 @@ namespace JustCombat
             Actor wraithOne = JustCombat.WraithOne;
             Actor wraithTwo = JustCombat.WraithTwo;
 
+            float ellipseX = player.GetX() + ((Constants.PLAYER_WIDTH  * Constants.SPRITE_SCALE) / 2);
+            float ellipseY = player.GetY() +  (Constants.PLAYER_HEIGHT * Constants.SPRITE_SCALE);
+
             mapRenderer.Draw(camera.GetViewMatrix(), null, null, 0);
 
             if (JustCombat.UserInterface.InDebugMode())
@@ -25,6 +29,8 @@ namespace JustCombat
             }
 
             //ObstacleTest.Draw(spriteBatch);
+
+            spriteBatch.DrawEllipse(new Vector2(ellipseX, (ellipseY - 2)), new Vector2(24, 10), 10, Color.White, 1, 0);
 
             player.Draw(spriteBatch);
 
