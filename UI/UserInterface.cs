@@ -1,4 +1,5 @@
-﻿using JustCombat.Entities;
+﻿using JustCombat.Collision;
+using JustCombat.Entities;
 using JustCombat.Panels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +10,9 @@ namespace JustCombat.UI
 {
     public class UserInterface
     {
+        public static CharacterPanel CharacterPanel;
+        public static InventoryPanel InventoryPanel;
+
         private static UserInterface _userInterface = null;
 
         private Player _player;
@@ -24,6 +28,9 @@ namespace JustCombat.UI
 
         private UserInterface()
         {
+            CharacterPanel = new CharacterPanel("Character", 20, 120, 320, 440, Color.Wheat);
+            InventoryPanel = new InventoryPanel("Inventory", 960, 480, 220, 220, Color.CornflowerBlue);
+
             _player = Player.Instance();
             _topBarBackpanel = JustCombat.GameContent.TopBarBackpanel;
             _playerInfoCard = new ActorInfoCard(_player, new Vector2(16.0f, 4.0f));
@@ -84,9 +91,6 @@ namespace JustCombat.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Collision.BoundingBox bb = Player.Instance().GetBoundingBox();
-            bool intersectsResult = !(bb.Intersects(JustCombat.MapTransformBounds));
-            
             MouseState mouseState = Mouse.GetState();
 
             int screenMouseX = mouseState.X;
@@ -109,6 +113,16 @@ namespace JustCombat.UI
                 _targetInfoCard.Draw(spriteBatch);
             }
 
+            if (InventoryPanel.IsDisplayed())
+            {
+                InventoryPanel.Draw(spriteBatch);
+            }
+
+            if (CharacterPanel.IsDisplayed())
+            {
+                CharacterPanel.Draw(spriteBatch);
+            }
+
             if (_cursorInfoPanel.IsDisplayed())
             {
                 _cursorInfoPanel.Draw(spriteBatch);
@@ -118,7 +132,7 @@ namespace JustCombat.UI
             {
                 spriteBatch.DrawString(_fontConsolas13, DateTime.Now.ToString(), new Vector2(500.0f, 10.0f), Color.White);
                 spriteBatch.DrawString(_fontConsolas13, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(500.0f, 30.0f), Color.White);
-                spriteBatch.DrawString(_fontConsolas13, "Camera: " + intersectsResult, new Vector2(500.0f, 50.0f), Color.White);
+                //spriteBatch.DrawString(_fontConsolas13, "empty_slot: ", new Vector2(500.0f, 50.0f), Color.White);
                 spriteBatch.DrawString(_fontConsolas13, target, new Vector2(500.0f, 70.0f), Color.White);
 
                 //spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(744.0f, 6.0f), Color.White);

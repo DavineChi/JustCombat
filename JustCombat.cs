@@ -1,6 +1,5 @@
 using JustCombat.Collision;
 using JustCombat.Entities;
-using JustCombat.Panels;
 using JustCombat.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,8 +30,6 @@ namespace JustCombat
         public static Collision.BoundingBox ObstacleTest;
         public static Collision.BoundingBox MapTransformBounds;
         public static OrthographicCamera WorldCamera;
-        public static CharacterPanel CharPanel;
-        public static InventoryPanel InvPanel;
         public static Wraith WraithOne;
         public static Wraith WraithTwo;
         public static UserInterface UserInterface;
@@ -55,7 +52,7 @@ namespace JustCombat
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Add your initialization logic here
 
             //this.IsMouseVisible = true;
 
@@ -74,15 +71,12 @@ namespace JustCombat
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // Use this.Content to load your game content here
             GameContent = new GameContent(Content);
 
             GraphicsManager.PreferredBackBufferWidth = Constants.SCREEN_WIDTH;
             GraphicsManager.PreferredBackBufferHeight = Constants.SCREEN_HEIGHT;
             GraphicsManager.ApplyChanges();
-
-            CharPanel = new CharacterPanel("Character", 20, 20, 220, 440, Color.Wheat);
-            InvPanel = new InventoryPanel("Inventory", 960, 440, 220, 220, Color.CornflowerBlue);
 
             _frizQuadFont = GameContent.FontFrizQuad;
             _player = Player.Instance();
@@ -123,7 +117,7 @@ namespace JustCombat
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            // Unload any non ContentManager content here
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using JustCombat.Common;
 using JustCombat.Entities;
+using JustCombat.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
@@ -8,7 +9,8 @@ namespace JustCombat
 {
     public class InputHandler
     {
-        // Implementation reference: https://community.monogame.net/t/one-shot-key-press/11669
+        // Implementation reference:
+        // https://community.monogame.net/t/one-shot-key-press/11669
 
         private static KeyboardState _currentKeyState;
         private static KeyboardState _previousKeyState;
@@ -112,24 +114,24 @@ namespace JustCombat
                 Player.AddLevel();
             }
 
-            if (IsKeyPressed(Keys.I) && !(JustCombat.InvPanel.IsDisplayed()))
+            if (IsKeyPressed(Keys.I) && !(UserInterface.InventoryPanel.IsDisplayed()))
             {
-                JustCombat.InvPanel.SetDisplayed(true);
+                UserInterface.InventoryPanel.SetDisplayed(true);
             }
 
-            else if (IsKeyPressed(Keys.I) && JustCombat.InvPanel.IsDisplayed())
+            else if (IsKeyPressed(Keys.I) && UserInterface.InventoryPanel.IsDisplayed())
             {
-                JustCombat.InvPanel.SetDisplayed(false);
+                UserInterface.InventoryPanel.SetDisplayed(false);
             }
 
-            if (IsKeyPressed(Keys.C) && !(JustCombat.CharPanel.IsDisplayed()))
+            if (IsKeyPressed(Keys.C) && !(UserInterface.CharacterPanel.IsDisplayed()))
             {
-                JustCombat.CharPanel.SetDisplayed(true);
+                UserInterface.CharacterPanel.SetDisplayed(true);
             }
 
-            else if (IsKeyPressed(Keys.C) && JustCombat.CharPanel.IsDisplayed())
+            else if (IsKeyPressed(Keys.C) && UserInterface.CharacterPanel.IsDisplayed())
             {
-                JustCombat.CharPanel.SetDisplayed(false);
+                UserInterface.CharacterPanel.SetDisplayed(false);
             }
 
             //if (IsKeyPressed(Keys.Q))
