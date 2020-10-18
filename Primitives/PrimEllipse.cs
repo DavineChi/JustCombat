@@ -6,30 +6,31 @@ namespace JustCombat.Primitives
 {
     public class PrimEllipse : PrimShape
     {
+        private const int DEFAULT_SIDES = 10;
         private int _sides;
 
         public PrimEllipse(Vector2 center, Vector2 radius) :
-            this(center.X, center.Y, radius.X, radius.Y, 20, Color.White, 1, 0)
+            this(center.X, center.Y, radius.X, radius.Y, DEFAULT_SIDES, Color.White, 1, 0)
         {
         }
 
         public PrimEllipse(float x, float y, float width, float height) :
-            this(x, y, width, height, 20, Color.White, 1, 0)
+            this(x, y, width, height, DEFAULT_SIDES, Color.White, 1, 0)
         {
         }
 
         public PrimEllipse(Vector2 center, Vector2 radius, float thickness) :
-            this(center.X, center.Y, radius.X, radius.Y, 20, Color.White, thickness, 0)
+            this(center.X, center.Y, radius.X, radius.Y, DEFAULT_SIDES, Color.White, thickness, 0)
         {
         }
 
         public PrimEllipse(float x, float y, float width, float height, float thickness) :
-            this(x, y, width, height, 20, Color.White, thickness, 0)
+            this(x, y, width, height, DEFAULT_SIDES, Color.White, thickness, 0)
         {
         }
 
         public PrimEllipse(float x, float y, float width, float height, float thickness, int layerDepth) :
-            this(x, y, width, height, 20, Color.White, thickness, layerDepth)
+            this(x, y, width, height, DEFAULT_SIDES, Color.White, thickness, layerDepth)
         {
         }
 
@@ -39,7 +40,7 @@ namespace JustCombat.Primitives
         }
 
         public PrimEllipse(float x, float y, float width, float height, Color color, float thickness, int layerDepth) :
-            this(x, y, width, height, 20, color, thickness, layerDepth)
+            this(x, y, width, height, DEFAULT_SIDES, color, thickness, layerDepth)
         {
         }
 
