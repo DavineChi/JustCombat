@@ -1,5 +1,4 @@
-﻿using JustCombat.Collision;
-using JustCombat.Entities;
+﻿using JustCombat.Entities;
 using JustCombat.Panels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
