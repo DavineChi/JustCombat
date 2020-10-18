@@ -27,8 +27,8 @@ namespace JustCombat
         public static Texture2D[] Cursor2 = new Texture2D[2];
         public static Vector2 CursorPosition;
         public static TiledMapRenderer GameMapRenderer;
-        public static Collision.BoundingBox ObstacleTest;
-        public static Collision.BoundingBox MapTransformBounds;
+        public static CollisionBox ObstacleTest;
+        public static CollisionBox MapTransformBounds;
         public static OrthographicCamera WorldCamera;
         public static Wraith WraithOne;
         public static Wraith WraithTwo;
@@ -102,8 +102,8 @@ namespace JustCombat
             EntityContainer.Add(WraithOne);
             EntityContainer.Add(WraithTwo);
 
-            ObstacleTest = new Collision.BoundingBox(590, 390, 50, 50);
-            MapTransformBounds = new Collision.BoundingBox(480, 370, 240, 135);
+            ObstacleTest = new CollisionBox(590, 390, 50, 50);
+            MapTransformBounds = new CollisionBox(480, 370, 240, 135);
 
             ObstacleTest.GetPrimRectangle().SetColor(Color.Red);
             MapTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);

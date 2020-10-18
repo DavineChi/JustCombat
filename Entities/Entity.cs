@@ -10,7 +10,8 @@ namespace JustCombat.Entities
         protected float _y;
         protected float _width;
         protected float _height;
-        protected BoundingBox _boundingBox;
+        protected CollisionBox _boundingBox;
+        protected CollisionBox _collisionBox;
         protected BoundingCircle _boundingCircle;
         protected PrimEllipse _primEllipse;
         protected int _hitPoints;
@@ -28,7 +29,10 @@ namespace JustCombat.Entities
         public void SetX(float x) { _x = x; }
         public void SetY(float y) { _y = y; }
 
-        public BoundingBox GetBoundingBox() { return _boundingBox; }
-        public void SetBoundingBox(BoundingBox boundingBox) { _boundingBox = boundingBox; }
+        public CollisionBox GetBoundingBox()  { return _boundingBox;  }
+        public CollisionBox GetCollisionBox() { return _collisionBox; }
+
+        public void SetBoundingBox(CollisionBox boundingBox)   { _boundingBox = boundingBox;   }
+        public void SetCollisionBox(CollisionBox collisionBox) { _collisionBox = collisionBox; }
     }
 }

@@ -1,21 +1,21 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
+using MonoGame.Extended.Collisions;
 using System;
 
 namespace JustCombat.Collision
 {
-    public class BoundingBox : ICollision
+    public class CollisionBox : ICollision
     {
         private Rectangle _rectangle;
         private PrimRectangle _primRectangle;
 
-        public BoundingBox(float x, float y, float width, float height) :
+        public CollisionBox(float x, float y, float width, float height) :
             this(x, y, width, height, 1.0f)
         {
         }
 
-        public BoundingBox(float x, float y, float width, float height, float scale)
+        public CollisionBox(float x, float y, float width, float height, float scale)
         {
             float scaledWidth = (width * scale);
             float scaledHeight = (height * scale);
@@ -24,7 +24,7 @@ namespace JustCombat.Collision
             _primRectangle = new PrimRectangle(x, y, scaledWidth, scaledHeight);
         }
         
-        public bool Intersects(BoundingBox other)
+        public bool Intersects(CollisionBox other)
         {
             bool result = false;
 

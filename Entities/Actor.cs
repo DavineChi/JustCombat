@@ -4,6 +4,7 @@ using JustCombat.Common;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using JustCombat.Primitives;
+using JustCombat.Collision;
 
 namespace JustCombat.Entities
 {
@@ -53,8 +54,8 @@ namespace JustCombat.Entities
             _y = y;
             _width = width;
             _height = height;
-            _boundingBox = new Collision.BoundingBox(x, y, width, height, scale);
-            _primEllipse = new PrimEllipse(new Vector2(ellipseX, (ellipseY - 4)), new Vector2(24, 10));
+            _boundingBox = new CollisionBox(x, y, width, height, scale);
+            _primEllipse = new PrimEllipse(ellipseX, (ellipseY - 4), 24, 10, Color.Gold, 1, 0);
             _hitPoints = hitPoints;
             _previousHitPoints = _hitPoints;
             _maxHitPoints = _hitPoints;
@@ -67,16 +68,16 @@ namespace JustCombat.Entities
             _takingDamage = false;
         }
 
-        public void Move(float dx, float dy, bool isRunning)
-        {
-            int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
+        //public void Move(float dx, float dy, bool isRunning)
+        //{
+        //    int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
             
-            this.SetX(newPositions[0]);
-            this.SetY(newPositions[1]);
+        //    this.SetX(newPositions[0]);
+        //    this.SetY(newPositions[1]);
 
-            _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
-            _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
-        }
+        //    _boundingBox.GetPrimRectangle().SetX(newPositions[0]);
+        //    _boundingBox.GetPrimRectangle().SetY(newPositions[1]);
+        //}
 
         public void Move(int[] dxdy, bool isRunning)
         {
@@ -87,10 +88,10 @@ namespace JustCombat.Entities
             _boundingBox.GetPrimRectangle().SetY(dxdy[1]);
         }
 
-        public bool Intersects(Collision.BoundingBox other)
-        {
-            return _boundingBox.Intersects(other.GetPrimRectangle());
-        }
+        //public bool Intersects(CollisionBox other)
+        //{
+        //    return _boundingBox.Intersects(other.GetPrimRectangle());
+        //}
 
         public void SetHeading(float heading)
         {
@@ -367,13 +368,7 @@ namespace JustCombat.Entities
         {
             if (TargetingSystem.Instance().GetCurrentTarget() != null && TargetingSystem.Instance().GetCurrentTarget().Equals(this))
             {
-                _primEllipse.SetColor(Color.Gold);
                 _primEllipse.Draw(spriteBatch);
-            }
-
-            else
-            {
-                _primEllipse.SetColor(Color.White);
             }
 
             spriteBatch.Draw(_sprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);

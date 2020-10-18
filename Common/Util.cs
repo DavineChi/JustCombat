@@ -54,10 +54,10 @@ namespace JustCombat.Common
             int futureX = positions[0];
             int futureY = positions[1];
 
-            BoundingBox candidate = new BoundingBox(futureX, futureY, width, height);
-            BoundingBox obstacle = JustCombat.MapTransformBounds;
+            CollisionBox candidate = new CollisionBox(futureX, futureY, width, height);
+            CollisionBox boundary = JustCombat.MapTransformBounds;
 
-            if (candidate.Intersects(obstacle))
+            if (candidate.Intersects(boundary))
             {
                 result = false;
             }
