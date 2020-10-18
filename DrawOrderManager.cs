@@ -1,4 +1,4 @@
-using JustCombat.Entities;
+﻿using JustCombat.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -13,8 +13,6 @@ namespace JustCombat
             Player player = Player.Instance();
             TiledMapRenderer mapRenderer = JustCombat.GameMapRenderer;
             OrthographicCamera camera = JustCombat.WorldCamera;
-            Panel inventoryPanel = JustCombat.InvPanel;
-            Panel characterPanel = JustCombat.CharPanel;
             Actor wraithOne = JustCombat.WraithOne;
             Actor wraithTwo = JustCombat.WraithTwo;
 
@@ -34,18 +32,17 @@ namespace JustCombat
 
             player.Draw(spriteBatch);
 
-            if (inventoryPanel.IsDisplayed())
-            {
-                inventoryPanel.Draw(spriteBatch);
-            }
+            //Vector2 wraithOnePosition = camera.ScreenToWorld(new Vector2(wraithOne.GetX(), wraithOne.GetY()));
+            //Vector2 wraithTwoPosition = camera.ScreenToWorld(new Vector2(wraithTwo.GetX(), wraithTwo.GetY()));
 
-            if (characterPanel.IsDisplayed())
-            {
-                characterPanel.Draw(spriteBatch);
-            }
+            Vector2 wraithOnePosition = camera.WorldToScreen(new Vector2(wraithOne.GetX(), wraithOne.GetY()));
+            Vector2 wraithTwoPosition = camera.WorldToScreen(new Vector2(wraithTwo.GetX(), wraithTwo.GetY()));
 
             wraithOne.Draw(spriteBatch);
             wraithTwo.Draw(spriteBatch);
+
+            spriteBatch.DrawString(JustCombat.GameContent.FontConsolas12, wraithOnePosition.ToString(), new Vector2(1000, 400), Color.White);
+            spriteBatch.DrawString(JustCombat.GameContent.FontConsolas12, wraithTwoPosition.ToString(), new Vector2(1000, 420), Color.White);
 
             //spriteBatch.Draw(Cursor, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
 
