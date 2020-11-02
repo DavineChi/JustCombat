@@ -3,7 +3,6 @@ using JustCombat.Entities;
 using JustCombat.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
@@ -17,18 +16,15 @@ namespace JustCombat
     public class JustCombat : Game
     {
         private Player _player;
-
-        private SpriteBatch spriteBatch;
-        private SpriteSheet _cursorSheet;
+        
+        private SpriteBatch _spriteBatch;
         private SpriteFont _frizQuadFont;
         private TiledMap _gameMap;
 
-        public static Texture2D Cursor;
-        public static Texture2D[] Cursor2 = new Texture2D[2];
-        public static Vector2 CursorPosition;
+        public static Matrix TransformMatrix;
+        
         public static TiledMapRenderer GameMapRenderer;
         public static CollisionBox ObstacleTest;
-        public static CollisionBox MapTransformBounds;
         public static OrthographicCamera WorldCamera;
         public static Wraith WraithOne;
         public static Wraith WraithTwo;
@@ -55,6 +51,7 @@ namespace JustCombat
             // Add your initialization logic here
 
             //this.IsMouseVisible = true;
+            Window.Title = "Just Combat";
 
             base.Initialize();
 
@@ -69,7 +66,7 @@ namespace JustCombat
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Use this.Content to load your game content here
             GameContent = new GameContent(Content);
@@ -81,34 +78,25 @@ namespace JustCombat
             _frizQuadFont = GameContent.FontFrizQuad;
             _player = Player.Instance();
             
-            WraithOne = new Wraith(2, "Wraith One", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
+            WraithOne = new Wraith(2, "Bane Fang the Mad", 200, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 30);
             WraithTwo = new Wraith(3, "Snot Maggot", 420, 300, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, Constants.SPRITE_SCALE, new Direction(180.0f), 100);
 
             WraithOne.SetAlignment(Actor.Alignment.NEUTRAL);
             WraithTwo.SetAlignment(Actor.Alignment.HOSTILE);
 
             UserInterface = UserInterface.Instance();
-
-            _cursorSheet = new SpriteSheet(GameContent.Cursor, 48, 48);
-
-            Cursor2[0] = _cursorSheet.GetTexture("glove", 0, 0);
-            Cursor2[1] = _cursorSheet.GetTexture("sword", 1, 0);
-
-            Cursor = Cursor2[0];
-            
             TargetingSystem = TargetingSystem.Instance();
 
             //EntityContainer.Add(Player.Instance());
             EntityContainer.Add(WraithOne);
             EntityContainer.Add(WraithTwo);
 
-            ObstacleTest = new CollisionBox(590, 390, 50, 50);
-            MapTransformBounds = new CollisionBox(480, 370, 240, 135);
-
-            ObstacleTest.GetPrimRectangle().SetColor(Color.Red);
-            MapTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
+            //ObstacleTest = new CollisionBox(590, 390, 50, 50);
+            //ObstacleTest.GetPrimRectangle().SetColor(Color.Red);
 
             WorldCamera = new OrthographicCamera(GraphicsDevice);
+
+            TransformMatrix = WorldCamera.GetViewMatrix();
         }
 
         /// <summary>
@@ -132,8 +120,6 @@ namespace JustCombat
             //    Exit();
             //}
             
-            CursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-
             InputHandler.HandleInput();
             InputHandler.OnMouseHover();
 
@@ -144,7 +130,6 @@ namespace JustCombat
             WraithTwo.Update(gameTime);
 
             TargetingSystem.Update(gameTime);
-
             UserInterface.Update(gameTime);
             
             base.Update(gameTime);
@@ -158,11 +143,22 @@ namespace JustCombat
         {
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            {
+                _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, TransformMatrix);
 
-            DrawOrderManager.Draw(spriteBatch);
+                DrawOrderManager.Draw(_spriteBatch);
 
-            spriteBatch.End();
+                _spriteBatch.End();
+            }
+
+            {
+                // Draw UserInterface with default (null) transformation matrix.
+                _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+
+                JustCombat.UserInterface.Draw(_spriteBatch);
+
+                _spriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }
