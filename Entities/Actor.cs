@@ -54,6 +54,9 @@ namespace JustCombat.Entities
             _width = width;
             _height = height;
             _boundingBox = new CollisionBox(x, y, width, height, scale);
+            // TODO: Implement _collisionBox as the actual bounds for collision checks.
+            // This will allow _boundingBox to serve other purposes than collision resolution.
+            //_collisionBox = new CollisionBox(x, y, width, height, scale);
             _primEllipse = new PrimEllipse(ellipseX, (ellipseY - 4), 24, 10, Color.Gold, 1, 0);
             _hitPoints = hitPoints;
             _previousHitPoints = _hitPoints;
