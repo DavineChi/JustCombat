@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using JustCombat.Primitives;
@@ -135,6 +135,7 @@ namespace JustCombat.Entities
             {
                 _previousHitPoints = _hitPoints;
                 _takingDamage = true;
+
                 _combatExitTimer.Reset();
             }
         }
@@ -349,8 +350,10 @@ namespace JustCombat.Entities
         {
             bool result = false;
 
-            int mouseX = state.X;
-            int mouseY = state.Y;
+            Vector2 worldPosition = JustCombat.WorldCamera.ScreenToWorld(state.X, state.Y);
+
+            int mouseX = (int)(worldPosition.X);
+            int mouseY = (int)(worldPosition.Y);
 
             if (mouseX >= this._x &&
                 mouseX <= this._x + this._width * Constants.SPRITE_SCALE &&
