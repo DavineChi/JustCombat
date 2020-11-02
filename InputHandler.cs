@@ -1,4 +1,4 @@
-using JustCombat.Common;
+﻿using JustCombat.Common;
 using JustCombat.Entities;
 using JustCombat.UI;
 using Microsoft.Xna.Framework;
@@ -190,6 +190,22 @@ namespace JustCombat
                 {
                     JustCombat.UserInterface.SetDebug(true);
                 }
+            }
+
+            if (keyboardState.IsKeyDown(Keys.OemPeriod))
+            {
+                OrthographicCamera camera = JustCombat.WorldCamera;
+                JustCombat.TransformMatrix = camera.GetViewMatrix();
+
+                camera.ZoomIn(0.1f);
+            }
+
+            if (keyboardState.IsKeyDown(Keys.OemComma))
+            {
+                OrthographicCamera camera = JustCombat.WorldCamera;
+                JustCombat.TransformMatrix = camera.GetViewMatrix();
+
+                camera.ZoomOut(0.1f);
             }
 
             if (RightButtonPressed())
