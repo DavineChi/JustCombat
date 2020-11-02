@@ -1,5 +1,6 @@
 ﻿using JustCombat.Collision;
 using JustCombat.Entities;
+using JustCombat.UI;
 using System;
 
 namespace JustCombat.Common
@@ -47,7 +48,7 @@ namespace JustCombat.Common
             return result;
         }
 
-        public static bool ValidWorldLocation(int[] positions, int width, int height)
+        public static bool BeyondMapScrollTransformBounds(int[] positions, int width, int height)
         {
             bool result = true;
 
@@ -55,14 +56,14 @@ namespace JustCombat.Common
             int futureY = positions[1];
 
             CollisionBox candidate = new CollisionBox(futureX, futureY, width, height);
-            CollisionBox boundary = JustCombat.MapTransformBounds;
+            CollisionBox boundary = UserInterface.MapScrollTransformBounds;
 
             if (candidate.Intersects(boundary))
             {
                 result = false;
             }
 
-            return !result;
+            return result;
         }
     }
 }
