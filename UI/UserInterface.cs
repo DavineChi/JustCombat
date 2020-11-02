@@ -1,4 +1,5 @@
-﻿using JustCombat.Entities;
+﻿using JustCombat.Collision;
+using JustCombat.Entities;
 using JustCombat.Panels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,13 +10,18 @@ namespace JustCombat.UI
 {
     public class UserInterface
     {
+        public static Texture2D Cursor;
+        public static Texture2D[] CursorList;
         public static CharacterPanel CharacterPanel;
         public static InventoryPanel InventoryPanel;
+        public static CollisionBox MapScrollTransformBounds;
 
         private static UserInterface _userInterface = null;
 
         private Player _player;
         private Actor _target;
+        private SpriteSheet _cursorSheet;
+        private Vector2 _cursorPosition;
         private Texture2D _topBarBackpanel;
         private ActorInfoCard _playerInfoCard;
         private ActorInfoCard _targetInfoCard;
@@ -30,6 +36,10 @@ namespace JustCombat.UI
             CharacterPanel = new CharacterPanel("Character", 20, 120, 320, 440, Color.Wheat);
             InventoryPanel = new InventoryPanel("Inventory", 960, 480, 220, 220, Color.CornflowerBlue);
 
+            MapScrollTransformBounds = new CollisionBox(480, 370, 240, 135);
+
+            MapScrollTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
+
             _player = Player.Instance();
             _topBarBackpanel = JustCombat.GameContent.TopBarBackpanel;
             _playerInfoCard = new ActorInfoCard(_player, new Vector2(16.0f, 4.0f));
@@ -37,6 +47,19 @@ namespace JustCombat.UI
             _cursorInfoPanel = new InfoPanel("", 998, (Constants.SCREEN_HEIGHT - 26), 200, 24, new Color(0.0f, 0.004f, 0.125f, 0.5f), true);
             _fontConsolas13 = JustCombat.GameContent.FontConsolas13;
             _debug = false;
+
+            InitCursors();
+        }
+
+        private void InitCursors()
+        {
+            CursorList = new Texture2D[2];
+            _cursorSheet = new SpriteSheet(JustCombat.GameContent.Cursor, 48, 48);
+
+            CursorList[0] = _cursorSheet.GetTexture("glove", 0, 0);
+            CursorList[1] = _cursorSheet.GetTexture("sword", 1, 0);
+
+            Cursor = CursorList[0];
         }
 
         public static UserInterface Instance()
@@ -76,6 +99,8 @@ namespace JustCombat.UI
 
         public void Update(GameTime gameTime)
         {
+            _cursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
             _target = (Actor)(JustCombat.TargetingSystem.GetCurrentTarget());
 
             _playerInfoCard.Update(gameTime);
@@ -86,6 +111,8 @@ namespace JustCombat.UI
             }
 
             //CoolDownTimer.Update(gameTime);
+
+            //MapScrollTransformBounds;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -103,6 +130,9 @@ namespace JustCombat.UI
 
             string target = JustCombat.TargetingSystem.ToString();
 
+            // TODO: Need to keep this entire class and elements fixed to screen coords...
+            //OrthographicCamera camera = JustCombat.WorldCamera;
+            
             spriteBatch.Draw(_topBarBackpanel, new Vector2(0.0f, 0.0f), Color.White);
 
             _playerInfoCard.Draw(spriteBatch);
@@ -144,7 +174,11 @@ namespace JustCombat.UI
                 
                 spriteBatch.DrawString(_fontConsolas13, "Screen Mouse: (" + screenMouseX + "," + screenMouseY + ")", new Vector2(screenMouseX + 50, screenMouseY + 50), Color.White);
                 spriteBatch.DrawString(_fontConsolas13, " World Mouse: (" + worldMouseX + "," + worldMouseY + ")", new Vector2(screenMouseX + 50, screenMouseY + 70), Color.White);
+
+                MapScrollTransformBounds.Draw(spriteBatch);
             }
+
+            spriteBatch.Draw(Cursor, _cursorPosition, Color.White);
         }
     }
 }
