@@ -1,9 +1,10 @@
-﻿using JustCombat.Common;
+using JustCombat.Common;
 using JustCombat.Entities;
 using JustCombat.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using System;
 
 namespace JustCombat
 {
@@ -37,8 +38,42 @@ namespace JustCombat
 
         public static bool RightButtonPressed()
         {
-            return (_currentMouseState.RightButton == ButtonState.Pressed) &&
+            return (_currentMouseState.RightButton  == ButtonState.Pressed) &&
                   !(_previousMouseState.RightButton == ButtonState.Pressed);
+        }
+
+        private static void TranslateMovement(float dx, float dy, bool isRunning)
+        {
+            Player player = Player.Instance();
+            OrthographicCamera camera = JustCombat.WorldCamera;
+            Vector2 screenCoords;
+            int[] newPositions;
+            int[] testPositions;
+            bool translateCamera = false;
+
+            newPositions = Util.GetNewPosition(dx, dy, isRunning);
+            screenCoords = camera.WorldToScreen(newPositions[0], newPositions[1]);
+            testPositions = new int[] { (int)(screenCoords.X), (int)(screenCoords.Y) };
+            translateCamera = Util.BeyondMapScrollTransformBounds(testPositions, (int)(player.GetWidth()), (int)(player.GetHeight()));
+            
+            if (translateCamera)
+            {
+                int oldX = (int)(player.GetX());
+                int oldY = (int)(player.GetY());
+
+                int newX = newPositions[0];
+                int newY = newPositions[1];
+
+                int diffX = (oldX - newX) * (-1);
+                int diffY = (oldY - newY) * (-1);
+
+                camera.Move(new Vector2(diffX, diffY));
+
+                // Update the TransformMatrix, because the camera has moved.
+                JustCombat.TransformMatrix = camera.GetViewMatrix();
+            }
+
+            player.Move(newPositions, isRunning);
         }
 
         public static void HandleInput()
@@ -218,7 +253,7 @@ namespace JustCombat
                     if (actor.MouseOver(state))
                     {
                         // Show the attack / sword cursor...
-                        JustCombat.Cursor = JustCombat.Cursor2[1];
+                        UserInterface.Cursor = UserInterface.CursorList[1];
                         JustCombat.UserInterface.GetCursorInfoPanel().SetText(actor.ToString());
                         JustCombat.UserInterface.GetCursorInfoPanel().SetDisplayed(true);
 
@@ -234,7 +269,7 @@ namespace JustCombat
                     else
                     {
                         // Show the select / glove cursor...
-                        JustCombat.Cursor = JustCombat.Cursor2[0];
+                        UserInterface.Cursor = UserInterface.CursorList[0];
                         JustCombat.UserInterface.GetCursorInfoPanel().SetText(string.Empty);
                         JustCombat.UserInterface.GetCursorInfoPanel().SetDisplayed(false);
 
@@ -253,37 +288,6 @@ namespace JustCombat
                     state.IsKeyDown(Keys.A) ||
                     state.IsKeyDown(Keys.S) ||
                     state.IsKeyDown(Keys.D));
-        }
-
-        private static void TranslateMovement(float dx, float dy, bool isRunning)
-        {
-            Player player = Player.Instance();
-            OrthographicCamera camera = JustCombat.WorldCamera;
-
-            bool validLocation = false;
-
-            int oldX = (int)(player.GetX());
-            int oldY = (int)(player.GetY());
-
-            int[] newPositions = Util.GetNewPosition(dx, dy, isRunning);
-
-            validLocation = Util.ValidWorldLocation(newPositions, (int)(player.GetWidth()), (int)(player.GetHeight()));
-
-            if (validLocation)
-            {
-                player.Move(newPositions, isRunning);
-            }
-
-            else
-            {
-                int newX = newPositions[0];
-                int newY = newPositions[1];
-
-                int diffX = (oldX - newX) * (-1);
-                int diffY = (oldY - newY) * (-1);
-
-                camera.Move(new Vector2(diffX, diffY));
-            }
         }
     }
 }
