@@ -18,15 +18,22 @@ namespace JustCombat.UI
 
         private static UserInterface _userInterface = null;
 
+        // TODO: Convert this to its own class:
+        private static string[] actionKeys = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=" };
+
         private Player _player;
         private Actor _target;
         private SpriteSheet _cursorSheet;
         private Vector2 _cursorPosition;
         private Texture2D _topBarBackpanel;
+        private Texture2D _actionBarPanel;
+        private Texture2D _xpBarFrame;
         private ActorInfoCard _playerInfoCard;
         private ActorInfoCard _targetInfoCard;
         private InfoPanel _cursorInfoPanel;
         private SpriteFont _fontConsolas13;
+        private SpriteFont _fontCandara10;
+        private ExperienceBar _experienceBar;
         private bool _debug;
 
         //public CooldownTimer CoolDownTimer = new CooldownTimer();
@@ -36,18 +43,22 @@ namespace JustCombat.UI
             CharacterPanel = new CharacterPanel("Character", 20, 120, 320, 440, Color.Wheat);
             InventoryPanel = new InventoryPanel("Inventory", 960, 480, 220, 220, Color.CornflowerBlue);
 
-            MapScrollTransformBounds = new CollisionBox(480, 370, 240, 135);
+            MapScrollTransformBounds = new CollisionBox(480, 341, 240, 135);
 
             MapScrollTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
 
             _player = Player.Instance();
             _topBarBackpanel = JustCombat.GameContent.TopBarBackpanel;
+            _actionBarPanel = JustCombat.GameContent.ActionBarPanel;
+            _xpBarFrame = JustCombat.GameContent.ExperienceBarFrame;
             _playerInfoCard = new ActorInfoCard(_player, new Vector2(16.0f, 4.0f));
             _targetInfoCard = new ActorInfoCard(null);
             _cursorInfoPanel = new InfoPanel("", 998, (Constants.SCREEN_HEIGHT - 26), 200, 24, new Color(0.0f, 0.004f, 0.125f, 0.5f), true);
             _fontConsolas13 = JustCombat.GameContent.FontConsolas13;
+            _fontCandara10 = JustCombat.GameContent.FontCandara10;
+            _experienceBar = new ExperienceBar(285, 706, 630, 8, null);
             _debug = false;
-
+            
             InitCursors();
         }
 
@@ -113,11 +124,16 @@ namespace JustCombat.UI
             //CoolDownTimer.Update(gameTime);
 
             //MapScrollTransformBounds;
+
+            _experienceBar.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             MouseState mouseState = Mouse.GetState();
+
+            string currentXP = _player.GetExperiencePoints().ToString();
+            string maximumXP = _player.GetMaxExperiencePoints().ToString();
 
             int screenMouseX = mouseState.X;
             int screenMouseY = mouseState.Y;
@@ -134,6 +150,25 @@ namespace JustCombat.UI
             //OrthographicCamera camera = JustCombat.WorldCamera;
             
             spriteBatch.Draw(_topBarBackpanel, new Vector2(0.0f, 0.0f), Color.White);
+            spriteBatch.Draw(_actionBarPanel, new Vector2(((Constants.SCREEN_WIDTH / 2) - (_actionBarPanel.Width / 2)), (Constants.SCREEN_HEIGHT - _actionBarPanel.Height)), Color.White);
+
+            int _counter = 324;
+
+            for (int i = 0; i < actionKeys.Length; i++)
+            {
+                string text = actionKeys[i];
+
+                spriteBatch.DrawString(_fontCandara10, text, new Vector2(_counter, 729), Color.White);
+
+                _counter = _counter + 52;
+            }
+
+            if (_player.GetLevel() < Constants.MAXIMUM_PLAYER_LEVEL)
+            {
+                spriteBatch.Draw(_xpBarFrame, new Vector2(282, 703), Color.White);
+                _experienceBar.Draw(spriteBatch);
+                spriteBatch.DrawString(_fontCandara10, "XP   " + currentXP + " / " + maximumXP, new Vector2(560, 705), Color.White);
+            }
 
             _playerInfoCard.Draw(spriteBatch);
 

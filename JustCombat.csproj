@@ -47,6 +47,7 @@
     <Compile Include="CooldownTimer.cs" />
     <Compile Include="DrawOrderManager.cs" />
     <Compile Include="EntityBag.cs" />
+    <Compile Include="ExperienceSystem.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="Panels\InfoPanel.cs" />
     <Compile Include="Spells\Fireball.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Wraith.cs" />
     <Compile Include="GameContent.cs" />
+    <Compile Include="UI\ExperienceBar.cs" />
     <Compile Include="UI\FillBar.cs" />
     <Compile Include="HitPoints.cs" />
     <Compile Include="Collision\ICollision.cs" />

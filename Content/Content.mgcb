@@ -16,6 +16,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin action_bar_with_tiles.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:action_bar_with_tiles.png
+
 #begin actor_card_v8.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -39,6 +51,48 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:atlas.bmp
+
+#begin Candara10.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Candara10.spritefont
+
+#begin Candara11.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Candara11.spritefont
+
+#begin Candara12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Candara12.spritefont
+
+#begin CandaraLight10.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:CandaraLight10.spritefont
+
+#begin CandaraLight11.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:CandaraLight11.spritefont
+
+#begin CandaraLight12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:CandaraLight12.spritefont
 
 #begin Consolas10.spritefont
 /importer:FontDescriptionImporter
@@ -106,6 +160,18 @@
 /processorParam:TextureFormat=Color
 /build:Fumiko_v2.png
 
+#begin item_tile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:item_tile.png
+
 #begin northshire_test.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
@@ -134,4 +200,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:wraith.png
+
+#begin xp_bar_frame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:xp_bar_frame.png
 

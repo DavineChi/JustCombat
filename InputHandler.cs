@@ -208,6 +208,16 @@ namespace JustCombat
                 camera.ZoomOut(0.1f);
             }
 
+            if (IsKeyPressed(Keys.OemPlus))
+            {
+                Player.Instance().AddXP(300);
+            }
+
+            if (keyboardState.IsKeyDown(Keys.OemCloseBrackets))
+            {
+                Player.Instance().AddXP(300);
+            }
+
             if (RightButtonPressed())
             {
                 Entity entity = TargetingSystem.Instance().GetCurrentTarget();

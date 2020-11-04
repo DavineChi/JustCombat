@@ -27,6 +27,9 @@ namespace JustCombat.Entities
         private Animation _animatePlayerIdle;
         private Animation _currentAnimation;
 
+        private int _experiencePoints;
+        private int _maxExperiencePoints;
+
         private bool _moving;
 
         protected Player(string name, float x, float y, float width, float height, Direction heading) :
@@ -53,6 +56,9 @@ namespace JustCombat.Entities
             _animatePlayerIdle = AnimationFactory.CreateAnimationIdlePlayer(_spriteSheet, "idle", 16, 0, ANIMATION_SPEED_IDLE);
 
             _currentAnimation = _animatePlayerIdle;
+
+            _experiencePoints = 0;
+            _maxExperiencePoints = ExperienceSystem.GetExperienceForNextLevel(_level);
 
             _moving = false;
         }
@@ -126,7 +132,39 @@ namespace JustCombat.Entities
         {
             _player.SetMaxHitPoints(HitPoints.Calculate(_player));
             _player.SetHitPoints(_player.GetMaxHitPoints());
-            // TODO: set player experience points
+            _player.SetMaxExperiencePoints(ExperienceSystem.GetExperienceForNextLevel(Player.Instance().GetLevel()));
+        }
+
+        public int GetExperiencePoints()
+        {
+            return _experiencePoints;
+        }
+
+        public int GetMaxExperiencePoints()
+        {
+            return _maxExperiencePoints;
+        }
+
+        public void SetMaxExperiencePoints(int maxExperiencePoints)
+        {
+            _maxExperiencePoints = maxExperiencePoints;
+        }
+
+        public void AddXP(int points)
+        {
+            if (_experiencePoints + points >= _maxExperiencePoints)
+            {
+                int diff = (_experiencePoints + points) - _maxExperiencePoints;
+
+                Player.AddLevel();
+
+                _experiencePoints = diff;
+            }
+
+            else
+            {
+                _experiencePoints = _experiencePoints + points;
+            }
         }
 
         public void Update(GameTime gameTime)
