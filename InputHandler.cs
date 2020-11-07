@@ -190,6 +190,8 @@ namespace JustCombat
                 {
                     JustCombat.UserInterface.SetDebug(true);
                 }
+
+                Console.WriteLine("Debug toggled.");
             }
 
             if (keyboardState.IsKeyDown(Keys.OemPeriod))

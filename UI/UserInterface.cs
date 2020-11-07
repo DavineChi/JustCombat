@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace JustCombat.UI
 {
@@ -14,7 +15,8 @@ namespace JustCombat.UI
         public static Texture2D[] CursorList;
         public static CharacterPanel CharacterPanel;
         public static InventoryPanel InventoryPanel;
-        public static CollisionBox MapScrollTransformBounds;
+        public static CollisionBox ScrollTransformBounds;
+        public static CollisionBox ViewContainerBounds;
 
         private static UserInterface _userInterface = null;
 
@@ -36,6 +38,8 @@ namespace JustCombat.UI
         private ExperienceBar _experienceBar;
         private bool _debug;
 
+        private List<Actor> _actorList;
+
         //public CooldownTimer CoolDownTimer = new CooldownTimer();
 
         private UserInterface()
@@ -43,9 +47,11 @@ namespace JustCombat.UI
             CharacterPanel = new CharacterPanel("Character", 20, 120, 320, 440, Color.Wheat);
             InventoryPanel = new InventoryPanel("Inventory", 960, 480, 220, 220, Color.CornflowerBlue);
 
-            MapScrollTransformBounds = new CollisionBox(480, 341, 240, 135);
+            ScrollTransformBounds = new CollisionBox(480, 341, 240, 135);
+            ViewContainerBounds = new CollisionBox(0, 100, Constants.SCREEN_WIDTH, (Constants.SCREEN_HEIGHT - 100));
 
-            MapScrollTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
+            ScrollTransformBounds.GetPrimRectangle().SetColor(Color.Magenta);
+            ViewContainerBounds.GetPrimRectangle().SetColor(Color.Magenta);
 
             _player = Player.Instance();
             _topBarBackpanel = JustCombat.GameContent.TopBarBackpanel;
@@ -58,7 +64,9 @@ namespace JustCombat.UI
             _fontCandara10 = JustCombat.GameContent.FontCandara10;
             _experienceBar = new ExperienceBar(285, 706, 630, 8, null);
             _debug = false;
-            
+
+            _actorList = new List<Actor>();
+
             InitCursors();
         }
 
@@ -126,6 +134,35 @@ namespace JustCombat.UI
             //MapScrollTransformBounds;
 
             _experienceBar.Update(gameTime);
+            
+            foreach (Actor actor in JustCombat.EntityContainer)
+            {
+                int width  = (int)(actor.GetWidth());
+                int height = (int)(actor.GetHeight());
+
+                Vector2 oldPosition = new Vector2(actor.GetX(), actor.GetY());
+                Vector2 newPosition = JustCombat.WorldCamera.WorldToScreen(oldPosition);
+
+                CollisionBox candidate = new CollisionBox(newPosition.X, newPosition.Y, width, height);
+
+                if (candidate.Intersects(ViewContainerBounds))
+                {
+                    if (_actorList.Contains(actor))
+                    {
+                        continue;
+                    }
+
+                    else
+                    {
+                        _actorList.Add(actor);
+                    }
+                }
+
+                else
+                {
+                    _actorList.Remove(actor);
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -196,21 +233,27 @@ namespace JustCombat.UI
             {
                 spriteBatch.DrawString(_fontConsolas13, DateTime.Now.ToString(), new Vector2(500.0f, 10.0f), Color.White);
                 spriteBatch.DrawString(_fontConsolas13, "X: " + _player.GetX() + ", Y: " + _player.GetY(), new Vector2(500.0f, 30.0f), Color.White);
-                //spriteBatch.DrawString(_fontConsolas13, "empty_slot: ", new Vector2(500.0f, 50.0f), Color.White);
+                //spriteBatch.DrawString(_fontConsolas13, "empty3: ", new Vector2(500.0f, 50.0f), Color.White);
                 spriteBatch.DrawString(_fontConsolas13, target, new Vector2(500.0f, 70.0f), Color.White);
 
-                //spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(744.0f, 6.0f), Color.White);
-                spriteBatch.DrawString(_fontConsolas13, "   Player State: " + _player.GetState().ToString(), new Vector2(750.0f, 10.0f), Color.White);
-                spriteBatch.DrawString(_fontConsolas13, "HealthBar State: " + _player.GetHealthBarState().ToString(), new Vector2(750.0f, 30.0f), Color.White);
-                spriteBatch.DrawString(_fontConsolas13, "        Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(750.0f, 50.0f), Color.White);
-                spriteBatch.DrawString(_fontConsolas13, "  Taking Damage: " + _player._takingDamage.ToString(), new Vector2(750.0f, 70.0f), Color.White);
-
                 //spriteBatch.DrawString(_font, "CD: " + CoolDownTimer.ToString(), new Vector2(550.0f, 50.0f), Color.White);
-                
+
+                spriteBatch.DrawString(_fontConsolas13, "Visible Actors: " + _actorList.Count.ToString(), new Vector2(730.0f, 10.0f), Color.White);
+                //spriteBatch.DrawString(_fontConsolas13, "empty2: ", new Vector2(730.0f, 30.0f), Color.White);
+                //spriteBatch.DrawString(_fontConsolas13, "empty3: ", new Vector2(730.0f, 50.0f), Color.White);
+                //spriteBatch.DrawString(_fontConsolas13, "empty4: ", new Vector2(730.0f, 70.0f), Color.White);
+
+                //spriteBatch.DrawString(_font, "Health " + _player.GetHitPoints().ToString() + " / " + _player.GetMaxHitPoints().ToString(), new Vector2(744.0f, 6.0f), Color.White);
+                spriteBatch.DrawString(_fontConsolas13, "   Player State: " + _player.GetState().ToString(), new Vector2(950.0f, 10.0f), Color.White);
+                spriteBatch.DrawString(_fontConsolas13, "HealthBar State: " + _player.GetHealthBarState().ToString(), new Vector2(950.0f, 30.0f), Color.White);
+                spriteBatch.DrawString(_fontConsolas13, "        Heading: " + _player.GetDirection().GetHeading().ToString(), new Vector2(950.0f, 50.0f), Color.White);
+                spriteBatch.DrawString(_fontConsolas13, "  Taking Damage: " + _player._takingDamage.ToString(), new Vector2(950.0f, 70.0f), Color.White);
+
                 spriteBatch.DrawString(_fontConsolas13, "Screen Mouse: (" + screenMouseX + "," + screenMouseY + ")", new Vector2(screenMouseX + 50, screenMouseY + 50), Color.White);
                 spriteBatch.DrawString(_fontConsolas13, " World Mouse: (" + worldMouseX + "," + worldMouseY + ")", new Vector2(screenMouseX + 50, screenMouseY + 70), Color.White);
 
-                MapScrollTransformBounds.Draw(spriteBatch);
+                ScrollTransformBounds.Draw(spriteBatch);
+                ViewContainerBounds.Draw(spriteBatch);
             }
 
             spriteBatch.Draw(Cursor, _cursorPosition, Color.White);

@@ -167,7 +167,7 @@ namespace JustCombat.Entities
             }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             KeyboardState keyState = Keyboard.GetState();
             float heading = this.GetDirection().GetHeading();
@@ -291,9 +291,9 @@ namespace JustCombat.Entities
             }
         }
 
-        public new void Draw(SpriteBatch spriteBatch)
+        public new void Draw(SpriteBatch spriteBatch, float layerDepth)
         {
-            DrawPlayer(spriteBatch);
+            DrawPlayer(spriteBatch, layerDepth);
 
             if (JustCombat.UserInterface.InDebugMode())
             {
@@ -301,26 +301,26 @@ namespace JustCombat.Entities
             }
         }
 
-        private void DrawPlayer(SpriteBatch spriteBatch)
+        private void DrawPlayer(SpriteBatch spriteBatch, float layerDepth)
         {
             Vector2 position = new Vector2(this._x, this._y);
             float heading = this.GetDirection().GetHeading();
 
             if (_moving)
             {
-                _currentAnimation.Draw(position, Constants.SPRITE_SCALE, spriteBatch);
+                _currentAnimation.Draw(position, Constants.SPRITE_SCALE, spriteBatch, layerDepth);
             }
 
             else
             {
                 if (heading == 0 || heading == 90 || heading == 270)
                 {
-                    spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(_currentDirection, position, null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, layerDepth);
                 }
 
                 else
                 {
-                    _currentAnimation.Draw(position, Constants.SPRITE_SCALE, spriteBatch);
+                    _currentAnimation.Draw(position, Constants.SPRITE_SCALE, spriteBatch, layerDepth);
                 }
             }
         }

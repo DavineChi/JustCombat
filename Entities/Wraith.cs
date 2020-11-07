@@ -35,20 +35,5 @@ namespace JustCombat.Entities
         {
             return _sprites;
         }
-
-        public void Update(GameTime gameTime)
-        {
-            this.QueryState();
-        }
-
-        //public void Draw(SpriteBatch spriteBatch)
-        //{
-        //    spriteBatch.Draw(_sprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
-
-        //    if (JustCombat.UserInterface.InDebugMode())
-        //    {
-        //        _boundingBox.Draw(spriteBatch);
-        //    }
-        //}
     }
 }

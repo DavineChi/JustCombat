@@ -90,19 +90,22 @@ namespace JustCombat
             }
         }
 
-        public void Draw(Vector2 position, float scale, SpriteBatch spriteBatch)
+        public void Draw(Vector2 position, float scale, SpriteBatch spriteBatch, float layerDepth)
         {
-            Draw((int)(position.X), (int)(position.Y), scale, spriteBatch);
+            int posX = (int)(position.X);
+            int posY = (int)(position.Y);
+
+            Draw(posX, posY, scale, spriteBatch, layerDepth);
         }
 
-        public void Draw(int x, int y, float scale, SpriteBatch spriteBatch)
+        public void Draw(int x, int y, float scale, SpriteBatch spriteBatch, float layerDepth)
         {
             if (_currentFrame == null)
             {
                 _currentFrame = _framesList[0];
             }
 
-            spriteBatch.Draw(_currentFrame, new Vector2(x, y), null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_currentFrame, new Vector2(x, y), null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth);
         }
     }
 }

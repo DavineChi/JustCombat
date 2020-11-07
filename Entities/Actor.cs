@@ -51,9 +51,9 @@ namespace JustCombat.Entities
             _name = name;
             _x = x;
             _y = y;
-            _width = width;
-            _height = height;
-            _boundingBox = new CollisionBox(x, y, width, height, scale);
+            _width = (width * scale);
+            _height = (height * scale);
+            _boundingBox = new CollisionBox(_x, _y, _width, _height);
             // TODO: Implement _collisionBox as the actual bounds for collision checks.
             // This will allow _boundingBox to serve other purposes than collision resolution.
             //_collisionBox = new CollisionBox(x, y, width, height, scale);
@@ -369,14 +369,34 @@ namespace JustCombat.Entities
             return result;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        //public void Draw(SpriteBatch spriteBatch)
+        //{
+        //    if (TargetingSystem.Instance().GetCurrentTarget() != null && TargetingSystem.Instance().GetCurrentTarget().Equals(this))
+        //    {
+        //        _primEllipse.Draw(spriteBatch);
+        //    }
+
+        //    spriteBatch.Draw(_sprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
+
+        //    if (JustCombat.UserInterface.InDebugMode())
+        //    {
+        //        _boundingBox.Draw(spriteBatch);
+        //    }
+        //}
+
+        public virtual void Update(GameTime gameTime)
+        {
+            this.QueryState();
+        }
+
+        public void Draw(SpriteBatch spriteBatch, float layerDepth)
         {
             if (TargetingSystem.Instance().GetCurrentTarget() != null && TargetingSystem.Instance().GetCurrentTarget().Equals(this))
             {
                 _primEllipse.Draw(spriteBatch);
             }
 
-            spriteBatch.Draw(_sprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_sprites, new Vector2(_x, _y), null, Color.White, 0f, Vector2.Zero, Constants.SPRITE_SCALE, SpriteEffects.None, layerDepth);
 
             if (JustCombat.UserInterface.InDebugMode())
             {

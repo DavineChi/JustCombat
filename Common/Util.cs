@@ -56,7 +56,7 @@ namespace JustCombat.Common
             int futureY = positions[1];
 
             CollisionBox candidate = new CollisionBox(futureX, futureY, width, height);
-            CollisionBox boundary = UserInterface.MapScrollTransformBounds;
+            CollisionBox boundary = UserInterface.ScrollTransformBounds;
 
             if (candidate.Intersects(boundary))
             {
