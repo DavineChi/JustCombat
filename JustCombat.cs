@@ -7,7 +7,6 @@ using MonoGame.Extended;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace JustCombat
 {

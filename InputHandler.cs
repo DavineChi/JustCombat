@@ -281,7 +281,16 @@ namespace JustCombat
                     if (actor.MouseOver(state))
                     {
                         // Show the attack / sword cursor...
-                        UserInterface.Cursor = UserInterface.CursorList[1];
+                        if (actor is Player)
+                        {
+                            UserInterface.Cursor = UserInterface.CursorList[0];
+                        }
+
+                        else
+                        {
+                            UserInterface.Cursor = UserInterface.CursorList[1];
+                        }
+
                         JustCombat.UserInterface.GetCursorInfoPanel().SetText(actor.ToString());
                         JustCombat.UserInterface.GetCursorInfoPanel().SetDisplayed(true);
 
