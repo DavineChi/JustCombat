@@ -280,14 +280,15 @@ namespace JustCombat
 
                     if (actor.MouseOver(state))
                     {
-                        // Show the attack / sword cursor...
                         if (actor is Player)
                         {
+                            // Show the select / glove cursor...
                             UserInterface.Cursor = UserInterface.CursorList[0];
                         }
 
                         else
                         {
+                            // Show the attack / sword cursor...
                             UserInterface.Cursor = UserInterface.CursorList[1];
                         }
 
