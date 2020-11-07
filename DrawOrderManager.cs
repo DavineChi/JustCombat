@@ -32,9 +32,12 @@ namespace JustCombat
             foreach (Entity entity in JustCombat.EntityContainer)
             {
                 Actor actor = (Actor)(entity);
+
                 float bottomY = actor.GetY() + actor.GetHeight();
                 float offsetY = Constants.SCREEN_HEIGHT - bottomY;
+
                 Vector2 worldCoords  = camera.ScreenToWorld(0, offsetY);
+
                 float layer = worldCoords.Y;
 
                 layer = (layer / 1000.0f);

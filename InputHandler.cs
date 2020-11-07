@@ -1,4 +1,5 @@
-﻿using JustCombat.Common;
+﻿using JustCombat.Collision;
+using JustCombat.Common;
 using JustCombat.Entities;
 using JustCombat.UI;
 using Microsoft.Xna.Framework;
@@ -247,25 +248,79 @@ namespace JustCombat
 
             float distance = 150.0f;
 
+            CollisionBox bounds = UserInterface.ScrollTransformBounds;
+            OrthographicCamera camera = JustCombat.WorldCamera;
+            Vector2 worldCoords = camera.ScreenToWorld(bounds.GetPosX(), bounds.GetPosY());
+
+            float boundWest  = worldCoords.X;
+            float boundNorth = worldCoords.Y;
+            float boundEast  = boundWest + bounds.GetWidth();
+            float boundSouth = boundNorth + bounds.GetHeight();
+
+            float cameraDiffX = 0;
+            float cameraDiffY = 0;
+
+            // North
             if (heading == 0)
             {
-                player.Teleport(currentX, (currentY - distance));
+                float newY = (currentY - distance);
+                float diff = (boundNorth - (newY + player.GetHeight()));
+
+                if (diff > 0)
+                {
+                    cameraDiffY = -(diff);
+                }
+
+                player.Teleport(currentX, newY);
+                camera.Move(new Vector2(cameraDiffX, cameraDiffY));
             }
 
+            // East
             if (heading == 90)
             {
-                player.Teleport((currentX + distance), currentY);
+                float newX = (currentX + distance);
+                float diff = (newX - boundEast);
+
+                if (diff > 0)
+                {
+                    cameraDiffX = diff;
+                }
+
+                player.Teleport(newX, currentY);
+                camera.Move(new Vector2(cameraDiffX, cameraDiffY));
             }
 
+            // South
             if (heading == 180)
             {
-                player.Teleport(currentX, (currentY + distance));
+                float newY = (currentY + distance);
+                float diff = (newY - boundSouth);
+
+                if (diff > 0)
+                {
+                    cameraDiffY = diff;
+                }
+
+                player.Teleport(currentX, newY);
+                camera.Move(new Vector2(cameraDiffX, cameraDiffY));
             }
 
+            // West
             if (heading == 270)
             {
-                player.Teleport((currentX - distance), currentY);
+                float newX = (currentX - distance);
+                float diff = (boundWest - (newX + player.GetWidth()));
+
+                if (diff > 0)
+                {
+                    cameraDiffX = -(diff);
+                }
+
+                player.Teleport(newX, currentY);
+                camera.Move(new Vector2(cameraDiffX, cameraDiffY));
             }
+
+            JustCombat.TransformMatrix = camera.GetViewMatrix();
         }
 
         public static void OnMouseHover()
