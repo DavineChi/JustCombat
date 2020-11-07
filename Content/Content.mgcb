@@ -172,6 +172,27 @@
 /processorParam:TextureFormat=Color
 /build:item_tile.png
 
+#begin JosefinSlab10.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:JosefinSlab10.spritefont
+
+#begin JosefinSlab11.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:JosefinSlab11.spritefont
+
+#begin JosefinSlab12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:JosefinSlab12.spritefont
+
 #begin northshire_test.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor

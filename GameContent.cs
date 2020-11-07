@@ -24,6 +24,10 @@ namespace JustCombat
         public SpriteFont FontCandaraLight11 { get; set; }
         public SpriteFont FontCandaraLight12 { get; set; }
 
+        public SpriteFont FontJosefinSlab10 { get; set; }
+        public SpriteFont FontJosefinSlab11 { get; set; }
+        public SpriteFont FontJosefinSlab12 { get; set; }
+
         public TiledMap GameMap { get; set; }
         public Texture2D WraithImage { get; set; }
         public Texture2D Cursor { get; set; }
@@ -52,6 +56,10 @@ namespace JustCombat
             FontCandaraLight10 = content.Load<SpriteFont>("CandaraLight10");
             FontCandaraLight11 = content.Load<SpriteFont>("CandaraLight11");
             FontCandaraLight12 = content.Load<SpriteFont>("CandaraLight12");
+
+            FontJosefinSlab10 = content.Load<SpriteFont>("JosefinSlab10");
+            FontJosefinSlab11 = content.Load<SpriteFont>("JosefinSlab11");
+            FontJosefinSlab12 = content.Load<SpriteFont>("JosefinSlab12");
 
             GameMap = content.Load<TiledMap>("northshire_test");
             WraithImage = content.Load<Texture2D>("wraith");
