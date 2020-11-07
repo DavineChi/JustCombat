@@ -359,9 +359,9 @@ namespace JustCombat.Entities
             int mouseY = (int)(worldPosition.Y);
 
             if (mouseX >= this._x &&
-                mouseX <= this._x + this._width * Constants.SPRITE_SCALE &&
+                mouseX <= this._x + this._width &&
                 mouseY >= this._y &&
-                mouseY <= this._y + this._height * Constants.SPRITE_SCALE)
+                mouseY <= this._y + this._height)
             {
                 result = true;
             }
