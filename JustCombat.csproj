@@ -112,6 +112,9 @@
   <ItemGroup>
     <Content Include="Icon.ico" />
     <Content Include="TransformNotes.txt" />
+    <Content Include="_notes\OnDeath system design.txt" />
+    <Content Include="_notes\tmx_workaround.txt" />
+    <Content Include="_notes\TransformNotes.txt" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
