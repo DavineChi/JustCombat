@@ -1,0 +1,6 @@
+﻿Matrix Transformation Exclusion List:
+ - UI
+ - Cursor(s)
+ - Player, when outside of inner camera fence
+ - Top Bar and its elements
+ - View / camera fences

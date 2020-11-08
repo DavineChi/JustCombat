@@ -1,0 +1,7 @@
+OnDeath() method/event...
+If a mob's health ever reaches zero (0):
+ - death has occurred
+ - should display a dead sprite/image
+ - loot drop is spawned
+ - experience (XP) points are rewarded
+ - reward XP according to 'threat' (TBD)
